@@ -4,6 +4,7 @@ import api from '../api';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import {ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Navbar from '../component/Navbar';
 
 
 function Register() {
@@ -57,7 +58,11 @@ function Register() {
  
 
   return (
+    
+
+    
     <div className="flex justify-center items-center min-h-screen bg-white">
+      
       <div className="p-4 max-w-md w-full">
         <div className="p-6 shadow">
         <h2 className="text-2xl font-semibold mb-6">Register</h2>

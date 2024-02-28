@@ -66,7 +66,9 @@ function AddUser() {
  
 
   return (
+    
     <div className="flex justify-center items-center min-h-screen">
+      
     <div className=" max-w-md w-full">
       <div className=" d-flex justify-content-center shadow">
         <h2 className="text-2xl font-semibold mb-6">Register</h2>

@@ -15,9 +15,7 @@ const Navbar = () => {
                     <nav className="text-gray-800 bg-white h-12 ">       
                         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                             <div className="flex justify-between items-center">
-                                <div className="flex-shrink-0">
-                                    <img className="h-12 w-8" src={Logo} alt="Logo" />
-                                </div>
+                                
                                 <div className="flex-1 flex justify-center">
                                     <div className="mx-6 font-medium">Date: {currentTime.toLocaleDateString()}</div>
                                     <div className="mx-6 font-medium">Time: {currentTime.toLocaleTimeString()}</div>

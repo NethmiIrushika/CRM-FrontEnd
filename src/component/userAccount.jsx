@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
-import { useTable } from 'react-table';
+import { useTable, usePagination } from 'react-table';
 
 function UserAccount() {
   const [data, setData] = useState([]);
@@ -36,20 +36,36 @@ function UserAccount() {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
-  } = useTable({ columns, data });
+    page,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    state: { pageIndex }, 
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: { pageIndex:0 , pageSize:5 },
+    },
+    usePagination
+  );
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
   // Filter the rows based on search term
-  const filteredRows = rows.filter(row =>
-    Object.values(row.original).some(cellValue =>
-      cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
+  const filteredRows = React.useMemo(() => {
+    return page.filter((row) =>
+      Object.values(row.original).some((cellValue) =>
+        cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [page, searchTerm]);
 
   return (
     <div className="container mx-auto py-6">
@@ -64,7 +80,7 @@ function UserAccount() {
         />
       </div>
       <div className="overflow-x-auto">
-        <table {...getTableProps()} className="table-auto w-full border-collapse">
+        <table {...getTableProps()} className="table-fixed w-full border-collapse">
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-200">
@@ -77,20 +93,43 @@ function UserAccount() {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {filteredRows.map((row) => {
+            {filteredRows.map((row, index) => { // Add index parameter
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} className="border-b" key={row.id}>
+                <tr {...row.getRowProps()} className="border-b" key={row.original.userId}> 
                   {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} className="px-4 py-2" key={cell.value}>
-                      {cell.render('Cell')}
+                    <td {...cell.getCellProps()} className="px-4 py-2" key={cell.column.id}>
+                      <div>{cell.render('Cell')}</div>
                     </td>
                   ))}
+
+
                 </tr>
               );
             })}
           </tbody>
         </table>
+      </div>
+      <div className="pagination">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {'<'}
+        </button>{' '}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {'<'}
+          <span>
+          Page{' '}
+          <strong>
+            {pageIndex + 1} of {pageCount}
+          </strong>{' '}
+        </span>
+        </button>{' '}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {'>'}
+        </button>{' '}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>'}
+        </button>{' '}
+        
       </div>
     </div>
   );

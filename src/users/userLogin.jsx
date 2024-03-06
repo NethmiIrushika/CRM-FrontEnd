@@ -78,6 +78,7 @@ function UserLogin() {
                 {showPassword ? <FaEye className="h-5 w-5" /> : <FaEyeSlash className="h-5 w-5" />}
               </button>
             </div>
+            
           </div>
           <button type="submit" className="w-full bg-blue-500 text-white py-2.5 rounded-md hover:bg-blue-600 transition duration-300">
             Login

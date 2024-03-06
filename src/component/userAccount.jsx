@@ -1,116 +1,156 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Popup from 'reactjs-popup';
-import StatusPopup from '../popup/statuspopup';
-import ViewPopup from '../popup/viewpopup';
 import api from '../api';
+import { useTable, usePagination, useSortBy } from 'react-table';
 
 function UserAccount() {
   const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [viewPopupOpen, setViewPopupOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-  const fetchUsers = async () => {
-    try {
-      const accessToken = localStorage.getItem('accessToken'); // Retrieve token from storage
-      console.log(accessToken);
-      const response = await axios.get(`${api.defaults.baseURL}/users`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`, // Include token in the request headers
-        },
-      });
-      setUsers(response.data);
+    const fetchUsers = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        const response = await axios.get(`${api.defaults.baseURL}/users`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        setUsers(response.data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+    fetchUsers();
+  }, []);
 
-      console.log(response.data);
+  const columns = React.useMemo(
+    () => [
+      { id: 'userId', Header: 'ID', accessor: 'userId' },
+      { id: 'firstname', Header: 'First Name', accessor: 'firstname' },
+      { id: 'lastname', Header: 'Last Name', accessor: 'lastname' },
+      { id: 'username', Header: 'Username', accessor: 'username' },
+      { id: 'userType', Header: 'User Type', accessor: 'userType' },
+      { id: 'status', Header: 'Status', accessor: 'status' },
+    ],
+    []
+  );
 
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    state: { pageIndex },
+  } = useTable(
+    {
+      columns,
+      data: users, // Use 'users' state as data
+      initialState: { pageIndex: 0, pageSize: 5 },
+    },
+    useSortBy,
+    usePagination
+  );
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
   };
-  fetchUsers();
-}, []);
 
-
-  const handleStatusPopupOpen = (user) => {
-    setSelectedUser(user);
-  };
-
-  const handleViewPopupOpen = (user) => {
-    setSelectedUser(user);
-    setViewPopupOpen(true);
-  };
-
-  const handleStatusChange = async (status) => {
-    try {
-      await axios.post(`${api.defaults.baseURL}/users/approve/${selectedUser.userId}`);
-      updateUserList();
-      closeStatusPopup();
-    } catch (error) {
-      console.error('Error updating status:', error);
-    }
-  };
-
-  const closeStatusPopup = () => {
-    setSelectedUser(null);
-  };
-
-  const closeViewPopup = () => {
-    setSelectedUser(null);
-    setViewPopupOpen(false);
-  };
-
-  const updateUserList = async () => {
-    try {
-      const response = await axios.get(`${api.defaults.baseURL}/users`);
-      setUsers(response.data);
-    } catch (error) {
-      console.error('Error updating users:', error);
-    }
-  };
+  const filteredRows = React.useMemo(() => {
+    return page.filter((row) =>
+      Object.values(row.original).some((cellValue) =>
+        cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [page, searchTerm]);
 
   return (
-    <div className="container mx-auto py-6">
-      <h2 className="text-2xl font-bold mb-4">User Table</h2>
+    <div className="container mx-auto full">
+      <div className="mb-4 flex justify-end">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          placeholder="Search..."
+          className="px-4 py-2 border border-gray-500 rounded"
+        />
+      </div>
+
       <div className="overflow-x-auto">
-        <table className="table-auto w-full border-collapse">
+        <table {...getTableProps()} className="table-fixed w-full border-collapse">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="px-4 py-2">ID</th>
-              <th className="px-4 py-2">First Name</th>
-              <th className="px-4 py-2">Last Name</th>
-              <th className="px-4 py-2">Username</th>
-              <th className="px-4 py-2">User Type</th>
-              <th className="px-4 py-2">Status</th>
-              <th className="px-4 py-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.userId} className="border-b">
-                <td className="px-4 py-2">{user.userId}</td>
-                <td className="px-4 py-2">{user.firstname}</td>
-                <td className="px-4 py-2">{user.lastname}</td>
-                <td className="px-4 py-2">{user.username}</td>
-                <td className="px-4 py-2">{user.userType}</td>
-                <td className="px-4 py-2">{user.status}</td>
-                <td>
-                  <button onClick={() => handleStatusPopupOpen(user)} className="btn">Change Status</button>
-                  <Popup open={viewPopupOpen} closeOnDocumentClick onClose={closeViewPopup}>
-                    <ViewPopup user={selectedUser} close={closeViewPopup} />
-                  </Popup>
-                </td>
-                <td>
-                  <button onClick={() => handleViewPopupOpen(user)} className="btn">View</button>
-                </td>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-200">
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2">
+                    <div className="flex items-center">
+                      <span>{column.render('Header')}</span>
+                      <span>
+                        {column.isSorted ? (
+                          column.isSortedDesc ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M7 10l5 5 5-5z" />
+                            </svg>
+                          ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M7 14l5-5 5 5z" />
+                            </svg>
+                          )
+                        ) : (
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 10l5 5 5-5z" />
+                          </svg>
+                        )}
+                      </span>
+                    </div>
+                  </th>
+                ))}
               </tr>
             ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {filteredRows.map((row, index) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} className="border-b" key={row.original.userId}>
+                  {row.cells.map((cell) => (
+                    <td {...cell.getCellProps()} className="px-4 py-2" key={cell.column.id}>
+                      <div>{cell.render('Cell')}</div>
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
-      {selectedUser && (
-        <StatusPopup close={closeStatusPopup} user={selectedUser} updateUser={updateUserList} />
-      )}
+      <div className="pagination">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {'<'}
+        </button>{' '}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {'<'}
+          <span>
+            Page{' '}
+            <strong>
+              {pageIndex + 1} of {pageCount}
+            </strong>{' '}
+          </span>
+        </button>{' '}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {'>'}
+        </button>{' '}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>'}
+        </button>{' '}
+      </div>
     </div>
   );
 }

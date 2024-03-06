@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
-import PriorityPopup from '../popup/prioritypopup'; // Import the PriorityPopup component
+import { useTable, usePagination, useSortBy } from 'react-table';
 
 function Crview() {
   const [crs, setCrs] = useState([]);
-  const [selectedCr, setSelectedCr] = useState(null);
-  const [editPriority, setEditPriority] = useState(false);
-  const [newPriority, setNewPriority] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchCrs = async () => {
@@ -30,87 +28,136 @@ function Crview() {
     fetchCrs();
   }, []);
 
+  const columns = React.useMemo(
+    () => [
+      { id: 'crId', Header: 'CR ID', accessor: 'userId' },
+      { id: 'name', Header: 'Name', accessor: 'name' },
+      { id: 'department', Header: 'Department', accessor: 'department' },
+      { id: 'topic', Header: 'Topic', accessor: 'topic' },
+      { id: 'description', Header: 'Description', accessor: 'userType' },
+      { id: 'priority', Header: 'Priority', accessor: 'priority' },
+      { id: 'actions', Header: 'Actions', accessor: 'actions' },
 
-  const openEditPriority = (cr) => {
-    setSelectedCr(cr);
-    setEditPriority(true);
-    setNewPriority(cr.priority);
+    ],
+    []
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    state: { pageIndex },
+  } = useTable(
+    {
+      columns,
+      data: crs, 
+      initialState: { pageIndex: 0, pageSize: 5 },
+    },
+    useSortBy,
+    usePagination
+  );
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
-  const closeEditPriority = () => {
-    setSelectedCr(null);
-    setEditPriority(false);
-  };
+  const filteredRows = React.useMemo(() => {
+    return page.filter((row) =>
+      Object.values(row.original).some((cellValue) =>
+        cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [page, searchTerm]);
 
-  const handlePriorityChange = (event) => {
-    setNewPriority(parseInt(event.target.value));
-  };
-
-  const updatePriority = async () => {
-    try {
-      await axios.put(`${api.defaults.baseURL}/crs/${selectedCr.crId}/priority`, { priority: newPriority });
-      closeEditPriority();
-      const response = await axios.get(`${api.defaults.baseURL}/crs`);
-      setCrs(response.data);
-    } catch (error) {
-      console.error('Error updating priority:', error);
-    }
-  };
-
+  
   return (
-    <div className="container mx-auto py-6">
+    <div className="container mx-auto full">
+      <div className="mb-4 flex justify-end">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          placeholder="Search..."
+          className="px-4 py-2 border border-gray-500 rounded"
+        />
+      </div>
+
       <div className="overflow-x-auto">
-          <table className="table-auto w-full border-collapse">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="px-4 py-2">CR ID</th>
-                <th className="px-4 py-2">Name</th>
-                <th className="px-4 py-2">Department</th>
-                <th className="px-4 py-2">Topic</th>
-                <th className="px-4 py-2">Description</th>
-                <th className="px-4 py-2">Priority</th>
-                <th className="px-4 py-2">Actions</th>
+        <table {...getTableProps()} className="table-fixed w-full border-collapse">
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-200">
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2">
+                    <div className="flex items-center">
+                      <span>{column.render('Header')}</span>
+                      <span>
+                        {column.isSorted ? (
+                          column.isSortedDesc ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M7 10l5 5 5-5z" />
+                            </svg>
+                          ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M7 14l5-5 5 5z" />
+                            </svg>
+                          )
+                        ) : (
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 10l5 5 5-5z" />
+                          </svg>
+                        )}
+                      </span>
+                    </div>
+                  </th>
+                ))}
               </tr>
-            </thead>
-            <tbody>
-              {crs.map(cr => (
-                <tr key={cr.crId} className="border-b">
-                  <td className="px-4 py-2">{cr.crId}</td>
-                  <td className="px-4 py-2">{cr.name}</td>
-                  <td className="px-4 py-2">{cr.department}</td>
-                  <td className="px-4 py-2">{cr.topic}</td>
-                  <td className="px-4 py-2">{cr.description}</td>
-                  <td className="px-4 py-2">
-                    {editPriority && selectedCr && selectedCr.crId === cr.crId ? (
-                      <input
-                        type="number"
-                        value={newPriority}
-                        onChange={handlePriorityChange}
-                        autoFocus
-                      />
-                    ) : (
-                      cr.priority
-                    )}
-                  </td>
-                  <td className="px-4 py-2">
-                    <button onClick={() => openEditPriority(cr)}
-                    className="bg-white hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow-md"
-                    >Change priority</button>
-                  </td>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {filteredRows.map((row, index) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} className="border-b" key={row.original.userId}>
+                  {row.cells.map((cell) => (
+                    <td {...cell.getCellProps()} className="px-4 py-2" key={cell.column.id}>
+                      <div>{cell.render('Cell')}</div>
+                    </td>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-     
-      <PriorityPopup
-        editPriority={editPriority}
-        selectedCr={selectedCr}
-        newPriority={newPriority}
-        handlePriorityChange={handlePriorityChange}
-        updatePriority={updatePriority}
-        closeEditPriority={closeEditPriority}
-      />
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div className="pagination">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {'<'}
+        </button>{' '}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {'<'}
+          <span>
+            Page{' '}
+            <strong>
+              {pageIndex + 1} of {pageCount}
+            </strong>{' '}
+          </span>
+        </button>{' '}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {'>'}
+        </button>{' '}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>'}
+        </button>{' '}
+      </div>
     </div>
   );
 }

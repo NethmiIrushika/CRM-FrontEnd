@@ -12,9 +12,14 @@ const Insert = () => {
     topic: '',
     description: '',
     priority: '',
+    
   });
 
   const navigate = useNavigate();
+
+  // Assuming you have a mechanism to retrieve userId from localStorage or context
+  const userId = localStorage.getItem('userId');
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -32,11 +37,17 @@ const Insert = () => {
         return;
       }
 
-      const response = await axios.post(`${api.defaults.baseURL}/crs/`, formData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+      const response = await axios.post(`${api.defaults.baseURL}/crs/`, 
+        {
+          ...formData,
+          userId: userId, // Include userId in the data
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
 
       console.log('Data inserted successfully:', response.data);
   
@@ -60,6 +71,7 @@ const Insert = () => {
       console.error('Error inserting data:', error);
     }
   };
+
   
 
   return (

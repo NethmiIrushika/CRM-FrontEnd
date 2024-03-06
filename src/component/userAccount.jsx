@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
 import { useTable, usePagination, useSortBy } from 'react-table';
+import StatusPopup from '../popup/statuspopup'; // Import StatusPopup component
 
 function UserAccount() {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedUser, setSelectedUser] = useState(null); // State to store selected user
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -32,6 +34,13 @@ function UserAccount() {
       { id: 'username', Header: 'Username', accessor: 'username' },
       { id: 'userType', Header: 'User Type', accessor: 'userType' },
       { id: 'status', Header: 'Status', accessor: 'status' },
+      {
+        id: 'actions',
+        Header: 'Actions',
+        Cell: ({ row }) => (
+          <button onClick={() => setSelectedUser(row.original)}>Change Status</button>
+        ),
+      },
     ],
     []
   );
@@ -71,8 +80,31 @@ function UserAccount() {
     );
   }, [page, searchTerm]);
 
+  const updateUser = async () => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      const response = await axios.get(`${api.defaults.baseURL}/users`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      setUsers(response.data);
+    } catch (error) {
+      console.error('Error updating user:', error);
+    }
+  };
+
   return (
     <div className="container mx-auto full">
+      {/* Render StatusPopup if selectedUser is not null */}
+      {selectedUser && (
+        <StatusPopup
+          user={selectedUser}
+          close={() => setSelectedUser(null)}
+          updateUser={updateUser}
+        />
+      )}
+
       <div className="mb-4 flex justify-end">
         <input
           type="text"

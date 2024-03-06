@@ -10,18 +10,26 @@ function Crview() {
   const [newPriority, setNewPriority] = useState('');
 
   useEffect(() => {
-    fetchData();
+    const fetchCrs = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken'); // Retrieve token from storage
+        
+        const response = await axios.get(`${api.defaults.baseURL}/crs`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`, // Include token in the request headers
+          },
+        });
+        // console.log(accessToken);
+
+        setCrs(response.data);
+
+      } catch (error) {
+        console.error('Error fetching crs:', error);
+      }
+    };
+    fetchCrs();
   }, []);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${api.defaults.baseURL}/crs/add`);
-      const sortedCrs = response.data.sort((a, b) => a.priority - b.priority);
-      setCrs(sortedCrs);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
 
   const openEditPriority = (cr) => {
     setSelectedCr(cr);
@@ -42,7 +50,8 @@ function Crview() {
     try {
       await axios.put(`${api.defaults.baseURL}/crs/${selectedCr.crId}/priority`, { priority: newPriority });
       closeEditPriority();
-      fetchData();
+      const response = await axios.get(`${api.defaults.baseURL}/crs`);
+      setCrs(response.data);
     } catch (error) {
       console.error('Error updating priority:', error);
     }
@@ -64,7 +73,7 @@ function Crview() {
               </tr>
             </thead>
             <tbody>
-              {crs.sort((a, b) => a.priority - b.priority).map(cr => (
+              {crs.map(cr => (
                 <tr key={cr.crId} className="border-b">
                   <td className="px-4 py-2">{cr.crId}</td>
                   <td className="px-4 py-2">{cr.name}</td>

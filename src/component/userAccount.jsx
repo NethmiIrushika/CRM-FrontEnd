@@ -11,16 +11,26 @@ function UserAccount() {
   const [viewPopupOpen, setViewPopupOpen] = useState(false);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get(`${api.defaults.baseURL}/users`);
-        setUsers(response.data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-    fetchUsers();
-  }, []);
+  const fetchUsers = async () => {
+    try {
+      const accessToken = localStorage.getItem('accessToken'); // Retrieve token from storage
+      console.log(accessToken);
+      const response = await axios.get(`${api.defaults.baseURL}/users`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`, // Include token in the request headers
+        },
+      });
+      setUsers(response.data);
+
+      console.log(response.data);
+
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
+  fetchUsers();
+}, []);
+
 
   const handleStatusPopupOpen = (user) => {
     setSelectedUser(user);

@@ -4,8 +4,14 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import Navbar from '../component/Navbar';
 
 
+
+
+
 const Dashboard = () => {
   let navigate = useNavigate();
+
+  
+  
 
 
   return (
@@ -43,7 +49,7 @@ const Dashboard = () => {
           <ul className="space-y-2 font-medium">
             <li>
               <button
-                onClick={() => navigate('userAccount')}
+                onClick={() => navigate('userAccount', { state: { accessToken: localStorage.getItem("accessToken") } })}
                 className="flex items-center justify-center  text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white dark:hover:bg-gray-700 group"
               >
                 <div className="flex items-center  w-40 h-10">

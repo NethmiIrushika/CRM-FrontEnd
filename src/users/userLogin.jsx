@@ -42,9 +42,14 @@ function UserLogin() {
       if (response && response.data) {
         const {data} = response;
         if (data.accessToken){
-          localStorage.setItem('token', data.accessToken);
+          localStorage.setItem('accessToken', data.accessToken);
+          localStorage.setItem('userId', data.userId);
+          console.log('userId:', data.userId); 
           toast.success('You have  successfully logged in!');
+            
           navigate('/dashboard');
+
+       
         } else {
           setError (data.message || 'login failed. Please try again');
           }

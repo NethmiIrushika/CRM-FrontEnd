@@ -25,7 +25,19 @@ const Insert = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${api.defaults.baseURL}/crs/`, formData);
+      const accessToken = localStorage.getItem('accessToken');
+      if (!accessToken) {
+        // Handle case where access token is not available
+        console.error('Access token not found.');
+        return;
+      }
+
+      const response = await axios.post(`${api.defaults.baseURL}/crs/`, formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
       console.log('Data inserted successfully:', response.data);
   
       toast.success('You have successfully made a change request!');

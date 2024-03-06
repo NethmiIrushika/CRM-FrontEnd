@@ -15,7 +15,6 @@ import AddUser from './component/addUser';
 import Log from './component/log';
 
 
-
 function App() {
   
 

@@ -13,6 +13,7 @@ import CreateCr from './component/createCr'
 import { ToastContainer } from 'react-toastify';
 import AddUser from './component/addUser';
 import Log from './component/log';
+import ProtectedRoute from './ProtectedRoute';
 
 
 
@@ -25,16 +26,16 @@ function App() {
     <Router>
       <ToastContainer/>
           <Routes>
-            <Route path="/" element={<Home />} />;
+            <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />;
             <Route path="/UserLogin" element= {<UserLogin/>} />
             <Route path="/UserRegistration" element= {<UserRegistration/>}/>
-            <Route path="/dashboard" element={<Dashboard />}>
-              <Route path="UserAccount" element={<UserAccount />} />
-              <Route path="createCr" element={<CreateCr />} />
-              <Route path="viewCr" element={<Crview/>}/>
-              <Route path="addUser" element={<AddUser/>}/>
-              <Route path="log" element={<Log/>}/>
-              <Route path="crProtoType" element={<CrProtoType/>}/>
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>
+              <Route path="UserAccount" element={<ProtectedRoute><UserAccount /></ProtectedRoute>} />
+              <Route path="createCr" element={<ProtectedRoute><CreateCr /></ProtectedRoute>} />
+              <Route path="viewCr" element={<ProtectedRoute><Crview/></ProtectedRoute>}/>
+              <Route path="addUser" element={<ProtectedRoute><AddUser/></ProtectedRoute>}/>
+              <Route path="log" element={<ProtectedRoute><Log/></ProtectedRoute>}/>
+              <Route path="crProtoType" element={<ProtectedRoute><CrProtoType/></ProtectedRoute>}/>
             </Route>
           </Routes>
         </Router>

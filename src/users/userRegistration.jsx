@@ -4,7 +4,6 @@ import api from '../api';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import {ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Navbar from '../component/Navbar';
 
 
 function Register() {
@@ -77,8 +76,8 @@ function Register() {
             <input type="text" name="lastname" id="lastname" value={formData.lastname} onChange={handleChange} className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500" required />
           </div>
           <div className="mb-4">
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username:</label>
-            <input type="text" name="username" id="username" value={formData.username} onChange={handleChange} className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500" required />
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Email:</label>
+            <input type="email" name="username" id="username" value={formData.username} onChange={handleChange} className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500" required />
           </div>
           <div className="mb-4">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password:</label>

@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import axios from 'axios';
+
 import CrProtoType from './component/crProtoType';
 import Home from './home';
 import UserLogin from'./users/userLogin'

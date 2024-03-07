@@ -29,12 +29,12 @@ function App() {
             <Route path="/UserLogin" element= {<UserLogin/>} />
             <Route path="/UserRegistration" element= {<UserRegistration/>}/>
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>
-              <Route path="UserAccount" element={<ProtectedRoute><UserAccount /></ProtectedRoute>} />
-              <Route path="createCr" element={<ProtectedRoute><CreateCr /></ProtectedRoute>} />
-              <Route path="viewCr" element={<ProtectedRoute><Crview/></ProtectedRoute>}/>
-              <Route path="addUser" element={<ProtectedRoute><AddUser/></ProtectedRoute>}/>
-              <Route path="log" element={<ProtectedRoute><Log/></ProtectedRoute>}/>
-              <Route path="crProtoType" element={<ProtectedRoute><CrProtoType/></ProtectedRoute>}/>
+              <Route path="/UserAccount" element={<ProtectedRoute><UserAccount /></ProtectedRoute>} />
+              <Route path="/createCr" element={<ProtectedRoute><CreateCr /></ProtectedRoute>} />
+              <Route path="/viewCr" element={<ProtectedRoute><Crview/></ProtectedRoute>}/>
+              <Route path="/addUser" element={<ProtectedRoute><AddUser/></ProtectedRoute>}/>
+              <Route path="/log" element={<ProtectedRoute><Log/></ProtectedRoute>}/>
+              <Route path="/crProtoType" element={<ProtectedRoute><CrProtoType/></ProtectedRoute>}/>
             </Route>
           </Routes>
         </Router>

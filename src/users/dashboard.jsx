@@ -3,9 +3,18 @@ import logoImage from "../assets/dashboardr.png";
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar";
 
+<<<<<<< HEAD
 function Dashboard  ()  {
   let navigate = useNavigate();
 
+=======
+
+
+const Dashboard = () => {
+  let navigate = useNavigate();
+
+  
+>>>>>>> daa92cc2ac30e0e5173ec313eb6bd653a2a04fa7
   return (
     <>
       <button
@@ -222,7 +231,11 @@ function Dashboard  ()  {
               <button
                 onClick={() => {
                   localStorage.removeItem("accessToken");
+<<<<<<< HEAD
                   navigate("/userLogin");
+=======
+                  navigate("/userLogin")
+>>>>>>> daa92cc2ac30e0e5173ec313eb6bd653a2a04fa7
                 }}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white dark:hover:bg-gray-700 group"
               >

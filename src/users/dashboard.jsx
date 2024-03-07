@@ -44,7 +44,7 @@ const Dashboard = () => {
                     state: { accessToken: localStorage.getItem("accessToken") },
                   })
                 }
-                className="flex items-center justify-center  text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white dark:hover:bg-gray-700 group"
+                className="flex items-center justify-center  text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white"
               >
                 <div className="flex items-center  w-40 h-10">
                   <svg
@@ -66,7 +66,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("viewCr")}
-                className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white dark:hover:bg-gray-700 group"
+                className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center  w-40 h-10">
                   <svg
@@ -87,7 +87,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("crProtoType")}
-                className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white dark:hover:bg-gray-700 group"
+                className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center w-40 h-10">
                   <svg
@@ -109,7 +109,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("createCr")}
-                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white dark:hover:bg-gray-700 group"
+                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center w-40 h-10">
                   <svg
@@ -136,7 +136,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("userAccount")}
-                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white dark:hover:bg-gray-700 group"
+                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center w-40 h-10">
                   <svg
@@ -155,7 +155,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("addUser")}
-                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white dark:hover:bg-gray-700 group"
+                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center w-40 h-10">
                   <svg
@@ -176,7 +176,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("log")}
-                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white dark:hover:bg-gray-700 group"
+                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white"
               >
                 <div className="flex items-center w-40 h-10">
                   <svg
@@ -200,7 +200,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("addUser")}
-                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white dark:hover:bg-gray-700 group"
+                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center w-40 h-10">
                   <svg
@@ -225,7 +225,7 @@ const Dashboard = () => {
 
                   navigate("/userLogin");
                 }}
-                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white dark:hover:bg-gray-700 group"
+                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center w-40 h-10">
                   <svg

@@ -42,7 +42,8 @@ function UserLogin() {
       if (response && response.data) {
         const {data} = response;
         if (data.accessToken){
-          localStorage.setItem('accessToken', data.accessToken);
+          localStorage.setItem('accessToken',response.data.accessToken);
+          console.log('accessToken:', response.data.accessToken);
           localStorage.setItem('userId', data.userId);
           console.log('userId:', data.userId); 
         

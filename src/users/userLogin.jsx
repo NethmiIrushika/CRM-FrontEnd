@@ -46,6 +46,8 @@ function UserLogin() {
           console.log('accessToken:', response.data.accessToken);
           localStorage.setItem('userId', data.userId);
           console.log('userId:', data.userId); 
+          localStorage.setItem('userType', data.userType);
+          console.log('userType', data.userType);
         
           toast.success('You have  successfully logged in!');
             

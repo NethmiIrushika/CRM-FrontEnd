@@ -10,17 +10,15 @@ function Crview() {
   useEffect(() => {
     const fetchCrs = async () => {
       try {
-        const accessToken = localStorage.getItem('accessToken'); // Retrieve token from storage
-        
+        const accessToken = localStorage.getItem('accessToken');
         const response = await axios.get(`${api.defaults.baseURL}/crs`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`, // Include token in the request headers
+            Authorization: `Bearer ${accessToken}`,
           },
         });
-        // console.log(accessToken);
-
-        setCrs(response.data);
-
+        // Filter CRs with status "start-development"
+        const filteredCrs = response.data.filter(cr => cr.status !== 'Starting Development');
+        setCrs(filteredCrs);
       } catch (error) {
         console.error('Error fetching crs:', error);
       }

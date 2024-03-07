@@ -38,8 +38,13 @@ function DeveloperCr() {
       { id: 'priority', Header: 'Priority Number', accessor: 'priority' },
       { id: 'view', Header: 'view', accessor: 'view' },
 
-      { id: 'actions', Header: 'GET to Development', accessor: 'actions' },
-
+      {
+        id: 'get',
+        Header: 'Get',
+        accessor: (row) => (
+          <button onClick={() => handleButtonClick(row.crId)}>Get</button>
+        ),
+      },
     ],
     []
   );
@@ -78,6 +83,30 @@ function DeveloperCr() {
       )
     );
   }, [page, searchTerm]);
+
+  const handleButtonClick = async (crId) => {
+    
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      
+      await axios.put(
+        `${api.defaults.baseURL}/crs/${crId}/start-development`,
+
+        
+        null,
+        
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      // Refresh the CRs after updating the status
+      fetchCrs();
+    } catch (error) {
+      console.error('Error starting development:', error);
+    }
+  };
 
   
   return (

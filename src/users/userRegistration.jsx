@@ -76,11 +76,10 @@ function Register() {
             <input type="text" name="lastname" id="lastname" value={formData.lastname} onChange={handleChange} className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500" required />
           </div>
           <div className="mb-4">
-<<<<<<< HEAD
+
             <label htmlFor="username" className="block text-sm font-medium text-gray-700">Email:</label>
-=======
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username:</label>
->>>>>>> ae0f445b39a5d25c6ce9d9202c1b9b2ff28a9cc3
+
+
             <input type="email" name="username" id="username" value={formData.username} onChange={handleChange} className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500" required />
           </div>
           <div className="mb-4">

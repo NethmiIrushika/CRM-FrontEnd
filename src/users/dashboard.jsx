@@ -2,25 +2,21 @@ import React from 'react';
 import logoImage from "../assets/dashboardr.png"
 import { Outlet, useNavigate } from 'react-router-dom';
 import Navbar from '../component/Navbar';
-<<<<<<< HEAD
 
 
 
-=======
 
->>>>>>> ae0f445b39a5d25c6ce9d9202c1b9b2ff28a9cc3
+
 
 
 const Dashboard = () => {
   let navigate = useNavigate();
 
   
-<<<<<<< HEAD
+
   
 
 
-=======
->>>>>>> ae0f445b39a5d25c6ce9d9202c1b9b2ff28a9cc3
   return (
 
 
@@ -223,11 +219,9 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => {
-<<<<<<< HEAD
+
                   localStorage.removeItem("accesstoken");
-=======
-                  localStorage.removeItem("accessToken");
->>>>>>> ae0f445b39a5d25c6ce9d9202c1b9b2ff28a9cc3
+
                   navigate("/userLogin")
                 }}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white dark:hover:bg-gray-700 group"

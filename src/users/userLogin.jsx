@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import {ToastContainer, toast } from 'react-toastify';
+import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../api';
 
@@ -30,16 +30,16 @@ function UserLogin() {
 
     const { username, password } = formData;
 
-    
     if (!username || !password) {
-      setError('Please fill in all the fields.');
-      return;
+        setError('Please fill in all the fields.');
+        return;
     }
 
     try {
       const response = await api.post('/users/login', { username, password });
-
+    
       if (response && response.data) {
+
         const {data} = response;
         if (data.accessToken){
           localStorage.setItem('accessToken',response.data.accessToken);
@@ -55,17 +55,21 @@ function UserLogin() {
         } else {
           setError (data.message || 'login failed. Please try again');
           }
-        } else {
-          setError ('something went wrong. Please try again');
-        }
-      } catch (error){
-        console.error('Error:', error);
-        setError ('Login error');
+      } else {
+          setError('Something went wrong. Please try again');
       }
-
-      
-       
+    } catch (error) {
+      console.error('Error:', error);
+      if (error.response && error.response.status === 403) {
+          setError('Your account is still not approved');
+      } else if (error.response && error.response.status === 401) {
+          setError('Invalid credentials');
+      } else {
+          setError('Invalid credentials');
+      }
+    }
   }
+
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">

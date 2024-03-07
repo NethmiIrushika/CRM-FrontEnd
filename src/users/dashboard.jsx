@@ -5,15 +5,10 @@ import Navbar from '../component/Navbar';
 
 
 
-
-
 const Dashboard = () => {
   let navigate = useNavigate();
 
   
-  
-
-
   return (
 
 
@@ -216,7 +211,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => {
-                  localStorage.removeItem("token");
+                  localStorage.removeItem("accessToken");
                   navigate("/userLogin")
                 }}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white dark:hover:bg-gray-700 group"

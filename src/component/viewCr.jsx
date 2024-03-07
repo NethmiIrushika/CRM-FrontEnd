@@ -30,7 +30,7 @@ function Crview() {
 
   const columns = React.useMemo(
     () => [
-      { id: 'crId', Header: 'CR ID', accessor: 'userId' },
+      { id: 'crId', Header: 'CR ID', accessor: 'crId' },
       { id: 'name', Header: 'Name', accessor: 'name' },
       { id: 'department', Header: 'Department', accessor: 'department' },
       { id: 'topic', Header: 'Topic', accessor: 'topic' },

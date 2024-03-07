@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import {ToastContainer, toast} from 'react-toastify';
@@ -13,7 +13,7 @@ function UserLogin() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -66,8 +66,10 @@ function UserLogin() {
           setError('Your account is still not approved');
       } else if (error.response && error.response.status === 401) {
           setError('Invalid credentials');
+          setFormData({ username: '', password: '' });
       } else {
           setError('Invalid credentials');
+          setFormData({ username: '', password: '' });
       }
     }
   }

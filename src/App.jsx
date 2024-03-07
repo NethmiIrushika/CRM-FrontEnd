@@ -24,7 +24,7 @@ function App() {
     
       <div>
     <Router>
-      <ToastContainer/>
+      <ToastContainer />
           <Routes>
             <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />;
             <Route path="/UserLogin" element= {<UserLogin/>} />

@@ -31,7 +31,7 @@ function UserAccount() {
       { id: 'userId', Header: 'ID', accessor: 'userId' },
       { id: 'firstname', Header: 'First Name', accessor: 'firstname' },
       { id: 'lastname', Header: 'Last Name', accessor: 'lastname' },
-      { id: 'username', Header: 'Username', accessor: 'username' },
+      { id: 'username', Header: 'Email', accessor: 'username' },
       { id: 'userType', Header: 'User Type', accessor: 'userType' },
       { id: 'status', Header: 'Status', accessor: 'status' },
       {

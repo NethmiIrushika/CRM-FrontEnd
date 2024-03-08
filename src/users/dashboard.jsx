@@ -242,7 +242,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => {
-                  localStorage.removeItem("accesstoken");
+                  localStorage.removeItem("accessToken");
 
                   navigate("/userLogin");
                 }}

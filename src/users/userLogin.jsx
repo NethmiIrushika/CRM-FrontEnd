@@ -48,6 +48,8 @@ function UserLogin() {
           console.log('userId:', data.userId); 
           localStorage.setItem('userType', data.userType);
           console.log('userType', data.userType);
+          localStorage.setItem('uniqueKey', data.uniqueKey);
+          console.log('uniqueKey', data.uniqueKey);
         
           toast.success('You have  successfully logged in!');
             

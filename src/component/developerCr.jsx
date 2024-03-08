@@ -34,7 +34,7 @@ function DeveloperCr() {
       { id: 'name', Header: 'Name', accessor: 'name' },
       { id: 'department', Header: 'Department', accessor: 'department' },
       { id: 'topic', Header: 'Topic', accessor: 'topic' },
-      { id: 'description', Header: 'Description', accessor: 'userType' },
+      { id: 'description', Header: 'Description', accessor: 'description' },
       { id: 'priority', Header: 'Priority Number', accessor: 'priority' },
       { id: 'view', Header: 'view', accessor: 'view' },
 
@@ -42,7 +42,7 @@ function DeveloperCr() {
         id: 'get',
         Header: 'Get',
         accessor: (row) => (
-          <button onClick={() => handleButtonClick(row.crId)}>Get</button>
+          <button onClick={() => handleButtonClick(row.crId,row.uniqueKey)}>Get</button>
         ),
       },
     ],
@@ -84,29 +84,26 @@ function DeveloperCr() {
     );
   }, [page, searchTerm]);
 
-  const handleButtonClick = async (crId) => {
-    
+  const handleButtonClick = async (crId, uniqueKey) => {
     try {
-      const accessToken = localStorage.getItem('accessToken');
+        const accessToken = localStorage.getItem('accessToken');
+        const uniqueKey = localStorage.getItem('uniqueKey');
       
-      await axios.put(
-        `${api.defaults.baseURL}/crs/${crId}/start-development`,
-
-        
-        null,
-        
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      // Refresh the CRs after updating the status
-      fetchCrs();
+        await axios.put(
+            `${api.defaults.baseURL}/crs/${crId}/start-development`,
+            { uniqueKey }, // Include uniqueKey in the request payload
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        // Refresh the CRs after updating the status
+        fetchCrs();
     } catch (error) {
-      console.error('Error starting development:', error);
+        console.error('Error starting development:', error);
     }
-  };
+};
 
   
   return (

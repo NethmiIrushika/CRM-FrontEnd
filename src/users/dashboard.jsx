@@ -2,9 +2,11 @@ import React from "react";
 import logoImage from "../assets/dashboardr.png";
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar";
+import { getLoginInfo } from "../utils/LoginInfo";
 
 const Dashboard = () => {
   let navigate = useNavigate();
+  const userType = getLoginInfo()?.userType;
 
   return (
     <>
@@ -42,6 +44,7 @@ const Dashboard = () => {
                 onClick={() =>
                   navigate("userAccount", {
                     state: { accessToken: localStorage.getItem("accessToken") },
+                    
                   })
                 }
                 className="flex items-center justify-center  text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white"
@@ -66,6 +69,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("viewCr")}
+                
                 className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center  w-40 h-10">
@@ -136,6 +140,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("userAccount")}
+                style={{ display: userType !== "Admin" ? "none" : "" }}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center w-40 h-10">

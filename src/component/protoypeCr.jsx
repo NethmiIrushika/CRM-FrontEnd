@@ -1,27 +1,26 @@
-/* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
 import { useTable, usePagination, useSortBy } from 'react-table';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 
-function Crview() {
+function PrototypeCr() {
   const [crs, setCrs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchCrs = async () => {
       try {
-        const accessToken = localStorage.getItem('accessToken');
+        const accessToken = localStorage.getItem('accessToken'); // Retrieve token from storage
+        
         const response = await axios.get(`${api.defaults.baseURL}/crs`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`, // Include token in the request headers
           },
         });
-        // Filter CRs with status "start-development"
-        const filteredCrs = response.data.filter(cr => cr.status !== 'Starting Development');
-        setCrs(filteredCrs);
+        // console.log(accessToken);
+
+        setCrs(response.data);
+
       } catch (error) {
         console.error('Error fetching crs:', error);
       }
@@ -36,9 +35,14 @@ function Crview() {
       { id: 'department', Header: 'Department', accessor: 'department' },
       { id: 'topic', Header: 'Topic', accessor: 'topic' },
       { id: 'description', Header: 'Description', accessor: 'description' },
-      { id: 'priority', Header: 'Priority', accessor: 'priority' },
-      { id: 'actions', Header: 'Actions', accessor: 'actions' },
 
+      {
+        id: 'prototype',
+        Header: 'prototype',
+        accessor: (row) => (
+          <button onClick={() => handleButtonClick()}>Prototype</button>
+        ),
+      },
     ],
     []
   );
@@ -59,7 +63,7 @@ function Crview() {
   } = useTable(
     {
       columns,
-      data: crs,
+      data: crs, 
       initialState: { pageIndex: 0, pageSize: 5 },
     },
     useSortBy,
@@ -78,9 +82,10 @@ function Crview() {
     );
   }, [page, searchTerm]);
 
-
+  
+  
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto full">
       <div className="mb-4 flex justify-end">
         <input
           type="text"
@@ -92,13 +97,13 @@ function Crview() {
       </div>
 
       <div className="overflow-x-auto">
-        <table {...getTableProps()} className="table-auto w-full ">
+        <table {...getTableProps()} className="table-fixed w-full border-collapse">
           <thead>
-            {headerGroups.map((headerGroup,index) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-200" key={index}>
-                {headerGroup.headers.map((column, columnIndex) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2 text-center" key={columnIndex}>
-                    <div className="flex items-center justify-center">
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-200">
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2">
+                    <div className="flex items-center">
                       <span>{column.render('Header')}</span>
                       <span>
                         {column.isSorted ? (
@@ -127,17 +132,10 @@ function Crview() {
             {filteredRows.map((row, index) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} className="border-b" key={index}>
-                  {row.cells.map((cell, cellIndex) => (
-                    <td {...cell.getCellProps()} className="px-4 py-2 text-center" key={cellIndex}>
-                      {/* Check if the cell contains the 'description' field */}
-                      {cell.column.id === 'description' ? (
-                        // If it's the 'description' field, render the React Quill HTML content
-                        <div dangerouslySetInnerHTML={{ __html: cell.value }} />
-                      ) : (
-                        // If it's not the 'description' field, render the cell value as it is
-                        <div>{cell.render('Cell')}</div>
-                      )}
+                <tr {...row.getRowProps()} className="border-b" key={row.original.userId}>
+                  {row.cells.map((cell) => (
+                    <td {...cell.getCellProps()} className="px-4 py-2" key={cell.column.id}>
+                      <div>{cell.render('Cell')}</div>
                     </td>
                   ))}
                 </tr>
@@ -146,7 +144,7 @@ function Crview() {
           </tbody>
         </table>
       </div>
-      <div className="pagination flex justify-center mt-4">
+      <div className="pagination">
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<'}
         </button>{' '}
@@ -170,4 +168,4 @@ function Crview() {
   );
 }
 
-export default Crview;
+export default PrototypeCr;

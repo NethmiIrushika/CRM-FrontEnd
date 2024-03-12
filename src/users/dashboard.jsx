@@ -39,33 +39,7 @@ const Dashboard = () => {
         </div>
         <div className="h-full px-3 py-4 overflow-y-auto bg-yellow-400">
           <ul className="space-y-2 font-medium">
-            <li>
-              <button
-                onClick={() =>
-                  navigate("userAccount", {
-                    state: { accessToken: localStorage.getItem("accessToken") },
-                    
-                  })
-                }
-                className="flex items-center justify-center  text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white"
-              >
-                <div className="flex items-center  w-40 h-10">
-                  <svg
-                    className="w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 22 21"
-                  >
-                    <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"></path>
-                    <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"></path>
-                  </svg>
-                  <span className="ms-3 text-black justify-center">
-                    Dashboard
-                  </span>
-                </div>
-              </button>
-            </li>
+
             <li>
               <button
                 onClick={() => navigate("viewCr")}
@@ -104,7 +78,7 @@ const Dashboard = () => {
                     <path d="M5.5 0h13a2.5 2.5 0 0 1 2.5 2.5v19a2.5 2.5 0 0 1-2.5 2.5h-13a2.5 2.5 0 0 1-2.5-2.5v-19a2.5 2.5 0 0 1 2.5-2.5zm5.5 2h2v2h-2V2zm-2 3h12v13h-12V5zm2 2h2v2h-2V7zm0 3h2v2h-2v-2zm0 3h2v2h-2v-2zm0 3h2v2h-2v-2zm8-9h-4V5h4v2zm0 3h-4V8h4v3zm0 3h-4v-2h4v2z" />
                   </svg>
                   <span className="ms-3 text-black justify-center">
-                    CR Proto Type{" "}
+                    Completed CR{" "}
                   </span>
                 </div>
               </button>
@@ -113,6 +87,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("createCr")}
+                style={{ display: userType !== "SFA_User" ? "none" : "" }}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center w-40 h-10">
@@ -200,30 +175,31 @@ const Dashboard = () => {
                 </div>
               </button>
             </li>
+
+            
             <li>
               <button
-                onClick={() => navigate("developerCr")}
-                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white dark:hover:bg-gray-700 group"
+                onClick={() => navigate("log")}
+                style={{ display: userType !== "Admin" ? "none" : "" }}
+                className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
-                <div className="flex items-center w-40 h-10">
+                <div className="flex items-center  w-40 h-10">
                   <svg
                     className=" w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
+                    aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                    fill="currentColor"
+                    viewBox="0 0 18 18"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                    />
+                    <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z"></path>
                   </svg>
-                  <span className="ms-3 text-black justify-center">Developer Get</span>
+                  <span className="ms-3 text-black justify-center ">
+                   Log
+                  </span>
                 </div>
               </button>
             </li>
+
             <li>
               <button
                 onClick={() => navigate("addUser")}

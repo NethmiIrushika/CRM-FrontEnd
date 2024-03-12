@@ -5,6 +5,7 @@ import { useTable, usePagination, useSortBy } from 'react-table';
 import StatusPopup from '../popup/statuspopup'; // Import StatusPopup component
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FaEdit } from 'react-icons/fa';
 
 function UserAccount() {
   const [users, setUsers] = useState([]);
@@ -35,16 +36,18 @@ function UserAccount() {
       { id: 'firstname', Header: 'First Name', accessor: 'firstname' },
       { id: 'lastname', Header: 'Last Name', accessor: 'lastname' },
       { id: 'username', Header: 'Email', accessor: 'username' },
+      { id: 'department', Header: 'Department', accessor: 'department' },
       { id: 'userType', Header: 'User Type', accessor: 'userType' },
       { id: 'status', Header: 'Status', accessor: 'status' },
       {
         id: 'actions',
         Header: 'Actions',
         Cell: ({ row }) => (
-          <button onClick={() => {setSelectedUser(row.original); setShowStatusPopup(true);}}>Change Status</button>
+          
+          <button onClick={() => {setSelectedUser(row.original); setShowStatusPopup(true);}}> <FaEdit className="mr-1" /> </button>
         ),
       },
-    ],
+    ],                              
     []
   );
 
@@ -111,8 +114,8 @@ function UserAccount() {
   
 
   return (
-    <div className="container mx-auto full">
-      {/* Render StatusPopup if selectedUser is not null */}
+<div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg ${showStatusPopup ? 'fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center' : ''}`}>
+
       {showStatusPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
           <StatusPopup
@@ -122,25 +125,25 @@ function UserAccount() {
           />
         </div>
       )}
-
+  
       <div className="mb-4 flex justify-end">
         <input
           type="text"
           value={searchTerm}
           onChange={handleSearchChange}
           placeholder="Search..."
-          className="px-4 py-2 border border-gray-500 rounded"
+          className="px-6 py-2 border border-gray-500 rounded"
         />
       </div>
-
+  
       <div className="overflow-x-auto">
-        <table {...getTableProps()} className="table-fixed w-full border-collapse">
-          <thead>
+        <table {...getTableProps()} className="table-auto w-full border-collapse">
+          <thead className="bg-yellow-400">
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-200">
+              <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2">
-                    <div className="flex items-center">
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2" key={column.id}>
+                    <div className="flex items-center justify-between text-center">
                       <span>{column.render('Header')}</span>
                       <span>
                         {column.isSorted ? (
@@ -165,14 +168,14 @@ function UserAccount() {
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()}>
-            {filteredRows.map((row, index) => {
+          <tbody className="bg-gray-50">
+            {filteredRows.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} className="border-b" key={row.original.userId}>
+                <tr {...row.getRowProps()} className="border-b" key={row.id}>
                   {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} className="px-4 py-2" key={cell.column.id}>
-                      <div>{cell.render('Cell')}</div>
+                    <td {...cell.getCellProps()} className="px-4 py-5" key={cell.column.id}>
+                      {cell.render('Cell')}
                     </td>
                   ))}
                 </tr>
@@ -181,28 +184,23 @@ function UserAccount() {
           </tbody>
         </table>
       </div>
-      <div className="pagination">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+      <div className="pagination flex justify-center mt-4">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+          {'<<'}
+        </button>
+        <button onClick={() => previousPage()} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
           {'<'}
-        </button>{' '}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-          <span>
-            Page{' '}
-            <strong>
-              {pageIndex + 1} of {pageCount}
-            </strong>{' '}
-          </span>
-        </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
+        </button>
+        <button onClick={() => nextPage()} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
           {'>'}
-        </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
+        </button>
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+          {'>>'}
+        </button>
       </div>
     </div>
   );
+  
 }
 
 export default UserAccount;

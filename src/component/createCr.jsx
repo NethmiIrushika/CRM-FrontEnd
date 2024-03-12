@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import api from '../api.jsx';
-import { ToastContainer, toast } from 'react-toastify';
+import {toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import Dropzone from 'react-dropzone';
+import { getLoginInfo } from "../utils/LoginInfo";
 
 const Insert = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    department: 'Select',
+    name: getLoginInfo()?.firstname,
+    department: getLoginInfo()?.department,
     topic: '',
     description: '',
     image: null,
     status: 'Pending',
+    date: '',
     priority: 0,
     
   });
@@ -80,6 +81,7 @@ const Insert = () => {
       navigate('/dashboard/viewCr');
     } catch (error) {
       console.error('Error inserting data:', error);
+
     }
   };
 
@@ -87,42 +89,59 @@ const Insert = () => {
 
 
   return (
-    <div>
-      <div>
+
+      <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-12">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Create Change Request</h2>
         <form onSubmit={handleSubmit}>
-          <div className="grid gap-6 mb-6 md:grid-cols-2">
+          <div className="grid gap-6">
             <div>
-              <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full Name</label>
-              <input type="text" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name" value={formData.name} onChange={handleChange} required />
+              <label htmlFor="topic" className="block text-sm font-medium text-gray-700 mb-1">Topic:</label>
+              <input 
+                type="text" 
+                id="topic" 
+                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 focus:outline-none placeholder-gray-400 text-gray-700" 
+                placeholder="Enter topic" 
+                value={formData.topic} 
+                onChange={handleChange} 
+                required 
+              />
             </div>
-            <div className="mb-4">
-              <label htmlFor="department" className="block text-sm font-medium text-gray-700">Department:</label>
-              <select id="department" name="department" value={formData.department} onChange={handleChange} className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"required>
-                <option value="Select">Select Department</option>
-                <option value="IT">IT</option>
-                <option value="Sales">Sales</option>
-                <option value="SAP">SAP</option>
-              </select>
-            </div>
+  
             <div>
-              <label htmlFor="topic" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Topic</label>
-              <input type="text" id="topic" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Topic" value={formData.topic} onChange={handleChange} required/>
-            </div>
-            <div>
-              <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-              <div className="h-50"> 
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">Description:</label>
+              <div>
                 <ReactQuill
-                  className="h-full" 
+                  className="bg-white border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                   value={formData.description}
                   onChange={handleDescriptionChange}
                 />
               </div>
             </div>
+  
+            <div>
+              <label htmlFor="file" className="block text-sm font-medium text-gray-700 mb-1">Attach File:</label>
+              <input 
+                type="file" 
+                id="file" 
+                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
+                // onChange={handleFileChange} 
+              />
+            </div>
+  
+            <button 
+              type="submit" 
+              className="block w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 px-4 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Submit
+            </button>
+            
           </div>
-          <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
         </form>
       </div>
-    </div>
+
   );
+  
+  
+  
 };
 export default Insert;

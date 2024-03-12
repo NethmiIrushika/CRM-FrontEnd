@@ -7,11 +7,13 @@ import 'react-quill/dist/quill.snow.css';
 import { getLoginInfo } from "../utils/LoginInfo";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FaEye } from "react-icons/fa";
 
 function Crview() {
   const [crs, setCrs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const userType = getLoginInfo()?.userType;
+
 
   useEffect(() => {
     fetchCrs();
@@ -79,19 +81,19 @@ function Crview() {
   const columns = React.useMemo(
     () => [
       { id: 'crId', Header: 'CR ID', accessor: 'crId' },
-      { id: 'name', Header: 'Name', accessor: 'name' },
+      { id: 'name', Header: 'Name', accessor: 'name' }, // Accessing firstname field
       { id: 'department', Header: 'Department', accessor: 'department' },
       { id: 'topic', Header: 'Topic', accessor: 'topic' },
-      { id: 'description', Header: 'Description', accessor: 'description' },
+      { id: 'date', Header: 'Date/Time', accessor: 'date' },
       { id: 'priority', Header: 'Priority', accessor: 'priority' },
-      userType === 'Admin' && {
+      userType === 'Developer' && {
         id: 'startDevelopment',
         Header: 'Start Development',
         accessor: (row) => (
           <button onClick={() => handleStartDevelopment(row.crId)}>Start Development</button>
         ),
       },
-  {
+      userType === 'SFA_User' && {
         id: 'priorityInput',
         Header: 'Change Priority',
         accessor: (row) => (
@@ -102,10 +104,18 @@ function Crview() {
           />
         ),
       },
-      userType === 'Admin' && { id: 'actions', Header: 'Actions', accessor: 'actions' },
+      {
+        id: 'actions',
+        Header: 'Actions',
+        accessor: () => (
+          <button>
+            <FaEye className="mr-1" /></button>
+        ),
+      },
     ].filter(Boolean),
     [userType]
   );
+  
 
   const {
     getTableProps,
@@ -143,94 +153,84 @@ function Crview() {
   }, [page, searchTerm]);
 
   return (
-    <div className="container mx-auto ">
-      <div className="mb-4 flex justify-end">
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={handleSearchChange}
-          placeholder="Search..."
-          className="px-4 py-2 border border-gray-500 rounded"
-        />
-      </div>
+    <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg `}>
+    
 
-      <div className="overflow-x-auto">
-        <table {...getTableProps()} className="table-auto w-full ">
-          <thead>
-            {headerGroups.map((headerGroup,index) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-200" key={index}>
-                {headerGroup.headers.map((column, columnIndex) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2 text-center" key={columnIndex}>
-                    <div className="flex items-center justify-center">
-                      <span>{column.render('Header')}</span>
-                      <span>
-                        {column.isSorted ? (
-                          column.isSortedDesc ? (
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M7 10l5 5 5-5z" />
-                            </svg>
-                          ) : (
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M7 14l5-5 5 5z" />
-                            </svg>
-                          )
-                        ) : (
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M7 10l5 5 5-5z" />
-                          </svg>
-                        )}
-                      </span>
-                    </div>
-                  </th>
+      
+          <div className="mb-4 flex justify-end">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              placeholder="Search..."
+              className="px-6 py-2 border border-gray-500 rounded"
+            />
+          </div>
+      
+          <div className="overflow-x-auto">
+            <table {...getTableProps()} className="table-auto w-full border-collapse">
+              <thead className="bg-yellow-400">
+                {headerGroups.map((headerGroup) => (
+                  <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+                    {headerGroup.headers.map((column) => (
+                      <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2" key={column.id}>
+                        <div className="flex items-center justify-between text-center">
+                          <span>{column.render('Header')}</span>
+                          <span>
+                            {column.isSorted ? (
+                              column.isSortedDesc ? (
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                                  <path d="M7 10l5 5 5-5z" />
+                                </svg>
+                              ) : (
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                                  <path d="M7 14l5-5 5 5z" />
+                                </svg>
+                              )
+                            ) : (
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M7 10l5 5 5-5z" />
+                              </svg>
+                            )}
+                          </span>
+                        </div>
+                      </th>
+                    ))}
+                  </tr>
                 ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {filteredRows.map((row, index) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} className="border-b" key={index}>
-                  {row.cells.map((cell, cellIndex) => (
-                    <td {...cell.getCellProps()} className="px-4 py-2 text-center" key={cellIndex}>
-                      {/* Check if the cell contains the 'description' field */}
-                      {cell.column.id === 'description' ? (
-                        // If it's the 'description' field, render the React Quill HTML content
-                        <div dangerouslySetInnerHTML={{ __html: cell.value }} />
-                      ) : (
-                        // If it's not the 'description' field, render the cell value as it is
-                        <div>{cell.render('Cell')}</div>
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-      <div className="pagination flex justify-center mt-4">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {'<'}
-        </button>{' '}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-          <span>
-            Page{' '}
-            <strong>
-              {pageIndex + 1} of {pageCount}
-            </strong>{' '}
-          </span>
-        </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
-      </div>
-    </div>
-  );
+              </thead>
+              <tbody className="bg-gray-50">
+                {filteredRows.map((row) => {
+                  prepareRow(row);
+                  return (
+                    <tr {...row.getRowProps()} className="border-b text-center" key={row.id}>
+                      {row.cells.map((cell) => (
+                        <td {...cell.getCellProps()} className="px-4 py-5 text-center" key={cell.column.id}>
+                          {cell.render('Cell')}
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          <div className="pagination flex justify-center mt-4">
+            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+              {'<<'}
+            </button>
+            <button onClick={() => previousPage()} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+              {'<'}
+            </button>
+            <button onClick={() => nextPage()} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+              {'>'}
+            </button>
+            <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+              {'>>'}
+            </button>
+          </div>
+        </div>
+      );
 }
 
 export default Crview;

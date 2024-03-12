@@ -15,6 +15,9 @@ const Insert = () => {
     topic: '',
     description: '',
     image: null,
+    status: 'Pending',
+    priority: 0,
+    
   });
 
   const navigate = useNavigate();

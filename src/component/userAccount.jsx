@@ -3,11 +3,14 @@ import axios from 'axios';
 import api from '../api';
 import { useTable, usePagination, useSortBy } from 'react-table';
 import StatusPopup from '../popup/statuspopup'; // Import StatusPopup component
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function UserAccount() {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUser, setSelectedUser] = useState(null); // State to store selected user
+  const [showStatusPopup, setShowStatusPopup] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -38,7 +41,7 @@ function UserAccount() {
         id: 'actions',
         Header: 'Actions',
         Cell: ({ row }) => (
-          <button onClick={() => setSelectedUser(row.original)}>Change Status</button>
+          <button onClick={() => {setSelectedUser(row.original); setShowStatusPopup(true);}}>Change Status</button>
         ),
       },
     ],
@@ -80,7 +83,7 @@ function UserAccount() {
     );
   }, [page, searchTerm]);
 
-  const updateUser = async () => {
+  const updateUser = async (updatedUser) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       const response = await axios.get(`${api.defaults.baseURL}/users`, {
@@ -89,6 +92,18 @@ function UserAccount() {
         },
       });
       setUsers(response.data);
+      if (updatedUser.status === 'approved') {
+        toast.success(`Status changed for ${updatedUser.username} to ${updatedUser.status}`, {
+          className: 'toast-success',
+        });
+      } else if (updatedUser.status === 'rejected') {
+        toast.error(`Status changed for ${updatedUser.username} to ${updatedUser.status}`, {
+          className: 'toast-error',
+        });
+      } else {
+        // For other statuses, use the default toast appearance
+        toast.success(`Status changed for ${updatedUser.username} to ${updatedUser.status}`);
+      }
     } catch (error) {
       console.error('Error updating user:', error);
     }
@@ -97,12 +112,14 @@ function UserAccount() {
   return (
     <div className="container mx-auto full">
       {/* Render StatusPopup if selectedUser is not null */}
-      {selectedUser && (
-        <StatusPopup
-          user={selectedUser}
-          close={() => setSelectedUser(null)}
-          updateUser={updateUser}
-        />
+      {showStatusPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
+          <StatusPopup
+            user={selectedUser}
+            close={() => setShowStatusPopup(false)}
+            updateUser={updateUser}
+          />
+        </div>
       )}
 
       <div className="mb-4 flex justify-end">

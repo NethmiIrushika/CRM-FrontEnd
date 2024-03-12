@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
+import 'react-quill/dist/quill.snow.css';
 import { useTable, usePagination, useSortBy } from 'react-table';
 
 function PrototypeCr() {

@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
 import { useTable, usePagination, useSortBy } from 'react-table';
-
 import 'react-quill/dist/quill.snow.css';
 import { getLoginInfo } from "../utils/LoginInfo";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Crview() {
   const [crs, setCrs] = useState([]);
@@ -46,6 +47,7 @@ function Crview() {
       );
       // Refresh the CRs after updating the status
       fetchCrs();
+      toast.success('CR is now in development!');
     } catch (error) {
       console.error('Error starting development:', error);
     }
@@ -67,6 +69,7 @@ function Crview() {
       );
       // You might want to handle the response here if needed
       console.log('Priority updated successfully');
+      toast.success('You changed the priority')
     } catch (error) {
       console.error('Error updating priority:', error);
     }
@@ -140,7 +143,7 @@ function Crview() {
   }, [page, searchTerm]);
 
   return (
-    <div className="container mx-auto full">
+    <div className="container mx-auto ">
       <div className="mb-4 flex justify-end">
         <input
           type="text"

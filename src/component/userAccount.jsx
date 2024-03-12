@@ -93,16 +93,16 @@ function UserAccount() {
       });
       setUsers(response.data);
       if (updatedUser.status === 'approved') {
-        toast.success(`Status changed for ${updatedUser.username} to ${updatedUser.status}`, {
+        toast.success(` ${updatedUser.firstname}  ${updatedUser.status}`, {
           className: 'toast-success',
         });
       } else if (updatedUser.status === 'rejected') {
-        toast.error(`Status changed for ${updatedUser.username} to ${updatedUser.status}`, {
+        toast.error(` ${updatedUser.firstname}  ${updatedUser.status}`, {
           className: 'toast-error',
         });
       } else {
         // For other statuses, use the default toast appearance
-        toast.success(`Status changed for ${updatedUser.username} to ${updatedUser.status}`);
+        toast.success(` ${updatedUser.firstname} ${updatedUser.status}`);
       }
     } catch (error) {
       console.error('Error updating user:', error);

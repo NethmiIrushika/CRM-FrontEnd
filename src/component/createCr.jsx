@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {  useNavigate } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import {  useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import api from '../api.jsx';
 import { ToastContainer, toast } from 'react-toastify';
@@ -17,11 +19,44 @@ const Insert = () => {
     description: '',
     image: null,
     priority:''
+    priority:''
 
 
   });
 
   const navigate = useNavigate();
+  const nameRef = useRef(null);
+  const departmentRef = useRef(null);
+  const topicRef = useRef(null);
+  const priorityRef = useRef(null);
+ 
+  useEffect(() => {
+    const handleArrowNavigation = (e) => {
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        if (document.activeElement === nameRef.current) {
+          departmentRef.current.focus();
+        } else if (document.activeElement === departmentRef.current) {
+          topicRef.current.focus();
+        } else if (document.activeElement === topicRef.current) {
+          priorityRef.current.focus();
+        }
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        if (document.activeElement === priorityRef.current) {
+          topicRef.current.focus();
+        } else if (document.activeElement === topicRef.current) {
+          departmentRef.current.focus();
+        } else if (document.activeElement === departmentRef.current) {
+          nameRef.current.focus();
+        }
+      }
+    };
+    document.addEventListener('keydown', handleArrowNavigation);
+    return () => {
+      document.removeEventListener('keydown', handleArrowNavigation);
+    };
+  }, []);
   const nameRef = useRef(null);
   const departmentRef = useRef(null);
   const topicRef = useRef(null);
@@ -71,8 +106,10 @@ const Insert = () => {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
+    const { id, value } = e.target;
     setFormData({
       ...formData,
+      [id]: value,
       [id]: value,
     });
   };
@@ -159,8 +196,34 @@ const Insert = () => {
                 onChange={handleChange}
                 required
               />
+          <div>
+              <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Full Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                ref={nameRef}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
             </div>
             <div className="mb-4">
+              <label htmlFor="department" className="block text-sm font-medium text-gray-700">
+                Department:
+              </label>
+              <select
+                id="department"
+                ref={departmentRef}
+                name="department"
+                value={formData.department}
+                onChange={handleChange}
+                className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                required
+              >
               <label htmlFor="department" className="block text-sm font-medium text-gray-700">
                 Department:
               </label>
@@ -210,16 +273,47 @@ const Insert = () => {
                 onChange={handleChange}
                 required
               />
+              <label htmlFor="topic" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Topic
+              </label>
+              <input
+                type="text"
+                id="topic"
+                ref={topicRef}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Topic"
+                value={formData.topic}
+                onChange={handleChange}
+                required
+              />
             </div>
             <div>
-              <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Description
+              <label htmlFor="priority" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Priority
+              </label>
+              <input
+                type="number"
+                id="priority"
+                min="1"
+                max="100"
+                ref={priorityRef}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Priority (1-100)"
+                value={formData.priority}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 ">
+                Description:
               </label>
               <ReactQuill value={formData.description} onChange={handleDescriptionChange} />
               <Dropzone
                 onDrop={handleImageUpload}
                 getUploadParams={getUploadParams}
                 onChangeStatus={handleChangeStatus}
+                accept="image/*" // Provide accept as an array
                 accept="image/*" // Provide accept as an array
               >
                 {({ getRootProps, getInputProps }) => (
@@ -235,6 +329,12 @@ const Insert = () => {
               )}
             </div>
           </div>
+          <button
+            type="submit"
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Submit
+          </button>
           <button
             type="submit"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

@@ -1,33 +1,78 @@
+/* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
 import { useTable, usePagination, useSortBy } from 'react-table';
-import ReactQuill from 'react-quill';
+
 import 'react-quill/dist/quill.snow.css';
+import { getLoginInfo } from "../utils/LoginInfo";
 
 function Crview() {
   const [crs, setCrs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const userType = getLoginInfo()?.userType;
 
   useEffect(() => {
-    const fetchCrs = async () => {
-      try {
-        const accessToken = localStorage.getItem('accessToken');
-        const response = await axios.get(`${api.defaults.baseURL}/crs`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        // Filter CRs with status "start-development"
-        const filteredCrs = response.data.filter(cr => cr.status !== 'Starting Development');
-        setCrs(filteredCrs);
-      } catch (error) {
-        console.error('Error fetching crs:', error);
-      }
-    };
     fetchCrs();
   }, []);
 
+  const fetchCrs = async () => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      const response = await axios.get(`${api.defaults.baseURL}/crs`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      // Filter CRs with status "start-development"
+      const filteredCrs = response.data.filter(cr => cr.status !== 'Starting Development');
+      setCrs(filteredCrs);
+    } catch (error) {
+      console.error('Error fetching crs:', error);
+    }
+  };
+
+  const handleStartDevelopment = async (crId) => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      await axios.put(
+        `${api.defaults.baseURL}/crs/${crId}/start-development`,
+        null, // no data payload needed
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      // Refresh the CRs after updating the status
+      fetchCrs();
+    } catch (error) {
+      console.error('Error starting development:', error);
+    }
+  };
+
+  const handlePriorityChange = async (crId, newPriority) => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      await axios.put(
+        `http://localhost:3000/change-requests/:id/update-priority`
+,
+        { priority: newPriority },
+        console.log(newPriority),
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      // You might want to handle the response here if needed
+      console.log('Priority updated successfully');
+    } catch (error) {
+      console.error('Error updating priority:', error);
+    }
+  };
+  
+  
   const columns = React.useMemo(
     () => [
       { id: 'crId', Header: 'CR ID', accessor: 'crId' },
@@ -36,10 +81,27 @@ function Crview() {
       { id: 'topic', Header: 'Topic', accessor: 'topic' },
       { id: 'description', Header: 'Description', accessor: 'description' },
       { id: 'priority', Header: 'Priority', accessor: 'priority' },
-      { id: 'actions', Header: 'Actions', accessor: 'actions' },
-
-    ],
-    []
+      userType === 'Admin' && {
+        id: 'startDevelopment',
+        Header: 'Start Development',
+        accessor: (row) => (
+          <button onClick={() => handleStartDevelopment(row.crId)}>Start Development</button>
+        ),
+      },
+  {
+        id: 'priorityInput',
+        Header: 'Change Priority',
+        accessor: (row) => (
+          <input
+            type="number"
+            value={row.priority}
+            onChange={(e) => handlePriorityChange(row.crId, e.target.value)}
+          />
+        ),
+      },
+      userType === 'Admin' && { id: 'actions', Header: 'Actions', accessor: 'actions' },
+    ].filter(Boolean),
+    [userType]
   );
 
   const {
@@ -77,9 +139,8 @@ function Crview() {
     );
   }, [page, searchTerm]);
 
-
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto full">
       <div className="mb-4 flex justify-end">
         <input
           type="text"

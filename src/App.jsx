@@ -13,7 +13,9 @@ import { ToastContainer } from 'react-toastify';
 import AddUser from './component/addUser';
 import Log from './component/log';
 import ProtectedRoute from './ProtectedRoute';
-import DeveloperCr from './component/developerCr'
+import DeveloperCr from './component/developerCr';
+import PrototypeCr from './component/protoypeCr';
+
 
 
 
@@ -37,6 +39,7 @@ function App() {
               <Route path="log" element={<ProtectedRoute><Log/></ProtectedRoute>}/>
               <Route path="crProtoType" element={<ProtectedRoute><CrProtoType/></ProtectedRoute>}/>
               <Route path="developerCr" element={<ProtectedRoute><DeveloperCr/></ProtectedRoute>}/>
+              <Route path="prototypeCr" element={<ProtectedRoute><PrototypeCr/></ProtectedRoute>}/>
             </Route>
           </Routes>
         </Router>

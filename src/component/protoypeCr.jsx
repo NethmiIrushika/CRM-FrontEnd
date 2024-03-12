@@ -2,46 +2,45 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
 import { useTable, usePagination, useSortBy } from 'react-table';
-import StatusPopup from '../popup/statuspopup'; // Import StatusPopup component
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
-function UserAccount() {
-  const [users, setUsers] = useState([]);
+function PrototypeCr() {
+  const [crs, setCrs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedUser, setSelectedUser] = useState(null); // State to store selected user
-  const [showStatusPopup, setShowStatusPopup] = useState(false);
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchCrs = async () => {
       try {
-        const accessToken = localStorage.getItem('accessToken');
-        const response = await axios.get(`${api.defaults.baseURL}/users`, {
+        const accessToken = localStorage.getItem('accessToken'); // Retrieve token from storage
+        
+        const response = await axios.get(`${api.defaults.baseURL}/crs`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`, // Include token in the request headers
           },
         });
-        setUsers(response.data);
+        // console.log(accessToken);
+
+        setCrs(response.data);
+
       } catch (error) {
-        console.error('Error fetching users:', error);
+        console.error('Error fetching crs:', error);
       }
     };
-    fetchUsers();
+    fetchCrs();
   }, []);
 
   const columns = React.useMemo(
     () => [
-      { id: 'userId', Header: 'ID', accessor: 'userId' },
-      { id: 'firstname', Header: 'First Name', accessor: 'firstname' },
-      { id: 'lastname', Header: 'Last Name', accessor: 'lastname' },
-      { id: 'username', Header: 'Email', accessor: 'username' },
-      { id: 'userType', Header: 'User Type', accessor: 'userType' },
-      { id: 'status', Header: 'Status', accessor: 'status' },
+      { id: 'crId', Header: 'CR ID', accessor: 'crId' },
+      { id: 'name', Header: 'Name', accessor: 'name' },
+      { id: 'department', Header: 'Department', accessor: 'department' },
+      { id: 'topic', Header: 'Topic', accessor: 'topic' },
+      { id: 'description', Header: 'Description', accessor: 'description' },
+
       {
-        id: 'actions',
-        Header: 'Actions',
-        Cell: ({ row }) => (
-          <button onClick={() => {setSelectedUser(row.original); setShowStatusPopup(true);}}>Change Status</button>
+        id: 'prototype',
+        Header: 'prototype',
+        accessor: (row) => (
+          <button onClick={() => handleButtonClick()}>Prototype</button>
         ),
       },
     ],
@@ -64,7 +63,7 @@ function UserAccount() {
   } = useTable(
     {
       columns,
-      data: users, // Use 'users' state as data
+      data: crs, 
       initialState: { pageIndex: 0, pageSize: 5 },
     },
     useSortBy,
@@ -83,46 +82,10 @@ function UserAccount() {
     );
   }, [page, searchTerm]);
 
-  const updateUser = async (updatedUser) => {
-    try {
-      const accessToken = localStorage.getItem('accessToken');
-      const response = await axios.get(`${api.defaults.baseURL}/users`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      setUsers(response.data);
-      if (updatedUser.status === 'approved') {
-        toast.success(`Status changed for ${updatedUser.username} to ${updatedUser.status}`, {
-          className: 'toast-success',
-        });
-      } else if (updatedUser.status === 'rejected') {
-        toast.error(`Status changed for ${updatedUser.username} to ${updatedUser.status}`, {
-          className: 'toast-error',
-        });
-      } else {
-        // For other statuses, use the default toast appearance
-        toast.success(`Status changed for ${updatedUser.username} to ${updatedUser.status}`);
-      }
-    } catch (error) {
-      console.error('Error updating user:', error);
-    }
-  };
   
-
+  
   return (
     <div className="container mx-auto full">
-      {/* Render StatusPopup if selectedUser is not null */}
-      {showStatusPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
-          <StatusPopup
-            user={selectedUser}
-            close={() => setShowStatusPopup(false)}
-            updateUser={updateUser}
-          />
-        </div>
-      )}
-
       <div className="mb-4 flex justify-end">
         <input
           type="text"
@@ -205,4 +168,4 @@ function UserAccount() {
   );
 }
 
-export default UserAccount;
+export default PrototypeCr;

@@ -3,6 +3,9 @@ import axios from 'axios';
 import api from '../api';
 import { useTable, usePagination, useSortBy } from 'react-table';
 import StatusPopup from '../popup/statuspopup'; // Import StatusPopup component
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function UserAccount() {
   const [users, setUsers] = useState([]);
@@ -89,10 +92,12 @@ function UserAccount() {
         },
       });
       setUsers(response.data);
+      toast.success('You changed the status');
     } catch (error) {
       console.error('Error updating user:', error);
     }
   };
+  
 
   return (
     <div className="container mx-auto full">

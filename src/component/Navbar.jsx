@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { getLoginInfo } from "../utils/LoginInfo";
 
 const Navbar = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
+  const name = getLoginInfo()?.firstname;
 
   useEffect(() => {
     const timerID = setInterval(() => {
@@ -12,7 +14,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="navbar h-16 shadow bg-gray-800 text-white rounded-full flex items-center justify-center">
+    <div className="navbar h-16 shadow bg-gray-800 text-white rounded-full flex items-center justify-center w-full">
       <nav className="text-gray-800  bg-yellow-400 h-12 rounded-full">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
@@ -26,7 +28,7 @@ const Navbar = () => {
             </div>
             <div className="flex-shrink-0">
               <div className="flex items-center space-x-4">
-                <div>Username</div>
+              <div className="text-lg text-black">Hello, {name}</div>
               </div>
             </div>
           </div>

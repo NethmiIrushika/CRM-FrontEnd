@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import api from '../api'; 
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import {ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -52,7 +52,7 @@ function Register() {
       setError('The username is already exists. Please enter a new one');
 
     }
-  };
+  }
 
  
 
@@ -104,7 +104,7 @@ function Register() {
             <select id="userType" name="userType" value={formData.userType} onChange={handleChange} className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
               <option value="UserType">Select User Type </option>
               <option value="Developer">Developer </option>
-              <option value="Creator">Creator</option>
+              <option value="SFA_User">SFA_User</option>
               
             </select>
           </div>

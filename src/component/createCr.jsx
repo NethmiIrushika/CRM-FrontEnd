@@ -212,8 +212,8 @@ const Insert = () => {
               />
             </div>
             <div>
-              <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Description
+              <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 ">
+                Description:
               </label>
               <ReactQuill value={formData.description} onChange={handleDescriptionChange} />
               <Dropzone

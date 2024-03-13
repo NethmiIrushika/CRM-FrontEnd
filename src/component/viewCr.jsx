@@ -35,26 +35,7 @@ function Crview() {
     }
   };
 
-  const handleStartDevelopment = async (crId) => {
-    try {
-      const accessToken = localStorage.getItem('accessToken');
-      await axios.put(
-        `${api.defaults.baseURL}/crs/${crId}/start-development`,
-        null, // no data payload needed
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      // Refresh the CRs after updating the status
-      fetchCrs();
-      toast.success('CR is now in development!');
-    } catch (error) {
-      console.error('Error starting development:', error);
-    }
-  };
-
+  
   const handlePriorityChange = async (crId, newPriority) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
@@ -87,10 +68,10 @@ function Crview() {
       { id: 'date', Header: 'Date/Time', accessor: 'date' },
       { id: 'priority', Header: 'Priority', accessor: 'priority' },
       userType === 'Developer' && {
-        id: 'startDevelopment',
-        Header: 'Start Development',
+        id: 'get',
+        Header: 'Get',
         accessor: (row) => (
-          <button onClick={() => handleStartDevelopment(row.crId)}>Start Development</button>
+          <button onClick={() => handleButtonClick(row.crId)}>Get</button>
         ),
       },
       userType === 'SFA_User' && {
@@ -116,6 +97,35 @@ function Crview() {
     [userType]
   );
   
+
+  const handleButtonClick = async (crId) => {
+    try {
+        const accessToken = localStorage.getItem('accessToken');
+        const userId = localStorage.getItem('userId'); // Retrieve the userId from localStorage
+
+        // Log the userId before making the API call
+        console.log(userId);
+
+        await axios.put(
+            `${api.defaults.baseURL}/crs/${crId}/start-development`,
+            { userId }, // Include userId in the request payload
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+
+        // Refresh the CRs after updating the status
+        fetchCrs();
+        toast.success('CR is now in development!');
+    } catch (error) {
+        console.error('Error starting development:', error);
+    }
+};
+
+
+
 
   const {
     getTableProps,

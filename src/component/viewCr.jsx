@@ -38,30 +38,24 @@ function Crview() {
   
 
 
-    const handleStartDevelopment = async (crId) => {
-      try {
-          const accessToken = localStorage.getItem('accessToken');
-          const userId = localStorage.getItem('userId'); // Retrieve the userId from localStorage
-  
-          // Log the userId before making the API call
-          console.log(userId);
-  
-          await axios.put(
-              `${api.defaults.baseURL}/crs/${crId}/start-development`,
-              { userId }, // Include userId in the request payload
-              {
-                  headers: {
-                      Authorization: `Bearer ${accessToken}`,
-                  },
-              }
-          );
-  
-          // Refresh the CRs after updating the status
-          fetchCrs();
-          toast.success('CR is now in development!');
-      } catch (error) {
-          console.error('Error starting development:', error);
-      }
+  const handleStartDevelopment = async (crId) => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      await axios.put(
+        `${api.defaults.baseURL}/crs/${crId}/start-development`,
+        null, // no data payload needed
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      // Refresh the CRs after updating the status
+      fetchCrs();
+      toast.success('CR is now in development!');
+    } catch (error) {
+      console.error('Error starting development:', error);
+    }
   };
 
   const handlePriorityChange = async (crId, newPriority) => {
@@ -83,13 +77,9 @@ function Crview() {
       toast.success('You changed the priority')
     } catch (error) {
       console.error('Error updating priority:', error);
+      // Handle error appropriately, e.g., show error message to the user
     }
   };
-  // const handleViewDetails = (row) => {
-  //   setSelectedCR(row.original);
-  //   setshowCrDetailsPopup(true);
-  // };
-  
   
   
   const columns = React.useMemo(
@@ -101,10 +91,10 @@ function Crview() {
       { id: 'date', Header: 'Date/Time', accessor: 'date' },
       { id: 'priority', Header: 'Priority', accessor: 'priority' },
       userType === 'Developer' && {
-        id: 'startDevelopment',
-        Header: 'Start Development',
+        id: 'get',
+        Header: 'Get',
         accessor: (row) => (
-          <button onClick={() => handleStartDevelopment(row.crId)}>Start Development</button>
+          <button onClick={() => handleButtonClick(row.crId)}>Get</button>
         ),
       },
       userType === 'SFA_User' && {
@@ -131,7 +121,38 @@ function Crview() {
     ].filter(Boolean),
     [userType]
   );
+
+
+  const handleButtonClick = async (crId) => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      const userId = localStorage.getItem('userId'); // Retrieve the userId from localStorage
+
+      // Log the userId before making the API call
+      console.log(userId);
+
+      await axios.put(
+        `${api.defaults.baseURL}/crs/${crId}/start-development`,
+        { userId }, // Include userId in the request payload
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      // Refresh the CRs after updating the status
+      fetchCrs();
+      toast.success('CR is now in development!');
+    } catch (error) {
+      console.error('Error starting development:', error);
+    }
+  };
+
   
+
+
+
 
   const {
     getTableProps,
@@ -169,7 +190,10 @@ function Crview() {
   }, [page, searchTerm]);
 
   return (
-    <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg`}>
+    <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg `}>
+    
+
+      
           <div className="mb-4 flex justify-end">
             <input
               type="text"
@@ -213,20 +237,19 @@ function Crview() {
                 ))}
               </thead>
               <tbody className="bg-gray-50">
-  {filteredRows.map((row, index) => {
-    prepareRow(row);
-    return (
-      <tr key={row.id} {...row.getRowProps()} className="border-b text-center">
-        {row.cells.map((cell) => (
-          <td key={cell.column.id} {...cell.getCellProps()} className="px-4 py-5 text-center">
-            {cell.render('Cell')}
-          </td>
-        ))}
-      </tr>
-    );
-  })}
-</tbody>
-
+                {filteredRows.map((row) => {
+                  prepareRow(row);
+                  return (
+                    <tr {...row.getRowProps()} className="border-b text-center" key={row.id}>
+                      {row.cells.map((cell) => (
+                        <td {...cell.getCellProps()} className="px-4 py-5 text-center" key={cell.column.id}>
+                          {cell.render('Cell')}
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })}
+              </tbody>
             </table>
           </div>
           <div className="pagination flex justify-center mt-4">

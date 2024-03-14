@@ -58,23 +58,24 @@ function Crview() {
     }
   };
 
-  const handlePriorityChange = async (crId, newPriority) => {
+  const handlePriorityChange = async (crId, priority) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
+  
       await axios.put(
-        `http://localhost:3000/change-requests/:id/update-priority`
-,
-        { priority: newPriority },
-        console.log(newPriority),
+        `${api.defaults.baseURL}/crs/${crId}/priority`,
+        { priority },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         }
       );
-      // You might want to handle the response here if needed
-      console.log('Priority updated successfully');
-      toast.success('You changed the priority')
+  
+      // Handle any additional logic or UI updates after successfully changing priority
+      // For example, you might want to refresh the CRs list or show a success message
+      fetchCrs();
+      toast.success('Priority updated successfully!');
     } catch (error) {
       console.error('Error updating priority:', error);
       // Handle error appropriately, e.g., show error message to the user

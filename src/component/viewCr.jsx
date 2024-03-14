@@ -38,15 +38,23 @@ function Crview() {
   const handleStartDevelopment = async (crId) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
+      const userId = getLoginInfo()?.userId;
+      
+      // Include userId in the request body
+      const requestBody = {
+        userId: userId
+      };
+  
       await axios.put(
         `${api.defaults.baseURL}/crs/${crId}/start-development`,
-        null, // no data payload needed
+        requestBody, // Include the userId in the request body
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         }
       );
+  
       // Refresh the CRs after updating the status
       fetchCrs();
       toast.success('CR is now in development!');
@@ -54,7 +62,7 @@ function Crview() {
       console.error('Error starting development:', error);
     }
   };
-
+  
   const handlePriorityChange = async (crId, newPriority) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
@@ -85,7 +93,6 @@ function Crview() {
       { id: 'department', Header: 'Department', accessor: 'department' },
       { id: 'topic', Header: 'Topic', accessor: 'topic' },
       { id: 'date', Header: 'Date/Time', accessor: 'date' },
-      { id: 'priority', Header: 'Priority', accessor: 'priority' },
       userType === 'Developer' && {
         id: 'startDevelopment',
         Header: 'Start Development',
@@ -119,7 +126,6 @@ function Crview() {
 
   const {
     getTableProps,
-    getTableBodyProps,
     headerGroups,
     prepareRow,
     page,
@@ -153,7 +159,7 @@ function Crview() {
   }, [page, searchTerm]);
 
   return (
-    <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg `}>
+    <div className={`container mx-auto bg-yellow-50 shadow-md min-h-96 rounded-lg `}>
     
 
       
@@ -165,7 +171,7 @@ function Crview() {
               placeholder="Search..."
               className="px-6 py-2 border border-gray-500 rounded"
             />
-          </div>
+    </div>
       
           <div className="overflow-x-auto">
             <table {...getTableProps()} className="table-auto w-full border-collapse">
@@ -199,7 +205,7 @@ function Crview() {
                   </tr>
                 ))}
               </thead>
-              <tbody className="bg-gray-50">
+              <tbody className="bg-yellow-50">
                 {filteredRows.map((row) => {
                   prepareRow(row);
                   return (

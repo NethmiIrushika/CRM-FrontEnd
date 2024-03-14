@@ -58,7 +58,7 @@ function Crview() {
     }
   };
 
-  const handlePriorityChange = async (crId, priority) => {
+  const handlePriorityChange = async (crId, priority,) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
   
@@ -172,7 +172,8 @@ function Crview() {
     {
       columns,
       data: crs,
-      initialState: { pageIndex: 0, pageSize: 5 },
+      initialState: { pageIndex: 0, pageSize: 5, sortBy: [{ id: 'priority', desc: false }]},
+      disableMultiSort: true, // Disable multi-column sorting
     },
     useSortBy,
     usePagination

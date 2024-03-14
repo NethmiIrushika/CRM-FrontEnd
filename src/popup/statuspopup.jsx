@@ -24,7 +24,7 @@ function StatusPopup({ close, user, updateUser }) {
 
       // Close the popup
       close();
-
+ 
       // Call the callback function to update the user table
       updateUser({ ...user, status: newStatus });
     } catch (error) {

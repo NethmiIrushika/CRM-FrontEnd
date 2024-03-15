@@ -18,16 +18,19 @@ function PrototypeCr() {
             Authorization: `Bearer ${accessToken}`, // Include token in the request headers
           },
         });
-        // console.log(accessToken);
-
-        setCrs(response.data);
-
+  
+        // Filter CRs based on status "Starting Development"
+        const startingDevelopmentCRs = response.data.filter(cr => cr.status === "Starting Development");
+  
+        setCrs(startingDevelopmentCRs);
+  
       } catch (error) {
         console.error('Error fetching crs:', error);
       }
     };
     fetchCrs();
   }, []);
+  
 
   const columns = React.useMemo(
     () => [

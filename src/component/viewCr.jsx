@@ -38,25 +38,7 @@ function Crview() {
   
 
 
-  const handleStartDevelopment = async (crId) => {
-    try {
-      const accessToken = localStorage.getItem('accessToken');
-      await axios.put(
-        `${api.defaults.baseURL}/crs/${crId}/start-development`,
-        null, // no data payload needed
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      // Refresh the CRs after updating the status
-      fetchCrs();
-      toast.success('CR is now in development!');
-    } catch (error) {
-      console.error('Error starting development:', error);
-    }
-  };
+  
 
   const handlePriorityChange = async (crId, priority,) => {
     try {

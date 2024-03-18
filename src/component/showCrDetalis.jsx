@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
 
-const ShowCrDetails = () => {
+const ShowCrDetails = ({ crId }) => {
     const [cr, setCr] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -10,14 +10,12 @@ const ShowCrDetails = () => {
         const fetchCrDetails = async () => {
             try {
                 const accessToken = localStorage.getItem('accessToken');
-                const response = await axios.get(`${api.defaults.baseURL}/crs`, {
+                const response = await axios.get(`${api.defaults.baseURL}/crs/${crId}`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 });
-                // Assuming you get a single CR from the response
-                const crData = response.data.find(cr => cr.status !== 'Starting Development');
-                setCr(crData);
+                setCr(response.data);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching CR details:', error);
@@ -26,7 +24,7 @@ const ShowCrDetails = () => {
         };
 
         fetchCrDetails();
-    }, []);
+    }, [crId]);
 
     if (loading) {
         return <div>Loading...</div>;

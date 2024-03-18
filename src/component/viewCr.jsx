@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
@@ -63,6 +62,12 @@ function Crview() {
       // Handle error appropriately, e.g., show error message to the user
     }
   };
+
+  const handleButtonClickon = (crId) => {
+    // Handle button click, you can navigate or perform any action with crId
+    console.log("CR ID:", crId);
+  };
+
   
   
   const columns = React.useMemo(
@@ -92,12 +97,12 @@ function Crview() {
         ),
       },
       {
-        id: 'actions',
-                Header: 'Actions',
-                accessor: (row) => (
-                  <Link to="/dashboard/showCrDetails" className="text-blue-500 hover:underline">
-                        <FaEye className="mr-1" />
-                    </Link>
+        id: 'action',
+        Header: 'Action',
+        accessor: (row) => (
+          <button onClick={() => handleButtonClickon((row.crId))}>
+            <Link to={`/dashboard/showCrDetails/${row.crId}`}>Action</Link>
+            </button>
         ),
       },
 

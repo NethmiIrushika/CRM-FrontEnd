@@ -3,7 +3,7 @@ import axios from 'axios';
 import api from '../api';
 import 'react-quill/dist/quill.snow.css';
 import { useTable, usePagination, useSortBy } from 'react-table';
-
+import { Link } from 'react-router-dom';
 function PrototypeCr() {
   const [crs, setCrs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -30,6 +30,13 @@ function PrototypeCr() {
     };
     fetchCrs();
   }, []);
+
+  const handleButtonClick = (crId) => {
+    // Handle button click, you can navigate or perform any action with crId
+    console.log("CR ID:", crId);
+  };
+
+  
   
 
   const columns = React.useMemo(
@@ -44,7 +51,9 @@ function PrototypeCr() {
         id: 'prototype',
         Header: 'prototype',
         accessor: (row) => (
-          <button onClick={() => handleButtonClick()}>Prototype</button>
+          <button onClick={() => handleButtonClick((row.crId))}>
+            <Link to={'/dashboard/crPrototype'}>Prototype</Link>
+            </button>
         ),
       },
     ],

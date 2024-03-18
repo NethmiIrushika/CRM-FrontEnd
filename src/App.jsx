@@ -39,7 +39,7 @@ function App() {
               <Route path="log" element={<ProtectedRoute><Log/></ProtectedRoute>}/>
               <Route path="crProtoType" element={<ProtectedRoute><CrProtoType/></ProtectedRoute>}/>
               <Route path="prototypeCr" element={<ProtectedRoute><PrototypeCr/></ProtectedRoute>}/>
-              <Route path="showCrDetails" element={<ProtectedRoute><ShowCrDetails/></ProtectedRoute>}/>
+              <Route path="showCrDetails/:crId" element={<ProtectedRoute><ShowCrDetails/></ProtectedRoute>}/>
             </Route>
           </Routes>
         </Router>

@@ -8,12 +8,12 @@ import { getLoginInfo } from "../utils/LoginInfo";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaEye } from "react-icons/fa";
-import { Link } from 'react-router-dom'; // Import Link from React Router
 
 function Crview() {
   const [crs, setCrs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const userType = getLoginInfo()?.userType;
+
 
   useEffect(() => {
     fetchCrs();
@@ -35,21 +35,26 @@ function Crview() {
     }
   };
 
-  
-
-
   const handleStartDevelopment = async (crId) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
+      const userId = getLoginInfo()?.userId;
+      
+      // Include userId in the request body
+      const requestBody = {
+        userId: userId
+      };
+  
       await axios.put(
         `${api.defaults.baseURL}/crs/${crId}/start-development`,
-        null, // no data payload needed
+        requestBody, // Include the userId in the request body
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         }
       );
+  
       // Refresh the CRs after updating the status
       fetchCrs();
       toast.success('CR is now in development!');
@@ -57,28 +62,26 @@ function Crview() {
       console.error('Error starting development:', error);
     }
   };
-
-  const handlePriorityChange = async (crId, priority) => {
+  
+  const handlePriorityChange = async (crId, newPriority) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
-  
       await axios.put(
-        `${api.defaults.baseURL}/crs/${crId}/priority`,
-        { priority },
+        `http://localhost:3000/change-requests/:id/update-priority`
+,
+        { priority: newPriority },
+        console.log(newPriority),
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         }
       );
-  
-      // Handle any additional logic or UI updates after successfully changing priority
-      // For example, you might want to refresh the CRs list or show a success message
-      fetchCrs();
-      toast.success('Priority updated successfully!');
+      // You might want to handle the response here if needed
+      console.log('Priority updated successfully');
+      toast.success('You changed the priority')
     } catch (error) {
       console.error('Error updating priority:', error);
-      // Handle error appropriately, e.g., show error message to the user
     }
   };
   
@@ -90,12 +93,11 @@ function Crview() {
       { id: 'department', Header: 'Department', accessor: 'department' },
       { id: 'topic', Header: 'Topic', accessor: 'topic' },
       { id: 'date', Header: 'Date/Time', accessor: 'date' },
-      { id: 'priority', Header: 'Priority', accessor: 'priority' },
       userType === 'Developer' && {
-        id: 'get',
-        Header: 'Get',
+        id: 'startDevelopment',
+        Header: 'Start Development',
         accessor: (row) => (
-          <button onClick={() => handleButtonClick(row.crId)}>Get</button>
+          <button onClick={() => handleStartDevelopment(row.crId)}>Start Development</button>
         ),
       },
       userType === 'SFA_User' && {
@@ -111,53 +113,19 @@ function Crview() {
       },
       {
         id: 'actions',
-                Header: 'Actions',
-                accessor: (row) => (
-                  <Link to="/dashboard/showCrDetails" className="text-blue-500 hover:underline">
-                        <FaEye className="mr-1" />
-                    </Link>
+        Header: 'Actions',
+        accessor: () => (
+          <button>
+            <FaEye className="mr-1" /></button>
         ),
       },
-
     ].filter(Boolean),
     [userType]
   );
-
-
-  const handleButtonClick = async (crId) => {
-    try {
-      const accessToken = localStorage.getItem('accessToken');
-      const userId = localStorage.getItem('userId'); // Retrieve the userId from localStorage
-
-      // Log the userId before making the API call
-      console.log(userId);
-
-      await axios.put(
-        `${api.defaults.baseURL}/crs/${crId}/start-development`,
-        { userId }, // Include userId in the request payload
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      // Refresh the CRs after updating the status
-      fetchCrs();
-      toast.success('CR is now in development!');
-    } catch (error) {
-      console.error('Error starting development:', error);
-    }
-  };
-
   
-
-
-
 
   const {
     getTableProps,
-    getTableBodyProps,
     headerGroups,
     prepareRow,
     page,
@@ -191,7 +159,7 @@ function Crview() {
   }, [page, searchTerm]);
 
   return (
-    <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg `}>
+    <div className={`container mx-auto bg-yellow-50 shadow-md min-h-96 rounded-lg `}>
     
 
       
@@ -203,7 +171,7 @@ function Crview() {
               placeholder="Search..."
               className="px-6 py-2 border border-gray-500 rounded"
             />
-          </div>
+    </div>
       
           <div className="overflow-x-auto">
             <table {...getTableProps()} className="table-auto w-full border-collapse">
@@ -237,7 +205,7 @@ function Crview() {
                   </tr>
                 ))}
               </thead>
-              <tbody className="bg-gray-50">
+              <tbody className="bg-yellow-50">
                 {filteredRows.map((row) => {
                   prepareRow(row);
                   return (

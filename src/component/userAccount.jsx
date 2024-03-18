@@ -114,7 +114,7 @@ function UserAccount() {
   
 
   return (
-<div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg ${showStatusPopup ? 'fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center' : ''}`}>
+<div className={`container mx-auto bg-yellow-50 shadow-md min-h-96 rounded-lg ${showStatusPopup ? 'fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center' : ''}`}>
 
       {showStatusPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
@@ -168,7 +168,7 @@ function UserAccount() {
               </tr>
             ))}
           </thead>
-          <tbody className="bg-gray-50">
+          <tbody className="bg-yellow-50">
             {filteredRows.map((row) => {
               prepareRow(row);
               return (

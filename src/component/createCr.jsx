@@ -14,7 +14,7 @@ const Insert = () => {
     department: getLoginInfo()?.department,
     topic: '',
     description: '',
-    image: null,
+    image: '',
     status: 'Pending',
     date: '',
     priority: 0,
@@ -51,6 +51,7 @@ const Insert = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    handleImageUpload(formData.image);
     try {
       const accessToken = localStorage.getItem('accessToken');
       if (!accessToken) {

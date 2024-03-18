@@ -87,6 +87,26 @@ const Insert = () => {
 
 
 
+    const handleFileUpload = async (e) => {
+      const formData = new FormData();
+      formData.append('file', e.target.files[0]);
+      try {
+        
+      const response = await axios.post(
+        `${api.defaults.baseURL}/crs/upload`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        console.log('File uploaded:', response.data);
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      }
+    };
+  
+
+
+
 
   return (
 
@@ -124,7 +144,7 @@ const Insert = () => {
                 type="file" 
                 id="file" 
                 className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
-                // onChange={handleFileChange} 
+                onChange={handleFileUpload} 
               />
             </div>
   

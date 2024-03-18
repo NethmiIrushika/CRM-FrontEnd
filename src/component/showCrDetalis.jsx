@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
+import { useParams } from 'react-router-dom';
 
-const ShowCrDetails = ({ crId }) => {
+const ShowCrDetails = () => {
+    const {crId} = useParams(); 
+    console.log('crId:', crId);
     const [cr, setCr] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -10,6 +13,7 @@ const ShowCrDetails = ({ crId }) => {
         const fetchCrDetails = async () => {
             try {
                 const accessToken = localStorage.getItem('accessToken');
+                console.log('Access Token:', accessToken);
                 const response = await axios.get(`${api.defaults.baseURL}/crs/${crId}`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,

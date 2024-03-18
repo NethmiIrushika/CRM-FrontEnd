@@ -7,12 +7,13 @@ import { getLoginInfo } from "../utils/LoginInfo";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaEye } from "react-icons/fa";
-import { Link } from 'react-router-dom'; // Import Link from React Router
+import { Link, useNavigate } from 'react-router-dom';
 
 function Crview() {
   const [crs, setCrs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const userType = getLoginInfo()?.userType;
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCrs();
@@ -63,10 +64,7 @@ function Crview() {
     }
   };
 
-  const handleButtonClickon = (crId) => {
-    // Handle button click, you can navigate or perform any action with crId
-    console.log("CR ID:", crId);
-  };
+
 
   
   
@@ -100,8 +98,8 @@ function Crview() {
         id: 'action',
         Header: 'Action',
         accessor: (row) => (
-          <button onClick={() => handleButtonClickon((row.crId))}>
-            <Link to={`/dashboard/showCrDetails/${row.crId}`}>Action</Link>
+          <button onClick={() => {handleActionClick(row.crId)}}>
+             <FaEye className="mr-1" />
             </button>
         ),
       },
@@ -110,7 +108,12 @@ function Crview() {
     [userType]
   );
 
-
+  const handleActionClick = (crId) => {
+    console.log('cr Id:', crId);
+    navigate(`/dashboard/showCrDetails/${crId}`);
+  };
+  
+  
   const handleButtonClick = async (crId) => {
     try {
       const accessToken = localStorage.getItem('accessToken');

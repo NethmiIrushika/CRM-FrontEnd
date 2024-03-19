@@ -11,7 +11,8 @@ const CrProtoType = () => {
 
   const [formData, setFormData] = useState({
     topic: '',
-    description: ''
+    description: '',
+    crId:''
   });
   const navigate = useNavigate();
 
@@ -25,14 +26,14 @@ const CrProtoType = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await api.post('/crprototype/', {
         description: formData.description,
         topic: formData.topic,
-        crId: crId
+        crId: crId // Ensure crId is included here
       });
-
+  
       console.log('Data inserted successfully:', response.data);
       toast.success('You have successfully made a change request!');
       

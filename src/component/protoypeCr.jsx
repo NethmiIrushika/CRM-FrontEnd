@@ -1,13 +1,15 @@
+// PrototypeCr.jsx
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
-import 'react-quill/dist/quill.snow.css';
-import { Link,  useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function PrototypeCr() {
   const [crs, setCrs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchCrs = async () => {
       try {
@@ -32,12 +34,9 @@ function PrototypeCr() {
   }, []);
 
   const handleButtonClick = (crId) => {
-    // Handle button click, you can navigate or perform any action with crId
     console.log("CR ID:", crId);
     navigate(`/dashboard/crProtoType/${crId}`);
   };
-
-  
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -70,9 +69,8 @@ function PrototypeCr() {
             <p><strong>Topic:</strong> {cr.topic}</p>
             <p><strong>Description:</strong> {cr.description}</p>
             <button onClick={() => handleButtonClick(cr.crId)}>
-             Prototype
+              Prototype
             </button>
-            
           </div>
         ))}
       </div>

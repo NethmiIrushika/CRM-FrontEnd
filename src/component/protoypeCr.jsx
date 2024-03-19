@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
 import 'react-quill/dist/quill.snow.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link,  useNavigate } from 'react-router-dom';
 
 function PrototypeCr() {
   const [crs, setCrs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-
   useEffect(() => {
     const fetchCrs = async () => {
       try {
@@ -36,30 +35,9 @@ function PrototypeCr() {
     // Handle button click, you can navigate or perform any action with crId
     console.log("CR ID:", crId);
     navigate(`/dashboard/crProtoType/${crId}`);
-    // navigate(`/dashboard/crProtoType`);
   };
 
-  const handleSendPrototype = async (crId) => {
-    try {
-      // Assuming you have an API endpoint to create a prototype for a CR
-      const accessToken = localStorage.getItem('accessToken'); // Retrieve token from storage
-      const response = await axios.post(`${api.defaults.baseURL}/create-prototype`, {
-        crId: crId,
-      }, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`, // Include token in the request headers
-        },
-      });
-
-      // Assuming the response contains information about the created prototype
-      console.log('Prototype created:', response.data);
-
-      // Optionally, you can update the UI or take further actions based on the response
-
-    } catch (error) {
-      console.error('Error creating prototype:', error);
-    }
-  };
+  
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -92,7 +70,7 @@ function PrototypeCr() {
             <p><strong>Topic:</strong> {cr.topic}</p>
             <p><strong>Description:</strong> {cr.description}</p>
             <button onClick={() => handleButtonClick(cr.crId)}>
-              Prototype
+             Prototype
             </button>
             
           </div>

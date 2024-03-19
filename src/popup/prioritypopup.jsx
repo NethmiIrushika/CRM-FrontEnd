@@ -1,24 +1,33 @@
 import React from 'react';
+import Popup from 'reactjs-popup';
 
-const PriorityPopup = ({ editPriority, selectedCr, newPriority, handlePriorityChange, updatePriority, closeEditPriority }) => {
-  return (
-    <div className={editPriority ? 'fixed inset-0 flex items-center justify-center' : 'hidden'}>
-      <div className="bg-white w-1/2 p-8 rounded-lg shadow-xl">
-        <h2 className="text-2xl mb-4">Edit Priority</h2>
-        <input
-          type="number"
-          className="w-full py-2 px-4 mb-4 border rounded-lg"
-          value={newPriority}
-          onChange={handlePriorityChange}
-          autoFocus
-        />
-        <div className="flex justify-between">
-          <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600" onClick={updatePriority}>Save</button>
-          <button className="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300" onClick={closeEditPriority}>Cancel</button>
-        </div>
-      </div>
-    </div>
-  );
+const customModalClass = {
+  content: 'max-w-lg mx-auto bg-gray-800 text-white rounded-md p-6 shadow-lg z-50',
+  overlay: 'fixed inset-0 bg-gray-900 bg-opacity-75',
 };
+
+function PriorityPopup({ show, priority, onClose }) {
+  return (
+    <Popup
+      modal
+      open={show}
+      closeOnDocumentClick={false}
+      onClose={onClose}
+      contentStyle={customModalClass}
+    >
+      {(close) => (
+        <div className='flex justify-center items-center h-80 bg-gray-100 w-80 rounded-lg'>
+          <div>
+            <p className="text-xl font-semibold mb-2">Priority Information</p>
+            <p className="text-lg">The priority number of your CR is {priority}</p>
+            <div className="flex justify-between">
+              <button onClick={onClose} className="inline-block w-1/2 mr-1 py-2 px-4 bg-blue-800 text-white rounded-l-md hover:bg-blue-900 focus:outline-none focus:bg-blue-900">Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </Popup>
+  );
+}
 
 export default PriorityPopup;

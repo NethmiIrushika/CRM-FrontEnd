@@ -8,16 +8,24 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaEye } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
+import ChangePriorityPopup from '../popup/changeprioritypopup';
 
 function Crview() {
   const [crs, setCrs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const userType = getLoginInfo()?.userType;
   const navigate = useNavigate();
-
+  const [editPriority, setEditPriority] = useState(false); // State for controlling the popup
+  const [selectedCr, setSelectedCr] = useState(null); // State for the selected CR
+  const [newPriority, setNewPriority] = useState('');
+  const [currentPriority, setCurrentPriority] = useState('');
   useEffect(() => {
+    if (selectedCr) {
+      const selectedCrObj = crs.find((cr) => cr.crId === selectedCr);
+      setCurrentPriority(selectedCrObj?.priority || '');
+    }
     fetchCrs();
-  }, []);
+  }, [selectedCr, crs]);
 
   const fetchCrs = async () => {
     try {
@@ -35,18 +43,23 @@ function Crview() {
     }
   };
 
-  
 
+  const handleEditPriority = (row) => {
+    console.log(row); // Add this line to check the structure of the row object
+    if (row.original) {
+      setSelectedCr(row.original);
+      setEditPriority(true);
+      setNewPriority(row.original.priority);
+    }
+  };
 
-  
-
-  const handlePriorityChange = async (crId, priority,) => {
+  const updatePriority = async (cr, newPriority) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
   
       await axios.put(
-        `${api.defaults.baseURL}/crs/${crId}/priority`,
-        { priority },
+        `${api.defaults.baseURL}/crs/${cr.crId}/priority`,
+        { priority: newPriority },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -64,10 +77,32 @@ function Crview() {
     }
   };
 
+  const closeEditPriority = () => {
+    setEditPriority(false);
+  };
+  const handlePriorityChange = async (cr) => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
 
+      await axios.put(
+        `${api.defaults.baseURL}/crs/${cr.crId}/priority`,
+        { priority: newPriority },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
 
-  
-  
+      // Handle any additional logic or UI updates after successfully changing priority
+      // For example, you might want to refresh the CRs list or show a success message
+      fetchCrs();
+      toast.success('Priority updated successfully!');
+    } catch (error) {
+      console.error('Error updating priority:', error);
+      // Handle error appropriately, e.g., show error message to the user
+    }
+  };
   const columns = React.useMemo(
     () => [
       { id: 'crId', Header: 'CR ID', accessor: 'crId' },
@@ -86,21 +121,39 @@ function Crview() {
       userType === 'SFA_User' && {
         id: 'priorityInput',
         Header: 'Change Priority',
-        accessor: (row) => (
-          <input
-            type="number"
-            value={row.priority}
-            onChange={(e) => handlePriorityChange(row.crId, e.target.value)}
-          />
+        accessor: (row) => row, // Return the entire row object
+        Cell: ({ row }) => (
+          <div className="flex items-center">
+            {editPriority && selectedCr?.crId === row.original.crId ? (
+              <>
+                <input
+                  type="number"
+                  value={newPriority} // Set the value of the input box to the newPriority state
+                  onChange={(e) => setNewPriority(e.target.value)} // Update the newPriority state when the user types in the input box
+                  onBlur={() => updatePriority()}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      updatePriority();
+                    }
+                  }}
+                  className="border border-gray-400 rounded p-1 mr-2"
+                />
+                <button onClick={() => closeEditPriority()}>Cancel</button>
+              </>
+            ) : (
+              <span className="mr-2">{row.original.priority}</span>
+            )}
+            <button onClick={() => handleEditPriority(row)}>Edit</button>
+          </div>
         ),
       },
       {
         id: 'action',
         Header: 'Action',
         accessor: (row) => (
-          <button onClick={() => {handleActionClick(row.crId)}}>
-             <FaEye className="mr-1" />
-            </button>
+          <button onClick={() => { handleActionClick(row.crId) }}>
+            <FaEye className="mr-1" />
+          </button>
         ),
       },
 
@@ -112,8 +165,8 @@ function Crview() {
     console.log('cr Id:', crId);
     navigate(`/dashboard/showCrDetails/${crId}`);
   };
-  
-  
+
+
   const handleButtonClick = async (crId) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
@@ -140,7 +193,7 @@ function Crview() {
     }
   };
 
-  
+
 
 
 
@@ -162,7 +215,7 @@ function Crview() {
     {
       columns,
       data: crs,
-      initialState: { pageIndex: 0, pageSize: 5, sortBy: [{ id: 'priority', desc: false }]},
+      initialState: { pageIndex: 0, pageSize: 5, sortBy: [{ id: 'priority', desc: false }] },
       disableMultiSort: true, // Disable multi-column sorting
     },
     useSortBy,
@@ -183,83 +236,90 @@ function Crview() {
 
   return (
     <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg `}>
-    
 
-      
-          <div className="mb-4 flex justify-end">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={handleSearchChange}
-              placeholder="Search..."
-              className="px-6 py-2 border border-gray-500 rounded"
-            />
-          </div>
-      
-          <div className="overflow-x-auto">
-            <table {...getTableProps()} className="table-auto w-full border-collapse">
-              <thead className="bg-yellow-400">
-                {headerGroups.map((headerGroup) => (
-                  <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
-                    {headerGroup.headers.map((column) => (
-                      <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2" key={column.id}>
-                        <div className="flex items-center justify-between text-center">
-                          <span>{column.render('Header')}</span>
-                          <span>
-                            {column.isSorted ? (
-                              column.isSortedDesc ? (
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
-                                  <path d="M7 10l5 5 5-5z" />
-                                </svg>
-                              ) : (
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
-                                  <path d="M7 14l5-5 5 5z" />
-                                </svg>
-                              )
-                            ) : (
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M7 10l5 5 5-5z" />
-                              </svg>
-                            )}
-                          </span>
-                        </div>
-                      </th>
-                    ))}
-                  </tr>
+      <ChangePriorityPopup
+        editPriority={editPriority}
+        selectedCr={selectedCr}
+        currentPriority={selectedCr ? selectedCr.priority : ''}
+        handlePriorityChange={(e) => setNewPriority(e.target.value)}
+        updatePriority={updatePriority}
+        closeEditPriority={closeEditPriority}
+      />
+
+      <div className="mb-4 flex justify-end">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          placeholder="Search..."
+          className="px-6 py-2 border border-gray-500 rounded"
+        />
+      </div>
+
+      <div className="overflow-x-auto">
+        <table {...getTableProps()} className="table-auto w-full border-collapse">
+          <thead className="bg-yellow-400">
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2" key={column.id}>
+                    <div className="flex items-center justify-between text-center">
+                      <span>{column.render('Header')}</span>
+                      <span>
+                        {column.isSorted ? (
+                          column.isSortedDesc ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M7 10l5 5 5-5z" />
+                            </svg>
+                          ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M7 14l5-5 5 5z" />
+                            </svg>
+                          )
+                        ) : (
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 10l5 5 5-5z" />
+                          </svg>
+                        )}
+                      </span>
+                    </div>
+                  </th>
                 ))}
-              </thead>
-              <tbody className="bg-gray-50">
-                {filteredRows.map((row) => {
-                  prepareRow(row);
-                  return (
-                    <tr {...row.getRowProps()} className="border-b text-center" key={row.id}>
-                      {row.cells.map((cell) => (
-                        <td {...cell.getCellProps()} className="px-4 py-5 text-center" key={cell.column.id}>
-                          {cell.render('Cell')}
-                        </td>
-                      ))}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-          <div className="pagination flex justify-center mt-4">
-            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-              {'<<'}
-            </button>
-            <button onClick={() => previousPage()} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-              {'<'}
-            </button>
-            <button onClick={() => nextPage()} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-              {'>'}
-            </button>
-            <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-              {'>>'}
-            </button>
-          </div>
-        </div>
-      );
+              </tr>
+            ))}
+          </thead>
+          <tbody className="bg-gray-50">
+            {filteredRows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} className="border-b text-center" key={row.id}>
+                  {row.cells.map((cell) => (
+                    <td {...cell.getCellProps()} className="px-4 py-5 text-center" key={cell.column.id}>
+                      {cell.render('Cell')}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div className="pagination flex justify-center mt-4">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+          {'<<'}
+        </button>
+        <button onClick={() => previousPage()} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+          {'<'}
+        </button>
+        <button onClick={() => nextPage()} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+          {'>'}
+        </button>
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+          {'>>'}
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default Crview;

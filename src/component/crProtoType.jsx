@@ -1,34 +1,25 @@
 import React, { useState } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
-import api from '../api';
-import {toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function CrProtoType() {
+export default function CrProtoType({ crId }) {
   const [description, setDescription] = useState('');
 
-  const handleChange = (value) => {
-    setDescription(value);
+  const handleChange = (e) => {
+    setDescription(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const accessToken = localStorage.getItem('accessToken');
-      const response = await axios.post(`${api.defaults.baseURL}/cr-prototype`, {
-          headers: {
-              Authorization: `Bearer ${accessToken}`,
-          },
-      });
-      // Clear the description after successful submission
-      setDescription('');
-      toast.success('You have successfully made a change request!');
+      const response = await axios.post('/api/cr-prototype', { description });
+      // Optionally, handle success (e.g., show a success message)
+      console.log(response.data); // Log the response for debugging
     } catch (error) {
-      console.error('Error submitting description:', error);
-      
+      // Handle error (e.g., show an error message)
+      console.error('Error saving data:', error);
+      toast.error('Failed to save data');
     }
   };
 
@@ -37,9 +28,16 @@ export default function CrProtoType() {
       <h1>CR Proto Types</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Description:</label>
-          <ReactQuill value={description} onChange={handleChange} />
+          <label htmlFor='description'>Description:</label>
+          <input 
+            type='text' 
+            id='description' 
+            name='description' 
+            value={description} 
+            onChange={handleChange}
+          />
         </div>
+
         <button type="submit">Submit</button>
       </form>
     </div>

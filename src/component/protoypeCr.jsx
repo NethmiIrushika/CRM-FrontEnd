@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
 import 'react-quill/dist/quill.snow.css';
-import { Link } from 'react-router-dom';
+import { Link,  useNavigate } from 'react-router-dom';
 
 function PrototypeCr() {
   const [crs, setCrs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchCrs = async () => {
       try {
@@ -34,12 +34,10 @@ function PrototypeCr() {
   const handleButtonClick = (crId) => {
     // Handle button click, you can navigate or perform any action with crId
     console.log("CR ID:", crId);
+    navigate(`/dashboard/crProtoType/${crId}`);
   };
 
-  const handleSendPrototype = (crId) => {
-    // Handle sending prototype for the specific CR
-    console.log("Sending prototype for CR ID:", crId);
-  };
+  
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -72,11 +70,9 @@ function PrototypeCr() {
             <p><strong>Topic:</strong> {cr.topic}</p>
             <p><strong>Description:</strong> {cr.description}</p>
             <button onClick={() => handleButtonClick(cr.crId)}>
-              <Link to={'/dashboard/crPrototype'}>Prototype</Link>
+             Prototype
             </button>
-            <button onClick={() => handleSendPrototype(cr.crId)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Send Prototype
-            </button>
+            
           </div>
         ))}
       </div>

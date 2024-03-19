@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import api from '../api.jsx';
@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { getLoginInfo } from '../utils/LoginInfo';
+import PriorityPopup from '../popup/prioritypopup.jsx';
 
 const Insert = () => {
   const [formData, setFormData] = useState({
@@ -20,6 +21,8 @@ const Insert = () => {
   });
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
+  const [showPriorityPopup, setShowPriorityPopup] = useState(false);
+
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -74,20 +77,35 @@ const Insert = () => {
 
       console.log('Data inserted successfully:', response.data);
     
-      const { crId } = response.data;
+      const { crId , priority } = response.data;
     
       console.log('Created CR ID:', crId);
+      console.log('Priority:', priority);
+      setFormData(prevState => ({
+        ...prevState,
+        priority: priority,
+      }));
+      
     
       toast.success('You have successfully made a change request!');
-      navigate('/dashboard/viewCr');
+      setShowPriorityPopup(true);
+setTimeout(() => {
+  navigate('/dashboard/viewCr');
+}, 2000);
+     
+      
+      
     } catch (error) {
       console.error('Error inserting data:', error);
     }
+console.log(showPriorityPopup);
+    
   };
-  
+ 
 
   return (
     <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-12">
+      <PriorityPopup show={showPriorityPopup} priority={formData.priority} onClose={() => setShowPriorityPopup(false)} />
       <h2 className="text-2xl font-semibold text-gray-800 mb-6">Create Change Request</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="grid gap-6">

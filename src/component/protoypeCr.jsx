@@ -1,12 +1,14 @@
+// PrototypeCr.jsx
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
-import 'react-quill/dist/quill.snow.css';
-import { useTable, usePagination, useSortBy } from 'react-table';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 function PrototypeCr() {
   const [crs, setCrs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCrs = async () => {
@@ -32,71 +34,20 @@ function PrototypeCr() {
   }, []);
 
   const handleButtonClick = (crId) => {
-    // Handle button click, you can navigate or perform any action with crId
     console.log("CR ID:", crId);
+    navigate(`/dashboard/crProtoType/${crId}`);
   };
-
-  
-  
-
-  const columns = React.useMemo(
-    () => [
-      { id: 'crId', Header: 'CR ID', accessor: 'crId' },
-      { id: 'name', Header: 'Name', accessor: 'name' },
-      { id: 'department', Header: 'Department', accessor: 'department' },
-      { id: 'topic', Header: 'Topic', accessor: 'topic' },
-      { id: 'description', Header: 'Description', accessor: 'description' },
-
-      {
-        id: 'prototype',
-        Header: 'prototype',
-        accessor: (row) => (
-          <button onClick={() => handleButtonClick((row.crId))}>
-            <Link to={'/dashboard/crPrototype'}>Prototype</Link>
-            </button>
-        ),
-      },
-    ],
-    []
-  );
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    page,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    canNextPage,
-    canPreviousPage,
-    state: { pageIndex },
-  } = useTable(
-    {
-      columns,
-      data: crs, 
-      initialState: { pageIndex: 0, pageSize: 5 },
-    },
-    useSortBy,
-    usePagination
-  );
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredRows = React.useMemo(() => {
-    return page.filter((row) =>
-      Object.values(row.original).some((cellValue) =>
-        cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    );
-  }, [page, searchTerm]);
+  const filteredCRs = crs.filter(cr =>
+    Object.values(cr).some(value =>
+      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
 
-  
-  
   return (
     <div className="container mx-auto full">
       <div className="mb-4 flex justify-end">
@@ -109,73 +60,19 @@ function PrototypeCr() {
         />
       </div>
 
-      <div className="overflow-x-auto">
-        <table {...getTableProps()} className="table-fixed w-full border-collapse">
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-200">
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2">
-                    <div className="flex items-center">
-                      <span>{column.render('Header')}</span>
-                      <span>
-                        {column.isSorted ? (
-                          column.isSortedDesc ? (
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M7 10l5 5 5-5z" />
-                            </svg>
-                          ) : (
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M7 14l5-5 5 5z" />
-                            </svg>
-                          )
-                        ) : (
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M7 10l5 5 5-5z" />
-                          </svg>
-                        )}
-                      </span>
-                    </div>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {filteredRows.map((row, index) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} className="border-b" key={row.original.userId}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} className="px-4 py-2" key={cell.column.id}>
-                      <div>{cell.render('Cell')}</div>
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-      <div className="pagination">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {'<'}
-        </button>{' '}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-          <span>
-            Page{' '}
-            <strong>
-              {pageIndex + 1} of {pageCount}
-            </strong>{' '}
-          </span>
-        </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
+      <div className="my-4">
+        {filteredCRs.map(cr => (
+          <div key={cr.crId} className="border rounded p-4 mb-4">
+            <p><strong>CR ID:</strong> {cr.crId}</p>
+            <p><strong>Name:</strong> {cr.name}</p>
+            <p><strong>Department:</strong> {cr.department}</p>
+            <p><strong>Topic:</strong> {cr.topic}</p>
+            <p><strong>Description:</strong> {cr.description}</p>
+            <button onClick={() => handleButtonClick(cr.crId)}>
+              Prototype
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );

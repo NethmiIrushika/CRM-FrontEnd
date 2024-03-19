@@ -12,7 +12,7 @@ const CrProtoType = () => {
   const [formData, setFormData] = useState({
     topic: '',
     description: '',
-    crId:''
+    crId: ''
   });
   const navigate = useNavigate();
 
@@ -35,6 +35,10 @@ const CrProtoType = () => {
       });
   
       console.log('Data inserted successfully:', response.data);
+      
+      // Update CR status
+      await api.put(`/crs/${crId}/status`, { status: 'sent prototype' });
+
       toast.success('You have successfully made a change request!');
       
       setTimeout(() => {

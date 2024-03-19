@@ -36,7 +36,8 @@ function Crview() {
         },
       });
       // Filter CRs with status "start-development"
-      const filteredCrs = response.data.filter(cr => cr.status !== 'Starting Development');
+      const filteredCrs = response.data.filter(cr => 
+        cr.status !== 'Starting Development' && cr.status !== 'sent prototype');
       setCrs(filteredCrs);
     } catch (error) {
       console.error('Error fetching crs:', error);

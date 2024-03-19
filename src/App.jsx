@@ -15,6 +15,7 @@ import Log from './component/log';
 import ProtectedRoute from './ProtectedRoute';
 import ShowCrDetails from './component/showCrDetalis';
 import PrototypeCr from './component/protoypeCr';
+import Approveprototype from './component/approveprototype'
 
 
 
@@ -40,6 +41,7 @@ function App() {
               <Route path="crProtoType/:crId" element={<ProtectedRoute><CrProtoType/></ProtectedRoute>}/>
               <Route path="prototypeCr" element={<ProtectedRoute><PrototypeCr/></ProtectedRoute>}/>
               <Route path="showCrDetails/:crId" element={<ProtectedRoute><ShowCrDetails/></ProtectedRoute>}/>
+              <Route path="approveprototype" element={<ProtectedRoute><Approveprototype/></ProtectedRoute>}/>
             </Route>
           </Routes>
         </Router>

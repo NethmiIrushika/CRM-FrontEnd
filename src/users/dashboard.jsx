@@ -114,6 +114,34 @@ const Dashboard = () => {
             </li>
             <li>
               <button
+                onClick={() => navigate("approveprototype")}
+                style={{ display: userType !== "SFA_User" ? "none" : "" }}
+                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
+              >
+                <div className="flex items-center w-40 h-10">
+                  <svg
+                    className="w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M10 4v12m-4-4h8"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <span className="ms-3 text-black justify-center">
+                    Approve Cr
+                  </span>
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
                 onClick={() => navigate("userAccount")}
                 style={{ display: userType !== "Admin" ? "none" : "" }}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "

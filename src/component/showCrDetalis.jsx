@@ -27,9 +27,20 @@ const ShowCrDetails = () => {
                 setLoading(false);
             }
         };
+ 
 
         fetchCrDetails();
     }, [crId]);
+
+    const handleViewAttachment = () => {
+       
+        // Construct the URL to fetch the file
+        const fileUrl = `${api.defaults.baseURL}/uploads/`+cr.filePath;
+        // Open the file in a new tab
+        window.open(fileUrl, '_blank');
+
+    }
+
 
     if (loading) {
         return <div>Loading...</div>;
@@ -52,9 +63,9 @@ const ShowCrDetails = () => {
         <p class="mb-2"><strong>Status:</strong> {cr.status}</p>
         <p class="mb-2"><strong>Created At:</strong> {cr.createdAt}</p>
 
-        <a href="#" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4">
+        <button onClick={handleViewAttachment} className="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4">
             View attachment
-        </a>
+        </button>
     </div>
 </div>
 

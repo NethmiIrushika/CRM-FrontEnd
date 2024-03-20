@@ -8,12 +8,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const CrProtoType = () => {
   const { crId } = useParams(); // Extract crId from URL parameters
-
+  
   const [formData, setFormData] = useState({
     topic: '',
-    description: '',
-    crId: ''
+    description: ''
   });
+  const [file, setFile] = useState(null);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -24,15 +24,22 @@ const CrProtoType = () => {
     }));
   }
 
+  const handleFileUpload = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   
     try {
-      const response = await api.post('/crprototype/', {
-        description: formData.description,
-        topic: formData.topic,
-        crId: crId // Ensure crId is included here
-      });
+      const formDataToSend = new FormData();
+      formDataToSend.append('description', formData.description);
+      formDataToSend.append('topic', formData.topic);
+      formDataToSend.append('crId', crId);
+      formDataToSend.append('file', file);
+  
+      const response = await api.post('/crprototype/', formDataToSend);
   
       console.log('Data inserted successfully:', response.data);
       
@@ -83,6 +90,18 @@ const CrProtoType = () => {
               value={formData.description}
               onChange={handleChange}
               required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="file" className="block text-sm font-medium text-gray-700 mb-1">
+              Attach File:
+            </label>
+            <input
+              type="file"
+              id="file"
+              className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
+              onChange={handleFileUpload}
             />
           </div>
 

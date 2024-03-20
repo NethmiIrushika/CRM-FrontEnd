@@ -319,20 +319,25 @@ function Crview() {
             ))}
           </thead>
           <tbody className="bg-gray-50">
-            {filteredRows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} className="border-b text-center" key={row.id}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} className="px-4 py-5 text-center" key={cell.column.id}>
-                      {cell.render('Cell')}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
-
+  {filteredRows.map((row, index) => {
+    prepareRow(row);
+    return (
+      <tr
+        {...row.getRowProps()}
+        className={`border-b text-center ${
+          index === 0 ? 'bg-red-400 shadow border border-red-500' : ''
+        }`}
+        key={row.id}
+      >
+        {row.cells.map((cell) => (
+          <td {...cell.getCellProps()} className="px-4 py-5 text-center" key={cell.column.id}>
+            {cell.render('Cell')}
+          </td>
+        ))}
+      </tr>
+    );
+  })}
+</tbody>
 
         </table>
       </div>

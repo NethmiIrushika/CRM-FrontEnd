@@ -38,7 +38,6 @@ function Approveprototype() {
           }
         );
       } else if (action === 'reject') {
-        // Assuming you have an input field for reason, you can access it here
         const reason = prompt('Enter rejection reason:');
         response = await axios.put(
           `${api.defaults.baseURL}/crprototype/${selectedCR.prId}/reject`,
@@ -50,7 +49,6 @@ function Approveprototype() {
           }
         );
       }
-      // Update crprototype state after action
       if (response && response.data) {
         const updatedCRPrototype = response.data;
         setCrprototype(prevState =>
@@ -83,9 +81,12 @@ function Approveprototype() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredCrPrototypes = crprototype.filter((pr) =>
-    pr.topic.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredCrPrototypes = crprototype.filter(pr => {
+    if (pr && pr.topic) {
+      return pr.topic.toLowerCase().includes(searchTerm.toLowerCase());
+    }
+    return false;
+  });
 
   useEffect(() => {
     fetchCrprototype();
@@ -116,7 +117,6 @@ function Approveprototype() {
         ))}
       </div>
 
-      {/* Approval Modal */}
       {showModal && selectedCR && (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-800 bg-opacity-75">
           <div className="bg-white p-4 rounded shadow">

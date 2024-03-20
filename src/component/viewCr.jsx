@@ -19,6 +19,8 @@ function Crview() {
   const [selectedCr, setSelectedCr] = useState(null); // State for the selected CR
   const [newPriority, setNewPriority] = useState('');
   const [currentPriority, setCurrentPriority] = useState('');
+  const [pageIndex, setPageIndex] = useState(0);
+
   useEffect(() => {
     if (selectedCr) {
       const selectedCrObj = crs.find((cr) => cr.crId === selectedCr);
@@ -36,7 +38,7 @@ function Crview() {
         },
       });
       // Filter CRs with status "start-development"
-      const filteredCrs = response.data.filter(cr => 
+      const filteredCrs = response.data.filter(cr =>
         cr.status !== 'Starting Development' && cr.status !== 'sent prototype');
       setCrs(filteredCrs);
     } catch (error) {
@@ -57,7 +59,7 @@ function Crview() {
   const updatePriority = async (cr, newPriority) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
-  
+
       await axios.put(
         `${api.defaults.baseURL}/crs/${cr.crId}/priority`,
         { priority: newPriority },
@@ -67,7 +69,7 @@ function Crview() {
           },
         }
       );
-  
+
       // Handle any additional logic or UI updates after successfully changing priority
       // For example, you might want to refresh the CRs list or show a success message
       fetchCrs();
@@ -194,34 +196,60 @@ function Crview() {
     }
   };
 
-
-
-
-
-
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
     page,
-    pageCount,
-    gotoPage,
     nextPage,
     previousPage,
     canNextPage,
     canPreviousPage,
-    state: { pageIndex },
+    gotoPage, // Add gotoPage from usePagination
+    pageCount, // Add pageCount from usePagination
   } = useTable(
     {
       columns,
       data: crs,
-      initialState: { pageIndex: 0, pageSize: 5, sortBy: [{ id: 'priority', desc: false }] },
+      initialState: { sortBy: [{ id: 'priority', desc: false }], pageSize: 5, pageIndex: pageIndex }, // Set initial page size and index
       disableMultiSort: true, // Disable multi-column sorting
     },
     useSortBy,
     usePagination
   );
+
+
+
+  const handleNextPage = () => {
+    if (canNextPage) {
+      nextPage();
+      setPageIndex(pageIndex + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (canPreviousPage) {
+      previousPage();
+      setPageIndex(pageIndex - 1);
+    }
+  };
+
+  const handleFirstPage = () => {
+    if (canPreviousPage) {
+      gotoPage(0);
+      setPageIndex(0);
+    }
+  };
+
+  const handleLastPage = () => {
+    if (canNextPage) {
+      gotoPage(pageCount - 1);
+      setPageIndex(pageCount - 1);
+    }
+  };
+
+
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -230,10 +258,11 @@ function Crview() {
   const filteredRows = React.useMemo(() => {
     return page.filter((row) =>
       Object.values(row.original).some((cellValue) =>
-        cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        cellValue && cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
   }, [page, searchTerm]);
+
 
   return (
     <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg `}>
@@ -303,22 +332,25 @@ function Crview() {
               );
             })}
           </tbody>
+
+
         </table>
       </div>
-      <div className="pagination flex justify-center mt-4">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+      <div className="pagination">
+        <button onClick={handleFirstPage} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
           {'<<'}
         </button>
-        <button onClick={() => previousPage()} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+        <button onClick={handlePreviousPage} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
           {'<'}
         </button>
-        <button onClick={() => nextPage()} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+        <button onClick={handleNextPage} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
           {'>'}
         </button>
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+        <button onClick={handleLastPage} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
           {'>>'}
         </button>
       </div>
+
     </div>
   );
 }

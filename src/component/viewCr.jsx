@@ -27,7 +27,7 @@ function Crview() {
       setCurrentPriority(selectedCrObj?.priority || '');
     }
     fetchCrs();
-  }, [selectedCr, crs]);
+}, [selectedCr, crs]);
 
   const fetchCrs = async () => {
     try {
@@ -87,7 +87,7 @@ function Crview() {
     try {
       const accessToken = localStorage.getItem('accessToken');
 
-      await axios.put(
+      awaitaxios.put(
         `${api.defaults.baseURL}/crs/${cr.crId}/priority`,
         { priority: newPriority },
         {
@@ -193,8 +193,7 @@ function Crview() {
       toast.success('CR is now in development!');
     } catch (error) {
       console.error('Error starting development:', error);
-    }
-  };
+    }};
 
   const {
     getTableProps,
@@ -208,6 +207,7 @@ function Crview() {
     canPreviousPage,
     gotoPage, // Add gotoPage from usePagination
     pageCount, // Add pageCount from usePagination
+    
   } = useTable(
     {
       columns,
@@ -220,6 +220,16 @@ function Crview() {
   );
 
 
+  page.forEach(prepareRow);
+
+  const getRowProps = (state, rowInfo, column) => {
+    if (rowInfo && rowInfo.row && rowInfo.row.index === 1 && pageIndex === 0) {
+      return {
+        className: 'bg-red-400 bg-opacity-15 shadow border border-red-600',
+      };
+    }
+    return {};
+  };
 
   const handleNextPage = () => {
     if (canNextPage) {
@@ -256,13 +266,11 @@ function Crview() {
   };
 
   const filteredRows = React.useMemo(() => {
-    return page.filter((row) =>
-      Object.values(row.original).some((cellValue) =>
+    return page.filter((row) =>Object.values(row.original).some((cellValue) =>
         cellValue && cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
   }, [page, searchTerm]);
-
 
   return (
     <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg `}>
@@ -318,15 +326,13 @@ function Crview() {
               </tr>
             ))}
           </thead>
-          <tbody className="bg-gray-50">
-  {filteredRows.map((row, index) => {
+          <tbody {...getTableBodyProps()} className="bg-gray-50">
+  {filteredRows.map((row, i) => {
     prepareRow(row);
+
     return (
       <tr
-        {...row.getRowProps()}
-        className={`border-b text-center ${
-          index === 0 ? 'bg-red-400 shadow border border-red-500' : ''
-        }`}
+        className={`border-b text-center ${getRowProps(null, { row, column: null }).className}`}
         key={row.id}
       >
         {row.cells.map((cell) => (
@@ -345,7 +351,7 @@ function Crview() {
         <button onClick={handleFirstPage} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
           {'<<'}
         </button>
-        <button onClick={handlePreviousPage} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+<button onClick={handlePreviousPage} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
           {'<'}
         </button>
         <button onClick={handleNextPage} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">

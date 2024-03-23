@@ -136,7 +136,7 @@ const Dashboard = () => {
                     />
                   </svg>
                   <span className="ms-3 text-black justify-center">
-                     Cr status
+                     Complete Comform
                   </span>
                 </div>
               </button>

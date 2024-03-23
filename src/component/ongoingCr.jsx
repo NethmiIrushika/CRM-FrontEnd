@@ -22,7 +22,7 @@ function OngingCr() {
         });
   
         // Filter CRs based on status "Starting Development"
-        const startingDevelopmentCRs = response.data.filter(cr => cr.status === "Starting Development");
+        const startingDevelopmentCRs = response.data.filter(cr => cr.status === "Starting Development" );
   
         setCrs(startingDevelopmentCRs);
   

@@ -7,6 +7,7 @@ function Approveprototype() {
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedCR, setSelectedCR] = useState(null);
+  const [loggedInUserId, setLoggedInUserId] = useState(null);
 
   const handleViewButtonClick = async (prId) => {
     try {
@@ -65,6 +66,9 @@ function Approveprototype() {
 
   const fetchCrprototype = async () => {
     try {
+      const userId = localStorage.getItem('userId');
+      setLoggedInUserId(userId);
+
       const accessToken = localStorage.getItem('accessToken');
       const response = await axios.get(`${api.defaults.baseURL}/crprototype`, {
         headers: {
@@ -105,7 +109,9 @@ function Approveprototype() {
       </div>
 
       <div className="mt-4">
-        {filteredCrPrototypes.map((pr) => (
+        {filteredCrPrototypes
+        // .filter(pr => pr.cr && pr.cr.userId && pr.cr.userId.userId === loggedInUserId)
+        .map((pr) => (
           <div key={pr.prId} className="bg-white rounded shadow p-4 mb-4">
             <h2 className="text-xl font-semibold">CR ID: {pr.crId}, PR ID: {pr.prId}</h2>
             <h3 className="text-lg font-semibold">{pr.topic}</h3>

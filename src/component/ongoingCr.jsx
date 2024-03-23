@@ -68,6 +68,7 @@ function OngingCr() {
             <p><strong>Department:</strong> {cr.department}</p>
             <p><strong>Topic:</strong> {cr.topic}</p>
             <p><strong>Description:</strong> {cr.description}</p>
+            {cr.userId && <p><strong>user id:</strong> {cr.userId.userId}</p>}
             <button onClick={() => handleButtonClick(cr.crId)}>
               Prototype
             </button>

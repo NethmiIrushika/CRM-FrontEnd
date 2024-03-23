@@ -15,8 +15,9 @@ import Log from './component/log';
 import ProtectedRoute from './ProtectedRoute';
 import ShowCrDetails from './component/showCrDetalis';
 import OngingCr from './component/ongoingCr';
-import Approveprototype from './component/approveprototype'
-import ApproveORreject from './component/approve_or_rejectedCr'
+import Approveprototype from './component/approveprototype';
+import ApproveORreject from './component/approve_or_rejectedCr';
+import CompletedCR from './component/completedCr'
 
 
 
@@ -43,6 +44,7 @@ function App() {
               <Route path="showCrDetails/:crId" element={<ProtectedRoute><ShowCrDetails/></ProtectedRoute>}/>
               <Route path="approveprototype" element={<ProtectedRoute><Approveprototype/></ProtectedRoute>}/>
               <Route path="approveORreject" element={<ProtectedRoute><ApproveORreject/></ProtectedRoute>}/>
+              <Route path="completedCR" element={<ProtectedRoute><CompletedCR/></ProtectedRoute>}/>
             </Route>
           </Routes>
         </Router>

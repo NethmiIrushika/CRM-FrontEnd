@@ -111,10 +111,20 @@ function UserAccount() {
       console.error('Error updating user:', error);
     }
   };
-  
+
+  // Sort the users by status, with 'pending' users appearing first
+  users.sort((a, b) => {
+    if (a.status === 'pending' && b.status !== 'pending') {
+      return -1;
+    } else if (a.status !== 'pending' && b.status === 'pending') {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
 
   return (
-<div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg ${showStatusPopup ? 'fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center' : ''}`}>
+    <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg ${showStatusPopup ? 'fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center' : ''}`}>
 
       {showStatusPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
@@ -125,7 +135,7 @@ function UserAccount() {
           />
         </div>
       )}
-  
+
       <div className="mb-4 flex justify-end">
         <input
           type="text"
@@ -135,7 +145,7 @@ function UserAccount() {
           className="px-6 py-2 border border-gray-500 rounded"
         />
       </div>
-  
+
       <div className="overflow-x-auto">
         <table {...getTableProps()} className="table-auto w-full border-collapse">
           <thead className="bg-yellow-400">

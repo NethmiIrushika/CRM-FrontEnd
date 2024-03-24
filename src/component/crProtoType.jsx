@@ -46,10 +46,10 @@ const CrProtoType = () => {
       // Update CR status
       await api.put(`/crs/${crId}/status`, { status: 'sent prototype' });
 
-      toast.success('You have successfully made a change request!');
+      toast.success('You have successfully sent a change request prototype!');
       
       setTimeout(() => {
-        navigate('/dashboard/prototypeCr');
+        navigate('/dashboard/viewCr');
       }, 2000);
     } catch (error) {
       console.error('Error inserting data:', error);

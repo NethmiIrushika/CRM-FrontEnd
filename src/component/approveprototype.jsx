@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import api from '../api';
 
@@ -8,6 +9,7 @@ function Approveprototype() {
   const [showModal, setShowModal] = useState(false);
   const [selectedCR, setSelectedCR] = useState(null);
   const [loggedInUserId, setLoggedInUserId] = useState(null);
+  const navigate = useNavigate();
 
   const handleViewButtonClick = async (prId) => {
     try {
@@ -37,7 +39,8 @@ function Approveprototype() {
               Authorization: `Bearer ${accessToken}`,
             },
           }
-        );
+          
+        );navigate('/dashboard/viewcr');
       } else if (action === 'reject') {
         const reason = prompt('Enter rejection reason:');
         response = await axios.put(
@@ -48,7 +51,7 @@ function Approveprototype() {
               Authorization: `Bearer ${accessToken}`,
             },
           }
-        );
+        );navigate('/dashboard/viewcr');
       }
       if (response && response.data) {
         const updatedCRPrototype = response.data;

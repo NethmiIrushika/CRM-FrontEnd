@@ -39,7 +39,7 @@ function Crview() {
       });
       // Filter CRs with status "start-development"
       const filteredCrs = response.data.filter(cr =>
-        cr.status !== 'Starting Development' && cr.status !== 'sent prototype' && cr.status !== 'Completed');
+        cr.status !== 'Starting Development' && cr.status !== 'sent prototype');
       setCrs(filteredCrs);
     } catch (error) {
       console.error('Error fetching crs:', error);
@@ -223,7 +223,7 @@ function Crview() {
   page.forEach(prepareRow);
 
   const getRowProps = (state, rowInfo, column) => {
-    if (rowInfo && rowInfo.row && rowInfo.row.index === 1 && pageIndex === 0) {
+    if (rowInfo && rowInfo.row && rowInfo.row.index === 0 && pageIndex === 0) {
       return {
         className: 'bg-red-400 bg-opacity-15 shadow border border-red-600',
       };

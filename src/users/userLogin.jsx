@@ -40,6 +40,7 @@ function UserLogin() {
     
       if (response && response.data) {
 
+    
         const {data} = response;
         if (data.accessToken){
           localStorage.setItem('accessToken',response.data.accessToken);
@@ -53,7 +54,11 @@ function UserLogin() {
         
           toast.success('You have  successfully logged in!');
             
-          navigate('/dashboard');
+          if (data.userType === 'Developer' || data.userType === 'SFA_User') {
+            navigate('/dashboard/viewCr');
+          } else if (data.userType === 'Admin') {
+            navigate('/dashboard/useraccount');
+          }
 
        
         } else {

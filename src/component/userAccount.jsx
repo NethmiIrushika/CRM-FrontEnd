@@ -68,7 +68,7 @@ function UserAccount() {
     {
       columns,
       data: users, // Use 'users' state as data
-      initialState: { pageIndex: 0, pageSize: 5 },
+      initialState: { pageIndex: 0, pageSize: 10 },
     },
     useSortBy,
     usePagination
@@ -200,6 +200,8 @@ function UserAccount() {
       </div>
     </div>
   );
+
+  
   
 }
 

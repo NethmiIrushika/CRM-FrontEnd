@@ -104,8 +104,16 @@ console.log(showPriorityPopup);
  
 
   return (
-    <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-12">
-      <PriorityPopup show={showPriorityPopup} priority={formData.priority} onClose={() => setShowPriorityPopup(false)} />
+    <div className={`max-w-lg mx-auto bg-white shadow-lg rounded-lg p-12 `}>
+      {showPriorityPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
+          <PriorityPopup
+             show={showPriorityPopup}
+             priority={formData.priority}
+             onClose={() => setShowPriorityPopup(false)}
+          />
+        </div>
+      )}
       <h2 className="text-2xl font-semibold text-gray-800 mb-6">Create Change Request</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="grid gap-6">

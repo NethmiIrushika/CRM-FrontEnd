@@ -23,7 +23,7 @@ function PriorityPopup({ show, priority, onClose }) {
               The priority number of your CR is <span className="font-bold text-xl">{priority}</span>
             </p>
             <div className="flex justify-between">
-              <button onClick={onClose} className="inline-block w-1/2 mr-1 py-2 px-4 bg-blue-800 text-white rounded-l-md hover:bg-blue-900 focus:outline-none focus:bg-blue-900">Close</button>
+            <button onClick={onClose} className="inline-block w-1/2 mr-1 py-2 px-4 bg-yellow-300 text-white rounded-l-md hover:bg-yellow-500 focus:outline-none focus:bg-yellow-500">Close</button>
             </div>
           </div>
         </div>

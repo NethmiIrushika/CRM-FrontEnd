@@ -2,13 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import api from '../api';
+import { getLoginInfo } from "../utils/LoginInfo";
+
+const userId = getLoginInfo()?.sub;
+
 
 function Approveprototype() {
   const [crprototype, setCrprototype] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedCR, setSelectedCR] = useState(null);
-  const [loggedInUserId, setLoggedInUserId] = useState(null);
+  const [loggedInUserId, setLoggedInUserId] = useState(4);
   const navigate = useNavigate();
 
   const handleViewButtonClick = async (prId) => {
@@ -69,8 +73,10 @@ function Approveprototype() {
 
   const fetchCrprototype = async () => {
     try {
-      const userId = localStorage.getItem('userId');
-      setLoggedInUserId(userId);
+      const userId1 = localStorage.getItem('userId');
+      setLoggedInUserId(userId1);
+      console.log(userId1)
+
 
       const accessToken = localStorage.getItem('accessToken');
       const response = await axios.get(`${api.defaults.baseURL}/crprototype`, {
@@ -90,19 +96,18 @@ function Approveprototype() {
 
   const filteredCrPrototypes = crprototype.filter(pr => {
     if (pr && pr.topic) {
-      return pr.topic.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      // Check if CR prototype's user ID matches the logged-in user's ID
+      return pr.cr.userId && pr.cr.userId.userId === userId &&
+             // Also, apply your existing search term filter
+             pr.topic.toLowerCase().includes(searchTerm.toLowerCase()) &&
+             // Check if popupstatus is not set
              (pr.popupstatus === null || pr.popupstatus === undefined || pr.popupstatus.trim() === '');
     }
     return false;
   });
-
-
-  // const filteredCrPrototypes = crprototype.filter(pr => {
-  //   if (pr && pr.topic) {
-  //     return pr.topic.toLowerCase().includes(searchTerm.toLowerCase());
-  //   }
-  //   return false;
-  // });
+  
+  
+  
   
 
   useEffect(() => {

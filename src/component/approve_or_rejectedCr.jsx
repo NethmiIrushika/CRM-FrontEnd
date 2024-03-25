@@ -204,6 +204,7 @@ function ApproveORreject() {
       </div>
     </div>
   );
+  
 }
 
 export default ApproveORreject;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
+import { Link, useNavigate } from 'react-router-dom';
 
 function ApproveORreject() {
 
@@ -9,6 +10,7 @@ function ApproveORreject() {
     const [showModal, setShowModal] = useState(false);
     const [selectedCR, setSelectedCR] = useState(null);
     const [loggedInUserId, setLoggedInUserId] = useState(null);
+    const navigate = useNavigate();
   
     const handleViewButtonClick = async (prId) => {
       try {
@@ -111,7 +113,9 @@ function ApproveORreject() {
               prevState.map(cr =>
                 cr.prId === updatedCRPrototype.prId ? updatedCRPrototype : cr
               )
+              
             );
+            navigate(`/dashboard/completedCR`);
           }
         } catch (error) {
           console.error('Error completing task:', error);
@@ -142,7 +146,7 @@ function ApproveORreject() {
               <p className="text-gray-600">{pr.description}</p>
               <p className="text-gray-600"><strong>Prototype Status:</strong>{pr.popupstatus}</p>
               {pr.rejectionReason && <p className="text-gray-600"><strong>Rejected reason:</strong>{pr.rejectionReason}</p>}
-              {/* {pr.cr.userId && <p><strong>UserId:</strong> {pr.cr.userId.userId}</p>} */}
+              {pr.cr.userId && <p><strong>UserId:</strong> {pr.cr.userId.userId}</p>}
               <button onClick={() => handleViewButtonClick(pr.prId)} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 view CR
               </button>

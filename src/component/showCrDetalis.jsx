@@ -30,7 +30,7 @@ const ShowCrDetails = () => {
 
     const handleViewAttachment = () => {
         // Construct the URL to fetch the file
-        const fileUrl = `${api.defaults.baseURL}/uploads/` + cr.filePath;
+        const fileUrl = `${api.defaults.baseURL}/uploads/cr/` + cr.filePath;
         // Open the file in a new tab
         window.open(fileUrl, '_blank');
     }

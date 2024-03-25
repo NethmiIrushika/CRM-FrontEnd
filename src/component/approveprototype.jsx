@@ -99,6 +99,11 @@ function Approveprototype() {
     fetchCrprototype();
   }, []);
 
+  const handleActionClick = (prId) => {
+    console.log('cr Id:', prId);
+    navigate(`/dashboard/showprotoDetails/${prId}`);
+  };
+
   return (
     <div className="container mx-auto full">
       <div className="mb-4 flex justify-end">
@@ -123,6 +128,9 @@ function Approveprototype() {
             {pr.cr.userId && <p><strong>UserId:</strong> {pr.cr.userId.userId}</p>}
             <button onClick={() => handleViewButtonClick(pr.prId)} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Get decision
+            </button>
+            <button onClick={() => handleActionClick(pr.prId)} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              View
             </button>
           </div>
         ))}

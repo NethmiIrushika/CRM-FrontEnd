@@ -50,7 +50,7 @@ const CrProtoType = () => {
       
       setTimeout(() => {
         navigate('/dashboard/viewCr');
-      }, 2000);
+      });
     } catch (error) {
       console.error('Error inserting data:', error);
       toast.error('Error creating change request prototype. Please try again.');

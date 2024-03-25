@@ -115,8 +115,8 @@ function ApproveORreject() {
               )
               
             );
-            navigate(`/dashboard/completedCR`);
-          }
+            
+          }navigate(`/dashboard/completedCR`);
         } catch (error) {
           console.error('Error completing task:', error);
         }

@@ -146,68 +146,69 @@ function ApproveORreject() {
           className="px-4 py-2 border border-gray-500 rounded"
         />
       </div>
-
+  
       <div className="mt-4">
         {filteredCrPrototypes.map((pr) => (
-          <div key={pr.prId} className="bg-white rounded shadow p-4 mb-4">
-            <h2 className="text-xl font-semibold">
-              CR ID: {pr.crId}, PR ID: {pr.prId}
+          <div key={pr.prId} className="bg-white rounded shadow-md p-6 mb-4">
+            <h2 className="text-xl font-semibold mb-2">
+              CR ID: {pr.crId}
             </h2>
-            <h3 className="text-lg font-semibold">{pr.topic}</h3>
-            <p className="text-gray-600">{pr.description}</p>
-            <p className="text-gray-600">
-              <strong>Prototype Status:</strong>
-              {pr.popupstatus}
+            <h3 className="text-lg font-semibold mb-2">{pr.topic}</h3>
+  
+            <p className="text-gray-600 mb-2">
+              <strong>Prototype Status:</strong> {pr.popupstatus}
             </p>
             {pr.rejectionReason && (
-              <p className="text-gray-600">
-                <strong>Rejected reason:</strong>
-                {pr.rejectionReason}
-              </p>
-            )}
-            {pr.cr.userId && (
-              <p>
-                <strong>UserId:</strong> {pr.cr.userId.userId}
+              <p className="text-gray-600 mb-2">
+                <strong>Rejected Reason:</strong> {pr.rejectionReason}
               </p>
             )}
             {pr.cr && (
-              <p>
-                <strong>name:</strong> {pr.cr.name}
+              <p className="text-gray-600 mb-2">
+                <strong>User ID:</strong> {pr.cr.userId.userId}
               </p>
             )}
-            <button
-              onClick={() => handleViewButtonClick(pr.prId)}
-              className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              view CR
-            </button>
-            <button
-              onClick={() => handleViewButtonClick(pr.prId)}
-              className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              view prototype
-            </button>
-            {pr.rejectionReason && (
-              <button
-                onClick={() => handleButtonClick(pr.crId)}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out"
-              >
-                Sent Prototype
-              </button>
+            {pr.cr && (
+              <p className="text-gray-600 mb-2">
+                <strong>Name:</strong> {pr.cr.name}
+              </p>
             )}
-            {pr.rejectionReason == null && (
+            <div className="flex flex-wrap gap-2">
               <button
-                onClick={() => handleChangeStatusButtonClick(pr.prId)}
-                className="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => handleViewButtonClick(pr.prId)}
+                className="bg-yellow-400 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
               >
-                Complete Task
+                View CR
               </button>
-            )}
+              <button
+                onClick={() => handleViewButtonClick(pr.prId)}
+                className="bg-yellow-400 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+              >
+                View Prototype
+              </button>
+              {pr.rejectionReason && (
+                <button
+                  onClick={() => handleButtonClick(pr.crId)}
+                  className="bg-yellow-400 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+                >
+                  Send Prototype
+                </button>
+              )}
+              {!pr.rejectionReason && (
+                <button
+                  onClick={() => handleChangeStatusButtonClick(pr.prId)}
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+                >
+                  Complete Task
+                </button>
+              )}
+            </div>
           </div>
         ))}
       </div>
     </div>
   );
+  
 }
 
 export default ApproveORreject;

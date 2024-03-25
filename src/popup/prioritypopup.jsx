@@ -2,8 +2,8 @@ import React from 'react';
 import Popup from 'reactjs-popup';
 
 const customModalClass = {
-  content: 'max-w-lg mx-auto bg-gray-800 text-white rounded-md p-6 shadow-lg z-50',
-  overlay: 'fixed inset-0 bg-gray-900 bg-opacity-75',
+  content: 'max-w-lg mx-auto bg-gray-800 text-white rounded-md p-6 shadow-lg ',
+  overlay: 'fixed inset-0 bg-gray-900 bg-opacity-75 z-50',
 };
 
 function PriorityPopup({ show, priority, onClose }) {

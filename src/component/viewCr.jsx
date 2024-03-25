@@ -6,7 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import { getLoginInfo } from "../utils/LoginInfo";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FaEye } from "react-icons/fa";
+import { FaEye,FaEdit } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import ChangePriorityPopup from '../popup/changeprioritypopup';
 
@@ -109,8 +109,7 @@ function Crview() {
   const columns = React.useMemo(
     () => [
       { id: 'crId', Header: 'CR ID', accessor: 'crId' },
-      { id: 'name', Header: 'Name', accessor: 'name' }, // Accessing firstname field
-      { id: 'department', Header: 'Department', accessor: 'department' },
+      { id: 'name', Header: 'Name', accessor: 'name' },
       { id: 'topic', Header: 'Topic', accessor: 'topic' },
       { id: 'date', Header: 'Date/Time', accessor: 'createdAt' },
       { id: 'priority', Header: 'Priority', accessor: 'priority' },
@@ -118,21 +117,21 @@ function Crview() {
         id: 'get',
         Header: 'Get',
         accessor: (row) => (
-          <button onClick={() => handleButtonClick(row.crId)}>Get</button>
+          <button className="btn-primary" onClick={() => handleButtonClick(row.crId)}>Get</button>
         ),
       },
       userType === 'SFA_User' && {
         id: 'priorityInput',
         Header: 'Change Priority',
-        accessor: (row) => row, // Return the entire row object
+        accessor: (row) => row,
         Cell: ({ row }) => (
           <div className="flex items-center">
             {editPriority && selectedCr?.crId === row.original.crId ? (
               <>
                 <input
                   type="number"
-                  value={newPriority} // Set the value of the input box to the newPriority state
-                  onChange={(e) => setNewPriority(e.target.value)} // Update the newPriority state when the user types in the input box
+                  value={newPriority}
+                  onChange={(e) => setNewPriority(e.target.value)}
                   onBlur={() => updatePriority()}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
@@ -141,12 +140,14 @@ function Crview() {
                   }}
                   className="border border-gray-400 rounded p-1 mr-2"
                 />
-                <button onClick={() => closeEditPriority()}>Cancel</button>
+                <button className="btn-secondary" onClick={() => closeEditPriority()}>Cancel</button>
               </>
             ) : (
               <span className="mr-2">{row.original.priority}</span>
             )}
-            <button onClick={() => handleEditPriority(row)}>Edit</button>
+            <button className="btn-primary" onClick={() => handleEditPriority(row)}>
+              <FaEdit className="icon" /> {/* Add class for icon styling */}
+            </button>
           </div>
         ),
       },
@@ -154,12 +155,11 @@ function Crview() {
         id: 'action',
         Header: 'Action',
         accessor: (row) => (
-          <button onClick={() => { handleActionClick(row.crId) }}>
-            <FaEye className="mr-1" />
+          <button className="btn-secondary" onClick={() => handleActionClick(row.crId)}>
+            <FaEye className="icon" />
           </button>
         ),
       },
-
     ].filter(Boolean),
     [userType]
   );

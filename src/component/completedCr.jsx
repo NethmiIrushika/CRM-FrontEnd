@@ -77,7 +77,7 @@ function CompletedCR() {
   }, [page, searchTerm]);
 
   return (
-    <div className="container mx-auto full">
+    <div className="container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg">
       <div className="mb-4 flex justify-end">
         <input
           type="text"
@@ -90,12 +90,12 @@ function CompletedCR() {
 
       <div className="overflow-x-auto">
         <table {...getTableProps()} className="table-fixed w-full border-collapse">
-          <thead>
+          <thead className="bg-yellow-400">
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-200">
+              <tr {...headerGroup.getHeaderGroupProps()} >
                 {headerGroup.headers.map((column) => (
                   <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2">
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-between text-center">
                       <span>{column.render('Header')}</span>
                       <span>
                         {column.isSorted ? (
@@ -120,15 +120,15 @@ function CompletedCR() {
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()}>
+          <tbody {...getTableBodyProps()} className="bg-gray-50">
             {filteredRows.map((row, index) => {
               prepareRow(row);
               // Remove HTML tags from the description
               const descriptionWithoutTags = row.original.description.replace(/(<([^>]+)>)/gi, '');
               return (
-                <tr {...row.getRowProps()} className="border-b" key={row.original.userId}>
+                <tr {...row.getRowProps()} className="border-b text-center" key={row.original.userId}>
                   {row.cells.map((cell, cellIndex) => (
-                    <td {...cell.getCellProps()} className="px-4 py-2" key={cellIndex}>
+                    <td {...cell.getCellProps()} className="px-4 py-2 text-center" key={cellIndex}>
                       {/* Render the description without HTML tags */}
                       {cell.column.id === 'description' ? descriptionWithoutTags : cell.render('Cell')}
                     </td>
@@ -140,22 +140,16 @@ function CompletedCR() {
         </table>
       </div>
       <div className="pagination">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
           {'<'}
         </button>{' '}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+        <button onClick={() => previousPage()} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
           {'<'}
-          <span>
-            Page{' '}
-            <strong>
-              {pageIndex + 1} of {pageCount}
-            </strong>{' '}
-          </span>
         </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
+        <button onClick={() => nextPage()} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
           {'>'}
         </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
           {'>'}
         </button>{' '}
       </div>

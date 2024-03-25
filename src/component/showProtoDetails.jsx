@@ -20,7 +20,6 @@ const ShowProtoDetails = () => {
                     },
                 });
                 setPr(response.data);
-                setShowModal(true);
             } catch (error) {
                 console.error('Error fetching CR details:', error);
 
@@ -30,7 +29,7 @@ const ShowProtoDetails = () => {
         fetchCrDetails();
     }, [prId]);
 
-    const handleViewButtonClick = async (prId) => {
+    const handleActionClick = async (prId) => {
         try {
           const accessToken = localStorage.getItem('accessToken');
           const response = await axios.get(`${api.defaults.baseURL}/crprototype/${prId}`, {
@@ -119,13 +118,13 @@ const ShowProtoDetails = () => {
                 <button onClick={handleViewAttachment} className="inline-block text-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4">
                     View attachment
                 </button>
-                <button onClick={() => (pr.prId)}  className="inline-block text-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4">
+                <button onClick={() => handleActionClick(pr.prId)}  className="inline-block text-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4">
                     Get Disition
                 </button>
             </div>
             </div>
 
-            {/* {showModal && pr && (
+            {showModal && pr && (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-800 bg-opacity-75">
           <div className="bg-white p-4 rounded shadow">
             <h2 className="text-xl font-semibold mb-4">Approve CR Prototype</h2>
@@ -142,7 +141,7 @@ const ShowProtoDetails = () => {
             </div>
           </div>
         </div>
-      )} */}
+      )}
             
         </div>
     );

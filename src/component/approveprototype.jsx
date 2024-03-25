@@ -90,10 +90,12 @@ function Approveprototype() {
 
   const filteredCrPrototypes = crprototype.filter(pr => {
     if (pr && pr.topic) {
-      return pr.topic.toLowerCase().includes(searchTerm.toLowerCase());
+      return pr.topic.toLowerCase().includes(searchTerm.toLowerCase()) &&
+             (pr.popupstatus === null || pr.popupstatus === undefined || pr.popupstatus.trim() === '');
     }
     return false;
   });
+  
 
   useEffect(() => {
     fetchCrprototype();

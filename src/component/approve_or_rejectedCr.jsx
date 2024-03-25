@@ -147,34 +147,30 @@ function ApproveORreject() {
         />
       </div>
 
-      <div className="mt-4">
+      <div className="mt-4 container mx-auto  h-auto">
         {filteredCrPrototypes.map((pr) => (
           <div key={pr.prId} className="bg-white rounded shadow p-4 mb-4">
-            <h2 className="text-xl font-semibold">
-              CR ID: {pr.crId}, PR ID: {pr.prId}
-            </h2>
-            <h3 className="text-lg font-semibold">{pr.topic}</h3>
-            <p className="text-gray-600">{pr.description}</p>
-            <p className="text-gray-600">
-              <strong>Prototype Status:</strong>
-              {pr.popupstatus}
-            </p>
-            {pr.rejectionReason && (
-              <p className="text-gray-600">
-                <strong>Rejected reason:</strong>
-                {pr.rejectionReason}
-              </p>
-            )}
-            {pr.cr.userId && (
-              <p>
-                <strong>UserId:</strong> {pr.cr.userId.userId}
-              </p>
-            )}
-            {pr.cr && (
-              <p>
-                <strong>name:</strong> {pr.cr.name}
-              </p>
-            )}
+            <h2 className="text-lg font-semibold text-center">{pr.topic}</h2>
+            <div className="p-8 grid grid-cols-2 gap-4 ">
+              <div className='col-span-1'>
+                <p className="mb-2 text-left">
+                  CR ID: {pr.crId}
+                </p>
+                {pr.cr.userId && (
+                  <p className="mb-2 text-left"> UserId: {pr.cr.userId.userId} </p>
+                )}
+              </div>
+              <div className='col-span-1'>
+              <p className="mb-2 text-left">Prototype Status: <span className={`font-bold ${pr.popupstatus === 'Rejected' ? 'text-red-500' : pr.popupstatus === 'Approved' ? 'text-green-500' : 'text-black'}`}>{pr.popupstatus}</span></p>
+                {pr.rejectionReason && (<p className="mb-2 text-left">Rejected reason: {pr.rejectionReason} </p>)}
+                {pr.cr && (<p className="mb-2 text-left"> name: {pr.cr.name} </p>)}
+              </div>
+              <div className="col-span-2 bg-gray-200 p-4 h-auto rounded-lg">
+                <p className="text-gray-600 mb-2 text-left">{pr.description}</p>
+              </div>
+            </div>
+
+
             <button
               onClick={() => handleViewButtonClick(pr.prId)}
               className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

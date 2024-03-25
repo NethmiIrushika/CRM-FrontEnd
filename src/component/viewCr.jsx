@@ -29,6 +29,29 @@ function Crview() {
     fetchCrs();
 }, [selectedCr, crs]);
 
+///////////////////////////////////////////////////////////////////////////
+
+const isTokenExpired = () => {
+  const token = localStorage.getItem('accessToken');
+  if (token) {
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    return decodedToken.exp * 1000 < Date.now();
+  }
+  return true; // Return true if token not found or unable to decode
+};
+
+// Logout user if token is expired
+useEffect(() => {
+  if (isTokenExpired()) {
+    // Perform logout action here, such as clearing local storage and redirecting to login page
+    localStorage.clear();
+    navigate('/UserLogin'); // Redirect to login page
+  }
+}, []);
+
+
+/////////////////////////////////////////////////////////////////////////////
+
   const fetchCrs = async () => {
     try {
       const accessToken = localStorage.getItem('accessToken');

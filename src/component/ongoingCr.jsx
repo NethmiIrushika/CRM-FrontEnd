@@ -1,29 +1,32 @@
-// PrototypeCr.jsx
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import api from "../api";
 import { useParams, useNavigate } from "react-router-dom";
+import { getLoginInfo } from "../utils/LoginInfo";
 
 function OngingCr() {
   const { crId } = useParams();
   const [crs, setCrs] = useState([]);
   const [cr, setCr] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loggedInUserId, setLoggedInUserId] = useState(getLoginInfo()?.sub); // Initialize with the logged-in user ID
   const navigate = useNavigate();
+
+  // Update loggedInUserId when user logs in or out
+  useEffect(() => {
+    setLoggedInUserId(getLoginInfo()?.sub);
+  }, []);
 
   useEffect(() => {
     const fetchCrs = async () => {
       try {
-        const accessToken = localStorage.getItem("accessToken"); // Retrieve token from storage
-
+        const accessToken = localStorage.getItem("accessToken");
         const response = await axios.get(`${api.defaults.baseURL}/crs/`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`, // Include token in the request headers
+            Authorization: `Bearer ${accessToken}`,
           },
         });
 
-        // Filter CRs based on status "Starting Development"
         const startingDevelopmentCRs = response.data.filter(
           (cr) => cr.status === "Starting Development"
         );
@@ -37,23 +40,26 @@ function OngingCr() {
 
     const fetchCrDetails = async () => {
       try {
-          const accessToken = localStorage.getItem('accessToken');
-          const response = await axios.get(`${api.defaults.baseURL}/crs/${crId}`, {
-              headers: {
-                  Authorization: `Bearer ${accessToken}`,
-              },
-          });
-          setCr(response.data);
+        const accessToken = localStorage.getItem('accessToken');
+        const response = await axios.get(`${api.defaults.baseURL}/crs/${crId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        setCr(response.data);
 
       } catch (error) {
-          console.error('Error fetching CR details:', error);
-
+        console.error('Error fetching CR details:', error);
       }
-  };
+    };
 
-  fetchCrDetails();
+    fetchCrDetails();
     fetchCrs();
   }, [crId]);
+
+  // Rest of the component code...
+
+
 
 
 
@@ -66,11 +72,15 @@ function OngingCr() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredCRs = crs.filter((cr) =>
-    Object.values(cr).some((value) =>
+  const filteredCRs = crs.filter(cr =>
+    cr.getCr[0].user.userId === loggedInUserId &&
+    Object.values(cr).some(value =>
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
+  
+  
+  // .filter((cr) => cr.getCr[0].user.userId === loggedInUserId); 
 
   const handleActionClick = (crId) => {
     console.log('cr Id:', crId);
@@ -105,6 +115,9 @@ function OngingCr() {
           </p>
           <p className="text-gray-700 mb-2">
             <strong>Status: </strong> {cr.status}
+          </p>
+          <p className="text-gray-700 mb-2">
+          <strong>User ID: </strong> {cr.getCr[0].user.userId} {/* Assuming each CR has only one Getcr entry */}
           </p>
   
           <button

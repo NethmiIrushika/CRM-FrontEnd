@@ -69,16 +69,14 @@ const DevShowCrDetails = () => {
                     </p>
                 </div>
                 <div className="text-center my-4">
-                <button onClick={handleViewAttachment} className="inline-block text-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4">
-                    View attachment
-                </button>
-                <button
-              onClick={() => handleButtonClick(cr.crId)}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-            >
-              Sent Prototype
-            </button>
-            </div>
+  <button onClick={handleViewAttachment} className="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300 ease-in-out">
+    View Attachment
+  </button>
+  <button onClick={() => handleButtonClick(cr.crId)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out">
+    Sent Prototype
+  </button>
+</div>
+
             </div>
             
         </div>

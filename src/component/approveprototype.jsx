@@ -4,7 +4,7 @@ import axios from "axios";
 import api from "../api";
 import { getLoginInfo } from "../utils/LoginInfo";
 
-const userId = getLoginInfo()?.sub;
+
 
 function Approveprototype() {
   const [crprototype, setCrprototype] = useState([]);
@@ -35,18 +35,9 @@ function Approveprototype() {
   };
 
   const filteredCrPrototypes = crprototype.filter((pr) => {
-    if (pr && pr.topic) {
-      return (
-        pr.cr.userId &&
-        pr.cr.userId.userId === userId &&
-        pr.topic.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (pr.popupstatus === null ||
-          pr.popupstatus === undefined ||
-          pr.popupstatus.trim() === "")
-      );
-    }
-    return false;
+    return pr && pr.cr && pr.cr.userId && pr.cr.userId.userId === getLoginInfo()?.sub;
   });
+  
 
   useEffect(() => {
     fetchCrprototype();

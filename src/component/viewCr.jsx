@@ -39,7 +39,7 @@ function Crview() {
       });
       // Filter CRs with status "start-development"
       const filteredCrs = response.data.filter(cr =>
-        cr.status !== 'Starting Development' && cr.status !== 'sent prototype' && cr.status !== 'Completed') ;
+        cr.status !== 'Starting Development' && cr.status !== 'sent prototype' && cr.status !== 'Completed');
       setCrs(filteredCrs);
     } catch (error) {
       console.error('Error fetching crs:', error);
@@ -111,7 +111,7 @@ function Crview() {
       { id: 'crId', Header: 'CR ID', accessor: 'crId' },
       { id: 'name', Header: 'Name', accessor: 'name' },
       { id: 'topic', Header: 'Topic', accessor: 'topic' },
-      { id: 'date', Header: 'Date/Time', accessor: 'date' },
+      { id: 'date', Header: 'Date/Time', accessor: 'createdAt' },
       { id: 'priority', Header: 'Priority', accessor: 'priority' },
       userType === 'Developer' && {
         id: 'get',
@@ -190,7 +190,9 @@ function Crview() {
 
       // Refresh the CRs after updating the status
       fetchCrs();
+      
       toast.success('CR is now in development!');
+      navigate(`/dashboard/ongingCr`);
     } catch (error) {
       console.error('Error starting development:', error);
     }};

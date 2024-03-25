@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
 import { useTable, usePagination, useSortBy } from 'react-table';
+import { Link, useNavigate } from 'react-router-dom';
 
 function DeveloperCr() {
   const [crs, setCrs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCrs = async () => {
@@ -97,9 +99,15 @@ function DeveloperCr() {
                     Authorization: `Bearer ${accessToken}`,
                 },
             }
-        );
+
+            
+            
+        ); 
+       
+        
         // Refresh the CRs after updating the status
         fetchCrs();
+       
     } catch (error) {
         console.error('Error starting development:', error);
     }

@@ -1,7 +1,9 @@
+/* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
 import { useTable, usePagination, useSortBy } from 'react-table';
+import { FaEye } from "react-icons/fa";
 
 function CompletedCR() {
   const [crs, setCrs] = useState([]);
@@ -34,8 +36,16 @@ function CompletedCR() {
       { id: 'crId', Header: 'CR ID', accessor: 'crId' },
       { id: 'name', Header: 'Name', accessor: 'name' },
       { id: 'topic', Header: 'Topic', accessor: 'topic' },
-      { id: 'description', Header: 'Description', accessor: 'description' },
-      { id: 'view', Header: 'view', accessor: 'view' },
+
+      {
+        id: 'action',
+        Header: 'View',
+        accessor: (row) => (
+          <button className="btn-secondary" onClick={() => handleActionClick(row.crId)}>
+            <FaEye className="icon" />
+          </button>
+        ),
+      },
       { id: 'status', Header: 'Status', accessor: 'status' },
     ],
     []

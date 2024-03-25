@@ -184,7 +184,7 @@ const Dashboard = () => {
                     />
                   </svg>
                   <span className="ms-3 text-black justify-center">
-                    Approve Cr
+                    Approve Prototypes
                   </span>
                 </div>
               </button>

@@ -147,6 +147,7 @@ function ApproveORreject() {
               <p className="text-gray-600"><strong>Prototype Status:</strong>{pr.popupstatus}</p>
               {pr.rejectionReason && <p className="text-gray-600"><strong>Rejected reason:</strong>{pr.rejectionReason}</p>}
               {pr.cr.userId && <p><strong>UserId:</strong> {pr.cr.userId.userId}</p>}
+              {pr.cr && <p><strong>name:</strong> {pr.cr.name}</p>}
               <button onClick={() => handleViewButtonClick(pr.prId)} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 view CR
               </button>

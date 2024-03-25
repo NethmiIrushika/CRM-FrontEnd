@@ -103,7 +103,7 @@ function Approveprototype() {
              // Check if popupstatus is not set
              (pr.popupstatus === null || pr.popupstatus === undefined || pr.popupstatus.trim() === '');
     }
-    return false;
+    return true;
   });
   
   

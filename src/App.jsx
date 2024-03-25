@@ -10,7 +10,6 @@ import UserAccount from './component/userAccount';
 import Crview from './component/viewCr'
 import CreateCr from './component/createCr'
 import { ToastContainer } from 'react-toastify';
-import AddUser from './component/addUser';
 import Log from './component/log';
 import ProtectedRoute from './ProtectedRoute';
 import ShowCrDetails from './component/showCrDetalis';
@@ -39,7 +38,7 @@ function App() {
               <Route path="UserAccount" element={<ProtectedRoute><UserAccount /></ProtectedRoute>} />
               <Route path="createCr" element={<ProtectedRoute><CreateCr /></ProtectedRoute>} />
               <Route path="viewCr" element={<ProtectedRoute><Crview/></ProtectedRoute>}/>
-              <Route path="addUser" element={<ProtectedRoute><AddUser/></ProtectedRoute>}/>
+
               <Route path="log" element={<ProtectedRoute><Log/></ProtectedRoute>}/>
               <Route path="crProtoType/:crId" element={<ProtectedRoute><CrProtoType/></ProtectedRoute>}/>
               <Route path="ongingCr" element={<ProtectedRoute><OngingCr/></ProtectedRoute>}/>

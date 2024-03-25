@@ -74,62 +74,56 @@ function OngingCr() {
 
   const handleActionClick = (crId) => {
     console.log('cr Id:', crId);
-    navigate(`/dashboard/showCrDetails/${crId}/`);
+    navigate(`/dashboard/devShowCrDetails/${crId}/`);
   };
 
 
 
   return (
-    <div className="container mx-auto full">
-      <div className="mb-4 flex justify-end">
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={handleSearchChange}
-          placeholder="Search..."
-          className="px-4 py-2 border border-gray-500 rounded"
-        />
-      </div>
-
-      <div className="my-4">
-        {filteredCRs.map((cr) => (
-          <div key={cr.crId} className="border rounded p-4 mb-4">
-            <p>
-              <strong>CR ID:</strong> {cr.crId}
-            </p>
-            <p>
-              <strong>Name:</strong> {cr.name}
-            </p>
-            <p>
-              <strong>Department:</strong> {cr.department}
-            </p>
-            <p>
-              <strong>Topic:</strong> {cr.topic}
-            </p>
-            <p>
-              <strong> Description: </strong>{" "}
-              <div dangerouslySetInnerHTML={{ __html: cr.description }} />
-            </p>
-            {cr.userId && (
-              <p>
-                <strong>user id:</strong> {cr.userId.userId}
-              </p>
-            )}
-            <button
-              onClick={() => handleButtonClick(cr.crId)}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-            >
-              Sent Prototype
-            </button>
-            <button onClick={() => { handleActionClick(cr.crId) }}
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-            >
-              View CR
-            </button>
-          </div>
-        ))}
-      </div>
+    <div className="container mx-auto px-4 full">
+    <div className="mb-4 flex justify-end">
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={handleSearchChange}
+        placeholder="Search..."
+        className="px-4 py-2 border border-gray-500 rounded w-64"
+      />
     </div>
+  
+    <div className="my-4">
+      {filteredCRs.map((cr) => (
+        <div key={cr.crId} className="border rounded p-4 mb-4 shadow-md">
+          <p className="text-lg font-semibold mb-2">
+            <strong>CR ID: </strong> {cr.crId}
+          </p>
+          <p className="text-gray-700 mb-2">
+            <strong>SFA_User Name: </strong> {cr.name}
+          </p>
+          <p className="text-gray-700 mb-2">
+            <strong>Topic: </strong> {cr.topic}
+          </p>
+          <p className="text-gray-700 mb-2">
+            <strong>Status: </strong> {cr.status}
+          </p>
+  
+          <button
+            onClick={() => handleButtonClick(cr.crId)}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 transition duration-300 ease-in-out"
+          >
+            Sent Prototype
+          </button>
+          <button
+            onClick={() => handleActionClick(cr.crId)}
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+          >
+            View CR
+          </button>
+        </div>
+      ))}
+    </div>
+  </div>
+  
   );
 }
 

@@ -11,7 +11,7 @@ import PriorityPopup from '../popup/prioritypopup.jsx';
 
 const Insert = () => {
   const [formData, setFormData] = useState({
-    name: getLoginInfo()?.firstname,
+    name: getLoginInfo()?.firstname + ' ' + getLoginInfo()?.lastname,
     department: getLoginInfo()?.department,
     topic: '',
     description: '',

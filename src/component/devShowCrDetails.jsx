@@ -3,7 +3,7 @@ import axios from 'axios';
 import api from '../api';
 import { useParams, useNavigate } from "react-router-dom";
 
-const ShowCrDetails = () => {
+const DevShowCrDetails = () => {
     const { crId } = useParams();
     const [cr, setCr] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -60,7 +60,7 @@ const ShowCrDetails = () => {
                 </div>
                 <div className="col-span-1">
                     <p className="mb-2 text-xl font-bold text-yellow-400 text-left"> {cr.status}</p>
-                    <p className="mb-2 text-left">Change Request Priority: {cr.priority}</p>
+
                     <p className="mb-2 text-left">Department: {cr.department}</p>
                 </div>
                 <div className="col-span-2 bg-gray-200 p-4 h-auto rounded-lg">
@@ -72,7 +72,12 @@ const ShowCrDetails = () => {
                 <button onClick={handleViewAttachment} className="inline-block text-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4">
                     View attachment
                 </button>
-               
+                <button
+              onClick={() => handleButtonClick(cr.crId)}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+            >
+              Sent Prototype
+            </button>
             </div>
             </div>
             
@@ -80,4 +85,4 @@ const ShowCrDetails = () => {
     );
 };
 
-export default ShowCrDetails;
+export default DevShowCrDetails;

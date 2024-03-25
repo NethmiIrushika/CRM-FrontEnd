@@ -136,27 +136,22 @@ function Approveprototype() {
             <div className="p-8 grid grid-cols-2 gap-4 bg-white rounded-lg shadow-md">
             <div className='col-span-1'>
               <p className="mb-2 text-left">CR ID: {pr.crId}</p>
-              {pr.cr && <p className="mb-2 text-left">name: {pr.cr.name}</p>}
               {pr.cr.userId && <p className='mb-2 text-left'>UserId: {pr.cr.userId.userId}</p>}
             </div>
             <div className='col-span-1'>
               <p className="mb-2 text-xl font-bold text-yellow-400 text-left">Status: {pr.cr.status}</p>
-              <p className='text-left'>
-              <button onClick={() => handleViewButtonClick(pr.prId)} className=" mt-1 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 rounded">
-              Get decision
-            </button>
-              </p>
-              <p className='text-left'>
-              <button onClick={() => handleActionClick(pr.prId)} className=" mt-1 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 rounded">
-              View
-            </button>
-              </p>
+              {pr.cr && <p className="mb-2 text-left">name: {pr.cr.name}</p>}
             </div>
             <div className="col-span-2 bg-gray-200 p-4 h-auto rounded-lg">
-              <p className="text-gray-600 mb-2 text-left">{pr.description}</p>
+              <p className="text-gray-600 mb-2 text-left"> Descriptin :
+              <div>{pr.description}</div></p>
             </div>
-       
-            
+            <button onClick={() => handleViewButtonClick(pr.prId)} className=" mt-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Get decision
+            </button>
+            <button onClick={() => handleActionClick(pr.prId)} className=" mt-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              View
+            </button>
             
           </div>
           </div>

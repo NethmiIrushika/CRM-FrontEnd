@@ -174,28 +174,6 @@ function Register() {
             </div>
             <div className="mb-4">
               <label
-                htmlFor="department"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Department:
-              </label>
-              <select
-                id="department"
-                name="department"
-                value={formData.department}
-                onChange={handleChange}
-                className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                required
-              >
-                <option value="Department">Select Department </option>
-                <option value="IT">IT </option>
-                <option value="SAP">SAP</option>
-                <option value="Sales">Sales</option>
-                <option value="Marketing">Marketing</option>
-              </select>
-            </div>
-            <div className="mb-4">
-              <label
                 htmlFor="userType"
                 className="block text-sm font-medium text-gray-700"
               >
@@ -209,11 +187,41 @@ function Register() {
                 className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 required
               >
-                <option value="UserType">Select User Type </option>
-                <option value="Developer">Developer </option>
+                <option value="">Select User Type</option>
+                <option value="Developer">Developer</option>
                 <option value="SFA_User">SFA_User</option>
               </select>
             </div>
+            <div className="mb-4">
+              <label
+                htmlFor="department"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Department:
+              </label>
+              <select
+                id="department"
+                name="department"
+                value={formData.department}
+                onChange={handleChange}
+                className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                required
+              >
+                <option value="">Select Department</option>
+                {formData.userType === "Developer" && (
+                  <option value="IT">IT</option>
+                )}
+                {formData.userType === "SFA_User" && (
+                  <>
+                    <option value="SAP">SAP</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Marketing">Marketing</option>
+                  </>
+                )}
+              </select>
+            </div>
+            {/* User Type Selection */}
+            
             <button
               type="submit"
               className="w-full bg-blue-500 text-white py-2.5 rounded-md hover:bg-blue-600 transition duration-300"

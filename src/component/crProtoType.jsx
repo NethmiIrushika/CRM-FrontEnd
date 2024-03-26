@@ -53,7 +53,7 @@ const CrProtoType = () => {
       console.log('Data inserted successfully:', response.data);
       
       // Update CR status
-      await api.put(`/crs/${crId}/status`, { status: 'sent prototype' });
+      await api.put(`/crs/${crId}/status`, { status: 'Sent prototype' });
 
 
       await api.put(`/crprototype/updatePopupStatus/${crId}`, { popupstatus: 'second prototype' });

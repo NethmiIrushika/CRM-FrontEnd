@@ -37,7 +37,7 @@ function Approveprototype() {
   const filteredCrPrototypes = crprototype.filter((pr) => {
     return pr && pr.cr && pr.cr.userId && pr.cr.userId.userId === getLoginInfo()?.sub &&
     pr.popupstatus !== "Rejected" &&
-    pr.popupstatus !== "Approved";
+    pr.popupstatus !== "Approved" && pr.cr.status !== "Completed";
 
   });
   
@@ -65,27 +65,32 @@ function Approveprototype() {
 
       <div className="grid grid-cols-1 gap-4">
         {filteredCrPrototypes.map((pr) => (
-          <div key={pr.prId} className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-lg font-semibold mb-4">Topic: {pr.topic}</h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
+          <div key={pr.prId} className="bg-white rounded-lg shadow-md p-6" >
+            <div className="grid grid-cols-2 gap-4 ">
+              <div className="col-span-2 ">
+              <p className="mb-2 text-xl font-bold text-right">
+  <span className="text-black-400">Status: </span>
+  <span
+    className={`${
+      pr.cr.status === 'Sent prototype' ? 'text-blue-500' : pr.cr.status === 'Pending' ? 'text-red-500' : ''
+    }`}
+  >
+    {pr.cr.status}
+  </span>
+</p>
+
+                <p className="text-lg font-semibold mb-4 text-left">Topic: {pr.topic}</p>
+              </div>
+              <div className="col-span-1">
                 <p className="mb-2 text-left">CR ID: {pr.crId}</p>
-                {pr.cr.userId && (
-                  <p className="mb-2 text-left">
-                    UserId: {pr.cr.userId.userId}
-                  </p>
-                )}
               </div>
-              <div>
-                <p className="mb-2 text-lg text-black-400 text-left">
-                  Status: {pr.cr.status}
-                </p>
+              {/* <div className="col-span-1">
                 {pr.cr && <p className="mb-2 text-left">name: {pr.cr.name}</p>}
-              </div>
+              </div> */}
             </div>
-            <div className="bg-gray-200 p-4 mt-4 rounded-lg">
-              <p className="text-gray-600 mb-2 text-center">Description:</p>
-              <div>{pr.description}</div>
+            <div className="col-span-1">
+              <p className=" mb-2 text-left">Description:</p>
+              <div className="bg-gray-200 p-4 mt-4 rounded-lg">{pr.description}</div>
             </div>
             <button
               onClick={() => handleActionClick(pr.prId)}

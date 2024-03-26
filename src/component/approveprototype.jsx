@@ -79,7 +79,7 @@ function Approveprototype() {
   </span>
 </p>
 
-                <p className="text-lg font-semibold mb-4 text-left">Topic: {pr.topic}</p>
+                <p className="text-xl font-bold text-stone-950 mb-3 text-left">Topic: {pr.topic}</p>
               </div>
               <div className="col-span-1">
                 <p className="mb-2 text-left">CR ID: {pr.crId}</p>

@@ -36,9 +36,10 @@ const DevShowCrDetails = () => {
         window.open(fileUrl, '_blank');
     }
 
-    const handleButtonClick = (crId) => {
+    const handleButtonClick = (crId, topic) => {
         console.log("CR ID:", crId);
-        navigate(`/dashboard/crProtoType/${crId}`);
+        console.log('Topic:', topic)
+        navigate(`/dashboard/crProtoType/${crId}`,{ state: { topic: topic } });
     };
 
     if (loading) {
@@ -83,7 +84,7 @@ const DevShowCrDetails = () => {
                     <button onClick={handleViewAttachment} className="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300 ease-in-out">
                         View Attachment
                     </button>
-                    <button onClick={() => handleButtonClick(cr.crId)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out">
+                    <button onClick={() => handleButtonClick(cr.crId, cr.topic)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out">
                         Sent Prototype
                     </button>
                 </div>

@@ -28,7 +28,7 @@ const Navbar = () => {
             </div>
             <div className="flex-shrink-0">
               <div className="flex items-center space-x-4">
-              <div className="text-lg text-black">Hello, {name}</div>
+              <div className="mx-6 font-medium">Hello, {name}</div>
               </div>
             </div>
           </div>

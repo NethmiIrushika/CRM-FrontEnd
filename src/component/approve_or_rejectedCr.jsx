@@ -175,14 +175,9 @@ function ApproveORreject() {
               onClick={() => handleViewButtonClick(pr.prId)}
               className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
-              view CR
+              View Deatails
             </button>
-            <button
-              onClick={() => handleViewButtonClick(pr.prId)}
-              className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              view prototype
-            </button>
+ 
             {pr.rejectionReason && (
               <button
                 onClick={() => handleButtonClick(pr.crId)}

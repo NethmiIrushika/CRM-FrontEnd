@@ -106,29 +106,7 @@ useEffect(() => {
   const closeEditPriority = () => {
     setEditPriority(false);
   };
-  // const handlePriorityChange = async (cr) => {
-  //   try {
-  //     const accessToken = localStorage.getItem('accessToken');
 
-  //     awaitaxios.put(
-  //       `${api.defaults.baseURL}/crs/${cr.crId}/priority`,
-  //       { priority: newPriority },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       }
-  //     );
-
-  //     // Handle any additional logic or UI updates after successfully changing priority
-  //     // For example, you might want to refresh the CRs list or show a success message
-  //     fetchCrs();
-  //     toast.success('Priority updated successfully!');
-  //   } catch (error) {
-  //     console.error('Error updating priority:', error);
-  //     // Handle error appropriately, e.g., show error message to the user
-  //   }
-  // };
   const columns = React.useMemo(
     () => [
       { id: 'crId', Header: 'CR ID', accessor: 'crId' },

@@ -7,6 +7,7 @@ interface UserInfo {
   email: string;
   userType: string;
   department: string;
+  username: string;
 }
 export const getLoginInfo = (): UserInfo | null => {
   const accessToken = localStorage.getItem("accessToken");

@@ -19,6 +19,7 @@ import ApproveORreject from './component/approve_or_rejectedCr';
 import CompletedCR from './component/completedCr'
 import ShowProtoDetails from './component/showProtoDetails';
 import DevShowCrDetails from './component/devShowCrDetails';
+import Profile from './component/profile';
 
 
 
@@ -38,7 +39,7 @@ function App() {
               <Route path="UserAccount" element={<ProtectedRoute><UserAccount /></ProtectedRoute>} />
               <Route path="createCr" element={<ProtectedRoute><CreateCr /></ProtectedRoute>} />
               <Route path="viewCr" element={<ProtectedRoute><Crview/></ProtectedRoute>}/>
-
+              <Route path="profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
               <Route path="log" element={<ProtectedRoute><Log/></ProtectedRoute>}/>
               <Route path="crProtoType/:crId" element={<ProtectedRoute><CrProtoType/></ProtectedRoute>}/>
               <Route path="ongingCr" element={<ProtectedRoute><OngingCr/></ProtectedRoute>}/>

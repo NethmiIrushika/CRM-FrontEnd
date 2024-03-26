@@ -20,6 +20,7 @@ import CompletedCR from './component/completedCr'
 import ShowProtoDetails from './component/showProtoDetails';
 import DevShowCrDetails from './component/devShowCrDetails';
 import Profile from './component/profile';
+import CompleteView from './component/completeView';
 
 
 
@@ -44,6 +45,7 @@ function App() {
               <Route path="crProtoType/:crId" element={<ProtectedRoute><CrProtoType/></ProtectedRoute>}/>
               <Route path="ongingCr" element={<ProtectedRoute><OngingCr/></ProtectedRoute>}/>
               <Route path="showCrDetails/:crId" element={<ProtectedRoute><ShowCrDetails/></ProtectedRoute>}/>
+              <Route path="completeView/:crId" element={<ProtectedRoute><CompleteView/></ProtectedRoute>}/>
               <Route path="devShowCrDetails/:crId" element={<ProtectedRoute><DevShowCrDetails/></ProtectedRoute>}/>
               <Route path="showProtoDetails/:prId" element={<ProtectedRoute><ShowProtoDetails/></ProtectedRoute>}/>
               <Route path="approveprototype" element={<ProtectedRoute><Approveprototype/></ProtectedRoute>}/>

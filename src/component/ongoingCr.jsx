@@ -63,9 +63,10 @@ function OngingCr() {
 
 
 
-  const handleButtonClick = (crId) => {
+  const handleButtonClick = (crId, topic) => {
     console.log("CR ID:", crId);
-    navigate(`/dashboard/crProtoType/${crId}`);
+    console.log("Topic:", topic);
+    navigate(`/dashboard/crProtoType/${crId}`, { state: { topic: topic } });
   };
 
   const handleSearchChange = (e) => {
@@ -74,6 +75,7 @@ function OngingCr() {
 
   const filteredCRs = crs.filter(cr =>
     cr.getCr[0].user.userId === loggedInUserId &&
+    cr.topic !== undefined &&
     Object.values(cr).some(value =>
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
@@ -121,7 +123,7 @@ function OngingCr() {
           </p>
   
           <button
-            onClick={() => handleButtonClick(cr.crId)}
+            onClick={() => handleButtonClick(cr.crId, cr.topic)}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 transition duration-300 ease-in-out"
           >
             Sent Prototype

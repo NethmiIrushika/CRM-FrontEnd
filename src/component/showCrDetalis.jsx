@@ -39,7 +39,7 @@ const ShowCrDetails = () => {
     const handleButtonClick = (crId) => {
         console.log("CR ID:", crId);
         navigate(`/dashboard/crProtoType/${crId}`);
-      };
+    };
 
     if (loading) {
         return <div>Loading...</div>;
@@ -50,32 +50,45 @@ const ShowCrDetails = () => {
     }
 
     return (
-        <div className="container mx-auto  h-auto mb-4">
+        <div className="container mx-auto  h-auto mb- ">
             <h1 className="text-2xl font-bold my-4">View CR Details</h1>
-            <div className="p-8 grid grid-cols-2 gap-4 bg-white rounded-lg shadow-md">
+            <div className="p-8 grid grid-cols-2 gap-4 bg-white rounded-lg shadow-md4">
+                <div className="col-span-2 ">
+                    <p className="mb-2 text-xl font-bold text-right">
+                        <span className="text-black">Status: </span>
+                        {cr.status === 'Pending' ? (
+                            <span className="text-red-500">{cr.status}</span>
+                        ) : cr.status === 'Start Development' ? (
+                            <span className="text-green-500">{cr.status}</span>
+                        ) : (
+                            <span>{cr.status}</span>
+                        )}
+                    </p>
+
+                    <p className="text-xl font-bold text-stone-950 mb-2 text-left">Topic: {cr.topic}</p>
+                </div>
                 <div className="col-span-1">
-                    <p className="text-xl font-bold text-stone-950 mb-3 text-left">Topic: {cr.topic}</p>
                     <p className="mb-2 text-left">Change Request ID: {cr.crId}</p>
                     <p className="mb-2 text-left">SFA User {cr.name}</p>
                 </div>
                 <div className="col-span-1">
-                    <p className="mb-2 text-xl font-bold text-yellow-400 text-left"> {cr.status}</p>
+
                     <p className="mb-2 text-left">Change Request Priority: {cr.priority}</p>
                     <p className="mb-2 text-left">Department: {cr.department}</p>
                 </div>
                 <div className="col-span-2 bg-gray-200 p-4 h-auto rounded-lg">
                     <p className='mb-2 text-left'> Description:
-                    <div dangerouslySetInnerHTML={{ __html: cr.description }} />
+                        <div dangerouslySetInnerHTML={{ __html: cr.description }} />
                     </p>
                 </div>
                 <div className="text-center my-4">
-                <button onClick={handleViewAttachment} className="inline-block text-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4">
-                    View attachment
-                </button>
-               
+                    <button onClick={handleViewAttachment} className="inline-block text-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4">
+                        View attachment
+                    </button>
+
+                </div>
             </div>
-            </div>
-            
+
         </div>
     );
 };

@@ -126,9 +126,10 @@ function ApproveORreject() {
     }
   };
 
-  const handleButtonClick = (crId) => {
+  const handleButtonClick = (crId,topic) => {
     console.log("CR ID:", crId);
-    navigate(`/dashboard/crProtoType/${crId}`);
+    console.log("Topic: ", topic);
+    navigate(`/dashboard/crProtoType/${crId}`,{ state: { topic: topic } });
   };
 
   useEffect(() => {
@@ -185,7 +186,7 @@ function ApproveORreject() {
             </button>
             {pr.rejectionReason && (
               <button
-                onClick={() => handleButtonClick(pr.crId)}
+                onClick={() => handleButtonClick(pr.crId, pr.topic)}
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out"
               >
                 Sent Prototype

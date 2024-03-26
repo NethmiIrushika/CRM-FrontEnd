@@ -248,7 +248,12 @@ useEffect(() => {
   page.forEach(prepareRow);
 
   const getRowProps = (state, rowInfo, column) => {
-    if (rowInfo && rowInfo.row && rowInfo.row.index === 0 && pageIndex === 0) {
+    if (
+      rowInfo &&
+      rowInfo.row &&
+      rowInfo.row.original.priority === 1 &&
+      (pageIndex === 0 || !pageIndex)
+    ) {
       return {
         className: 'bg-red-400 bg-opacity-15 shadow border border-red-600',
       };

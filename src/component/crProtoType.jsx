@@ -1,16 +1,16 @@
 // CrProtoType.jsx
 
-import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import api from '../api';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const CrProtoType = () => {
   const { crId } = useParams(); // Extract crId from URL parameters
-  
+  const {state} = useLocation();
   const [formData, setFormData] = useState({
-    topic: '',
+    topic: state?.topic ||'',
     description: ''
   });
   const [file, setFile] = useState(null);
@@ -28,6 +28,15 @@ const CrProtoType = () => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
   };
+
+  useEffect(() => {
+    if (crId && state?.topic) {
+      setFormData(prevState => ({
+        ...prevState,
+        topic: state.topic,
+      }));
+    }
+  }, [state?.topic, crId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,7 +72,7 @@ const CrProtoType = () => {
 
   return (
     <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-12">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Create Change Request</h2>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Create Change Request ProtoType </h2>
       <form onSubmit={handleSubmit}>
         <div className="grid gap-6">
           <input type="hidden" id="crId" value={crId} />
@@ -78,7 +87,6 @@ const CrProtoType = () => {
               className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 focus:outline-none placeholder-gray-400 text-gray-700"
               placeholder="Enter topic"
               value={formData.topic}
-              onChange={handleChange}
               required
             />
           </div>

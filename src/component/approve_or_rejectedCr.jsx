@@ -150,9 +150,12 @@ function ApproveORreject() {
 
       <div className="mt-4 container mx-auto  h-auto">
         {filteredCrPrototypes.map((pr) => (
-          <div key={pr.prId} className="bg-white rounded shadow p-4 mb-4">
-            <h2 className="text-lg font-semibold text-center">{pr.topic}</h2>
-            <div className="p-8 grid grid-cols-2 gap-4 ">
+          <div className="bg-white rounded shadow p-4 mb-4" key={pr.prId} >
+            <div className="p-8 grid grid-cols-2 gap-4  ">
+              <div className="col-span-2 ">
+              <p className="mb-2 text-xl font-bold text-right">Prototype Status: <span className={`font-bold ${pr.popupstatus === 'Rejected' ? 'text-red-500' : pr.popupstatus === 'Approved' ? 'text-green-500' : 'text-black'}`}>{pr.popupstatus}</span></p>
+                <p className="text-xl font-bold text-stone-950 mb-2 text-left">{pr.topic}</p>
+              </div>
               <div className='col-span-1'>
                 <p className="mb-2 text-left">
                   CR ID: {pr.crId}
@@ -162,13 +165,16 @@ function ApproveORreject() {
                 )}
               </div>
               <div className='col-span-1'>
-              <p className="mb-2 text-left">Prototype Status: <span className={`font-bold ${pr.popupstatus === 'Rejected' ? 'text-red-500' : pr.popupstatus === 'Approved' ? 'text-green-500' : 'text-black'}`}>{pr.popupstatus}</span></p>
-                {pr.rejectionReason && (<p className="mb-2 text-left">Rejected reason: {pr.rejectionReason} </p>)}
+              
+                {/* {pr.rejectionReason && (<p className="mb-2 text-left">Rejected reason: {pr.rejectionReason} </p>)} */}
                 {pr.cr && (<p className="mb-2 text-left"> name: {pr.cr.name} </p>)}
               </div>
-              <div className="col-span-2 bg-gray-200 p-4 h-auto rounded-lg">
-                <p className="text-gray-600 mb-2 text-left">{pr.description}</p>
-              </div>
+
+              {pr.rejectionReason && (<div className="col-span-2 ">
+              <p className="mb-2 text-left"> Rejected Reason: </p>
+                <p className="text-gray-600 mb-2 text-left bg-gray-200 p-4 h-auto rounded-lg">{pr.rejectionReason}</p>
+              </div>)}
+
             </div>
 
 

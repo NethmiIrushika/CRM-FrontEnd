@@ -144,11 +144,11 @@ useEffect(() => {
                 <button className="btn-secondary" onClick={() => closeEditPriority()}>Cancel</button>
               </>
             ) : (
-              <span className="mr-2">{row.original.priority}</span>
-            )}
+              
+            
             <button className="btn-primary" onClick={() => handleEditPriority(row)}>
               <FaEdit className="icon" /> {/* Add class for icon styling */}
-            </button>
+            </button>)}
           </div>
         ),
       },

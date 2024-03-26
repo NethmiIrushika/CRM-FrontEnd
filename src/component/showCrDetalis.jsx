@@ -70,16 +70,17 @@ const ShowCrDetails = () => {
                 <div className="col-span-1">
                     <p className="mb-2 text-left">Change Request ID: {cr.crId}</p>
                     <p className="mb-2 text-left">SFA User {cr.name}</p>
+                    
                 </div>
                 <div className="col-span-1">
 
                     <p className="mb-2 text-left">Change Request Priority: {cr.priority}</p>
                     <p className="mb-2 text-left">Department: {cr.department}</p>
                 </div>
-                <div className="col-span-2 bg-gray-200 p-4 h-auto rounded-lg">
-                    <p className='mb-2 text-left'> Description:
-                        <div dangerouslySetInnerHTML={{ __html: cr.description }} />
-                    </p>
+                
+                <div className="col-span-2 ">
+                    <p className='mb-2 text-left'> Description:</p>
+                    <div className='bg-gray-200 p-4 h-auto rounded-lg' dangerouslySetInnerHTML={{ __html: cr.description }} />
                 </div>
                 <div className="text-center my-4">
                     <button onClick={handleViewAttachment} className="inline-block text-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4">

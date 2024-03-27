@@ -43,7 +43,7 @@ function Approveprototype() {
     pr.cr.status !== "Develop without Prototype";
 
   });
-  
+
 
   useEffect(() => {
     fetchCrprototype();
@@ -69,35 +69,36 @@ function Approveprototype() {
       <div className="grid grid-cols-1 gap-4">
         {filteredCrPrototypes.map((pr) => (
           <div key={pr.prId} className="bg-white rounded-lg shadow-md p-6" >
-            <div className="grid grid-cols-2 gap-4 ">
+            <div className="grid grid-cols-2 gap-2 ">
               <div className="col-span-2 ">
-              <p className="mb-2 text-xl font-bold text-right">
-  <span className="text-black-400">Status: </span>
-  <span
-    className={`${
-      pr.cr.status === 'Sent prototype' ? 'text-blue-500' : pr.cr.status === 'Pending' ? 'text-red-500' : ''
-    }`}
-  >
-    {pr.cr.status}
-  </span>
-</p>
+                <p className="text-lg font-bold text-right">
+                  <span className="text-black-400">Status: </span>
+                  <span
+                    className={`${pr.cr.status === 'Sent prototype' ? 'text-blue-500' : pr.cr.status === 'Pending' ? 'text-red-500' : ''
+                      }`}
+                  >
+                    {pr.cr.status}
+                  </span>
+                </p>
 
-                <p className="text-xl font-bold text-stone-950 mb-3 text-left">Topic: {pr.topic}</p>
+                <p className="text-lg font-bold text-stone-950 text-left">Topic: {pr.topic}</p>
               </div>
-              <div className="col-span-1">
-                <p className="mb-2 text-left">CR ID: {pr.crId}</p>
+              <div className="col-span-2 ">
+              {pr.cr.createdAt && (
+                  <p className=" text-center"> The Change Request with ID: <span className="font-semibold text-xl">{pr.crId}</span> you created at : <span className="font-semibold">{pr.cr.createdAt}</span> now has a Prototype. Plese make sure to View the prototype and give your feed backs</p> 
+                )}
               </div>
               {/* <div className="col-span-1">
                 {pr.cr && <p className="mb-2 text-left">name: {pr.cr.name}</p>}
               </div> */}
             </div>
-            <div className="col-span-1">
+            {/* <div className="col-span-1">
               <p className=" mb-2 text-left">Description:</p>
               <div className="bg-gray-200 p-4 mt-4 rounded-lg">{pr.description}</div>
-            </div>
+            </div> */}
             <button
               onClick={() => handleActionClick(pr.prId)}
-              className="mt-4 w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded"
+              className="mt-4  bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded"
             >
               View
             </button>

@@ -160,29 +160,32 @@ function ApproveORreject() {
 
       <div className="mt-4 container mx-auto  h-auto">
         {filteredCrPrototypes.map((pr) => (
-          <div className="bg-white rounded shadow p-4 mb-4" key={pr.prId} >
-            <div className="p-8 grid grid-cols-2 gap-4  ">
+          <div className="bg-white rounded shadow p-4 mb-6" key={pr.prId} >
+            <div className="p-8 grid grid-cols-2 gap-2  ">
               <div className="col-span-2 ">
-              <p className="mb-2 text-xl font-bold text-right">Prototype Status: <span className={`font-bold ${pr.popupstatus === 'Rejected' ? 'text-red-500' : pr.popupstatus === 'Approved' ? 'text-green-500' : 'text-black'}`}>{pr.popupstatus}</span></p>
-                <p className="text-xl font-bold text-stone-950 mb-2 text-left">Topic: {pr.topic}</p>
+              <p className=" text-lg font-semibold text-right">Prototype Status: <span className={`font-bold ${pr.popupstatus === 'Rejected' ? 'text-red-500' : pr.popupstatus === 'Approved' ? 'text-green-500' : 'text-black'}`}>{pr.popupstatus}</span></p>
+                <p className="text-lg font-bold text-stone-950  text-left">Topic: {pr.topic}</p>
               </div>
               <div className='col-span-1'>
-                <p className="mb-2 text-left">
-                  CR ID: {pr.crId}
+                <p className=" text-left font-semibold">
+                  CR ID: <span className="font-medium"> {pr.crId} </span> 
                 </p>
-                {pr.cr.userId && (
-                  <p className="mb-2 text-left"> UserId: {pr.cr.userId.userId} </p>
+                {pr.cr.createdAt && (
+                  <p className=" text-left font-semibold"> CR Created At: <span className="font-medium">{pr.cr.createdAt}</span> </p>
                 )}
               </div>
               <div className='col-span-1'>
               
                 {/* {pr.rejectionReason && (<p className="mb-2 text-left">Rejected reason: {pr.rejectionReason} </p>)} */}
-                {pr.cr && (<p className="mb-2 text-left"> name: {pr.cr.name} </p>)}
+                {pr.cr && (<p className=" text-left font-semibold"> SFA User:  <span className="font-medium">{pr.cr.name}</span> </p>)}
+                {pr.createdAt && (
+                  <p className=" text-left font-semibold"> Prototype Created At: <span className="font-medium">{pr.createdAt}</span> </p>
+                )}
               </div>
 
               {pr.rejectionReason && (<div className="col-span-2 ">
-              <p className="mb-2 text-left"> Rejected Reason: </p>
-                <p className="text-gray-600 mb-2 text-left bg-gray-200 p-4 h-auto rounded-lg">{pr.rejectionReason}</p>
+              <p className=" text-left font-semibold"> Rejected Reason: </p>
+                <p className=" text-gray-600 text-left bg-gray-200 p-4 h-auto rounded-lg font-medium">{pr.rejectionReason}</p>
               </div>)}
 
             </div>
@@ -190,7 +193,7 @@ function ApproveORreject() {
 
             <button
             onClick={() => handleActionClick(pr.crId)}
-              className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="mt-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
             >
               View Deatails
             </button>
@@ -198,7 +201,7 @@ function ApproveORreject() {
             {pr.rejectionReason && (
               <button
                 onClick={() => handleButtonClick(pr.crId, pr.topic)}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded ml-2 transition-colors duration-300 ease-in-out"
               >
                 Sent Prototype
               </button>
@@ -206,7 +209,7 @@ function ApproveORreject() {
             {pr.rejectionReason == null && (
               <button
                 onClick={() => handleChangeStatusButtonClick(pr.prId)}
-                className="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 ml-2 px-4 rounded"
+                className="mt-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 ml-2 px-2 rounded"
               >
                 Complete Task
               </button>

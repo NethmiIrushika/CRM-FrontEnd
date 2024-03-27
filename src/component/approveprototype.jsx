@@ -37,7 +37,9 @@ function Approveprototype() {
   const filteredCrPrototypes = crprototype.filter((pr) => {
     return pr && pr.cr && pr.cr.userId && pr.cr.userId.userId === getLoginInfo()?.sub &&
     pr.popupstatus !== "Rejected" &&
-    pr.popupstatus !== "Approved" && pr.cr.status !== "Completed";
+    pr.popupstatus !== "Approved" && 
+    pr.popupstatus !== "second prototype" && 
+    pr.cr.status !== "Completed";
 
   });
   
@@ -79,7 +81,7 @@ function Approveprototype() {
   </span>
 </p>
 
-                <p className="text-lg font-semibold mb-4 text-left">Topic: {pr.topic}</p>
+                <p className="text-xl font-bold text-stone-950 mb-3 text-left">Topic: {pr.topic}</p>
               </div>
               <div className="col-span-1">
                 <p className="mb-2 text-left">CR ID: {pr.crId}</p>

@@ -20,6 +20,8 @@ import CompletedCR from './component/completedCr'
 import ShowProtoDetails from './component/showProtoDetails';
 import DevShowCrDetails from './component/devShowCrDetails';
 import Profile from './component/profile';
+
+import Notificaton from './component/notificaton'
 import CompleteView from './component/completeView';
 
 
@@ -51,6 +53,7 @@ function App() {
               <Route path="approveprototype" element={<ProtectedRoute><Approveprototype/></ProtectedRoute>}/>
               <Route path="approveORreject" element={<ProtectedRoute><ApproveORreject/></ProtectedRoute>}/>
               <Route path="completedCR" element={<ProtectedRoute><CompletedCR/></ProtectedRoute>}/>
+              <Route path="notificaton" element={<ProtectedRoute><Notificaton/></ProtectedRoute>}/>
             </Route>
           </Routes>
         </Router>

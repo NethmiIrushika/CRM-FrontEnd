@@ -90,7 +90,7 @@ const ShowProtoDetails = () => {
         );
       }
       setShowModal(false);
-      navigate("/dashboard/viewcr"); 
+      navigate("/dashboard/viewcr");
     } catch (error) {
       console.error("Error updating CR prototype:", error);
     }
@@ -98,78 +98,79 @@ const ShowProtoDetails = () => {
 
 
   if (!pr) {
-    return <div>No PR found</div>; 
+    return <div>No PR found</div>;
   }
   return (
     <div className="container mx-auto h-auto mb-4">
       <h1 className="text-2xl font-bold my-4">View Prototype Details</h1>
       <div className="p-8 grid grid-cols-2 gap-4 bg-white rounded-lg shadow-md">
-        <div className="col-span-1">
+        <div className="col-span-2 ">
           <p className="text-xl font-bold text-stone-950 mb-3 text-left">
             Topic: {pr.topic}
           </p>
+        </div>
+        <div className="col-span-1">
           <p className="mb-2 text-left">Change Request ID: {pr.crId}</p>
         </div>
-        <div className="col-span-2 bg-gray-200 p-4 h-auto rounded-lg">
-          <p className="mb-2 text-left">
-            Description:
-            <div dangerouslySetInnerHTML={{ __html: pr.description }} />
-          </p>
+        <div className="col-span-2 ">
+          <p className="mb-2 text-left"> Description:</p>
+            <div className="bg-gray-200 p-4 h-auto rounded-lg" dangerouslySetInnerHTML={{ __html: pr.description }} />
+          
         </div>
         <div className="text-center my-4">
-        <button
-  onClick={handleViewAttachment}
-  className="inline-block bg-yellow-400 hover:bg-yellow-500 font-bold text-black px-4 py-2 rounded mt-4 mr-2"
->
-  View Attachment
-</button>
-<button
-  onClick={() => handleActionClick(pr.prId)}
-  className="inline-block bg-yellow-400 hover:bg-yellow-500 font-bold text-black px-4 py-2 rounded mt-4"
->
-  Get Decision
-</button>
+          <button
+            onClick={handleViewAttachment}
+            className="inline-block bg-yellow-400 hover:bg-yellow-500 font-bold text-black px-4 py-2 rounded mt-4 mr-2"
+          >
+            View Attachment
+          </button>
+          <button
+            onClick={() => handleActionClick(pr.prId)}
+            className="inline-block bg-yellow-400 hover:bg-yellow-500 font-bold text-black px-4 py-2 rounded mt-4"
+          >
+            Get Decision
+          </button>
 
 
         </div>
       </div>
-  
+
       {showModal && pr && (
-  <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-800 bg-opacity-75">
-    <div className="bg-white p-4 rounded shadow">
-      <div className="flex justify-between items-center mb-4">
-      <h2 className="text-xl font-semibold text-center">Decision For Prototype</h2>
+        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-800 bg-opacity-75">
+          <div className="bg-white p-4 rounded shadow">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-center">Decision For Prototype</h2>
 
-        <button onClick={() => setShowModal(false)} className="text-gray-500 hover:text-gray-700">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-      </div>
-      <p>CR ID: {pr.crId}</p>
-      <p>{pr.topic}</p>
+              <button onClick={() => setShowModal(false)} className="text-gray-500 hover:text-gray-700">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <p>CR ID: {pr.crId}</p>
+            <p>{pr.topic}</p>
 
-      <div className="mt-4">
-        <button
-          onClick={() => handleAction("approve")}
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-4"
-        >
-          Approve
-        </button>
-        <button
-          onClick={() => handleAction("reject")}
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Reject
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+            <div className="mt-4">
+              <button
+                onClick={() => handleAction("approve")}
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-4"
+              >
+                Approve
+              </button>
+              <button
+                onClick={() => handleAction("reject")}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Reject
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
-  
+
 };
 
 export default ShowProtoDetails;

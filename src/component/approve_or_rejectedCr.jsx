@@ -162,7 +162,7 @@ function ApproveORreject() {
             <div className="p-8 grid grid-cols-2 gap-2  ">
               <div className="col-span-2 ">
               <p className=" text-lg font-semibold text-right">Prototype Status: <span className={`font-bold ${pr.popupstatus === 'Rejected' ? 'text-red-500' : pr.popupstatus === 'Approved' ? 'text-green-500' : 'text-black'}`}>{pr.popupstatus}</span></p>
-                <p className="text-lg font-semibold text-stone-950  text-left"><span className="font-bold">Topic: {pr.topic}</span></p>
+                <p className="text-lg font-bold text-stone-950  text-left">Topic: {pr.topic}</p>
               </div>
               <div className='col-span-1'>
                 <p className=" text-left font-semibold">

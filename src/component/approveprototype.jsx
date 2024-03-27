@@ -38,7 +38,7 @@ function Approveprototype() {
     return pr && pr.cr && pr.cr.userId && pr.cr.userId.userId === getLoginInfo()?.sub &&
     pr.popupstatus !== "Rejected" &&
     pr.popupstatus !== "Approved" && 
-    pr.popupstatus !== "second prototype" && 
+    pr.rejectionReason !== "" &&
     pr.cr.status !== "Completed";
 
   });

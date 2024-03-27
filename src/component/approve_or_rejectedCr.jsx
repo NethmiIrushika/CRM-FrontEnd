@@ -126,10 +126,18 @@ function ApproveORreject() {
     }
   };
 
+  
+
+
   const handleButtonClick = (crId,topic) => {
     console.log("CR ID:", crId);
     console.log("Topic: ", topic);
     navigate(`/dashboard/crProtoType/${crId}`,{ state: { topic: topic } });
+  };
+
+  const handleActionClick = (crId) => {
+    console.log('cr Id:', crId);
+    navigate(`/dashboard/completeView/${crId}/`);
   };
 
   useEffect(() => {
@@ -179,7 +187,7 @@ function ApproveORreject() {
 
 
             <button
-              onClick={() => handleViewButtonClick(pr.prId)}
+            onClick={() => handleActionClick(pr.crId)}
               className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
               View Deatails

@@ -4,10 +4,12 @@ import axios from 'axios';
 import api from '../api';
 import { useTable, usePagination, useSortBy } from 'react-table';
 import { FaEye } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function CompletedCR() {
   const [crs, setCrs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCrs = async () => {
@@ -30,6 +32,13 @@ function CompletedCR() {
     };
     fetchCrs();
   }, []);
+
+  const handleActionClick = (crId) => {
+    console.log('cr Id:', crId);
+    navigate(`/dashboard/completeView/${crId}/`);
+  };
+
+  
 
   const columns = React.useMemo(
     () => [

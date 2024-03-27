@@ -154,7 +154,7 @@ useEffect(() => {
       },
       {
         id: 'action',
-        Header: 'Action',
+        Header: 'View',
         accessor: (row) => (
           <button className="btn-secondary" onClick={() => handleActionClick(row.crId)}>
             <FaEye className="icon" />

@@ -56,7 +56,7 @@ const CrProtoType = () => {
       await api.put(`/crs/${crId}/status`, { status: 'Sent prototype' });
 
 
-      await api.put(`/crprototype/updatePopupStatus/${crId}`, { popupstatus: 'second prototype' });
+      // await api.put(`/crprototype/updatePopupStatus/${crId}`, { popupstatus: 'second prototype' });
       
 
       toast.success('You have successfully sent a change request prototype!');

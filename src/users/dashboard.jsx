@@ -8,7 +8,14 @@ import { getLoginInfo } from "../utils/LoginInfo";
 const Dashboard = () => {
   let navigate = useNavigate();
   const userType = getLoginInfo()?.userType;
+  const handleLogout = () => {
+    const confirmLogout = window.confirm('Do you want to exit CR Management System?');
 
+    if (confirmLogout) {
+      localStorage.removeItem('accessToken');
+      navigate('/userLogin');
+    }
+  };
 
   
 
@@ -290,11 +297,7 @@ const Dashboard = () => {
 
             <li>
               <button
-                onClick={() => {
-                  localStorage.removeItem("accessToken");
-
-                  navigate("/userLogin");
-                }}
+                onClick={handleLogout}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center w-40 h-10">

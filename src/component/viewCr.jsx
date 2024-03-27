@@ -6,7 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import { getLoginInfo } from "../utils/LoginInfo";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FaEye,FaEdit } from "react-icons/fa";
+import { FaEye, FaEdit } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import ChangePriorityPopup from '../popup/changeprioritypopup';
 import { format } from 'date-fns';
@@ -28,30 +28,30 @@ function Crview() {
       setCurrentPriority(selectedCrObj?.priority || '');
     }
     fetchCrs();
-}, [selectedCr, crs]);
+  }, [selectedCr, crs]);
 
-///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
 
-const isTokenExpired = () => {
-  const token = localStorage.getItem('accessToken');
-  if (token) {
-    const decodedToken = JSON.parse(atob(token.split('.')[1]));
-    return decodedToken.exp * 1000 < Date.now();
-  }
-  return true; // Return true if token not found or unable to decode
-};
+  const isTokenExpired = () => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      return decodedToken.exp * 1000 < Date.now();
+    }
+    return true; // Return true if token not found or unable to decode
+  };
 
-// Logout user if token is expired
-useEffect(() => {
-  if (isTokenExpired()) {
-    // Perform logout action here, such as clearing local storage and redirecting to login page
-    localStorage.clear();
-    navigate('/UserLogin'); // Redirect to login page
-  }
-}, []);
+  // Logout user if token is expired
+  useEffect(() => {
+    if (isTokenExpired()) {
+      // Perform logout action here, such as clearing local storage and redirecting to login page
+      localStorage.clear();
+      navigate('/UserLogin'); // Redirect to login page
+    }
+  }, []);
 
 
-/////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
 
   const fetchCrs = async () => {
     try {
@@ -63,7 +63,7 @@ useEffect(() => {
       });
       // Filter CRs with status "start-development"
       const filteredCrs = response.data.filter(cr =>
-        cr.status !== 'Starting Development' && cr.status !== 'Sent prototype' && cr.status !== 'Completed'&& cr.status !== 'Develop without Prototype');
+        cr.status !== 'Starting Development' && cr.status !== 'Sent prototype' && cr.status !== 'Completed' && cr.status !== 'Develop without Prototype');
       setCrs(filteredCrs);
     } catch (error) {
       console.error('Error fetching crs:', error);
@@ -184,7 +184,7 @@ useEffect(() => {
     canPreviousPage,
     gotoPage, // Add gotoPage from usePagination
     pageCount, // Add pageCount from usePagination
-    
+
   } = useTable(
     {
       columns,
@@ -248,9 +248,9 @@ useEffect(() => {
   };
 
   const filteredRows = React.useMemo(() => {
-    return page.filter((row) =>Object.values(row.original).some((cellValue) =>
-        cellValue && cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
-      )
+    return page.filter((row) => Object.values(row.original).some((cellValue) =>
+      cellValue && cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
     );
   }, [page, searchTerm]);
 
@@ -275,74 +275,82 @@ useEffect(() => {
           className="px-6 py-2 border border-gray-500 rounded"
         />
       </div>
-
-      <div className="overflow-x-auto">
-        <table {...getTableProps()} className="table-auto w-full border-collapse">
-          <thead className="bg-yellow-400">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2 border " key={column.id}>
-                    <div className="flex justify-between text-left">
-                      <span>{column.render('Header')}</span>
-                      <span>
-                        {column.isSorted ? (
-                          column.isSortedDesc ? (
+      {crs.length === 0 ? (
+        <div className="flex justify-center items-center h-full mt-4">
+          <p className="text-xl text-black-500 mt-10">There are not any Change Requests Pending in this system!!</p>
+        </div>
+      ) : (<div>
+        <div className="overflow-x-auto">
+          <table {...getTableProps()} className="table-auto w-full border-collapse">
+            <thead className="bg-yellow-400">
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2 border " key={column.id}>
+                      <div className="flex justify-between text-left">
+                        <span>{column.render('Header')}</span>
+                        <span>
+                          {column.isSorted ? (
+                            column.isSortedDesc ? (
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M7 10l5 5 5-5z" />
+                              </svg>
+                            ) : (
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M7 14l5-5 5 5z" />
+                              </svg>
+                            )
+                          ) : (
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
                               <path d="M7 10l5 5 5-5z" />
                             </svg>
-                          ) : (
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M7 14l5-5 5 5z" />
-                            </svg>
-                          )
-                        ) : (
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-1" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M7 10l5 5 5-5z" />
-                          </svg>
-                        )}
-                      </span>
-                    </div>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()} >
-  {filteredRows.map((row, i) => {
-    prepareRow(row);
+                          )}
+                        </span>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()} >
+              {filteredRows.map((row, i) => {
+                prepareRow(row);
 
-    return (
-      <tr
-        className={`border-b text-left ${getRowProps(null, { row, column: null }).className}`}
-        key={row.id}
-      >
-        {row.cells.map((cell) => (
-          <td {...cell.getCellProps()} className="px-4 py-5 text-left  border" key={cell.column.id}>
-            {cell.render('Cell')}
-          </td>
-        ))}
-      </tr>
-    );
-  })}
-</tbody>
+                return (
+                  <tr
+                    className={`border-b text-left ${getRowProps(null, { row, column: null }).className}`}
+                    key={row.id}
+                  >
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()} className="px-4 py-5 text-left  border" key={cell.column.id}>
+                        {cell.render('Cell')}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
 
-        </table>
+          </table>
+        </div>
+        <div className="pagination">
+          <button onClick={handleFirstPage} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+            {'<<'}
+          </button>
+          <button onClick={handlePreviousPage} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+            {'<'}
+          </button>
+          <button onClick={handleNextPage} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+            {'>'}
+          </button>
+          <button onClick={handleLastPage} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+            {'>>'}
+          </button>
+        </div>
       </div>
-      <div className="pagination">
-        <button onClick={handleFirstPage} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-          {'<<'}
-        </button>
-<button onClick={handlePreviousPage} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-          {'<'}
-        </button>
-        <button onClick={handleNextPage} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-          {'>'}
-        </button>
-        <button onClick={handleLastPage} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-          {'>>'}
-        </button>
-      </div>
+
+      )
+      }
 
     </div>
   );

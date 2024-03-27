@@ -49,9 +49,9 @@ function Approveprototype() {
   };
 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
+    const value = e.target.value.toLowerCase();
+    setSearchTerm(value);
   };
-
   const filteredCrPrototypes = crprototype.filter((pr) => {
     return pr && pr.cr && pr.cr.userId && pr.cr.userId.userId === getLoginInfo()?.sub;
   });
@@ -100,12 +100,12 @@ function Approveprototype() {
   });
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg `}>
       <div className="max-w-4xl mx-auto">
-        {/* Profile Component */}
+
         <Profile userInfo={getLoginInfo()} />
 
-        {/* Search Input */}
+
         <div className="mb-4 flex justify-end">
           <input
             type="text"

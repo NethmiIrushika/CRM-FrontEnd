@@ -115,17 +115,28 @@ const DevShowCrDetails = () => {
                     <div className='bg-gray-200 p-4 h-auto rounded-lg' dangerouslySetInnerHTML={{ __html: cr.description }} />
 
                 </div>
-                <div className="text-center my-4">
-                    <button onClick={handleViewAttachment} className="inline-block bg-blue-500 text-white px-2 py-2 rounded hover:bg-blue-600 transition-colors duration-300 ease-in-out">
-                        View Attachment
-                    </button>
-                    <button onClick={() => handleButtonClick(cr.crId, cr.topic)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded ml-2 transition-colors duration-300 ease-in-out">
-                        Sent Prototype
-                    </button>
-                    <button onClick={() => handleButtonClickskip(cr.crId, cr.topic)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out">
-                        Develop without Prototype
-                    </button>
-                </div>
+  <div className="flex justify-center my-4">
+  <button
+    onClick={handleViewAttachment}
+    className="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300 ease-in-out"
+  >
+    View Attachment
+  </button>
+  <button
+    onClick={() => handleButtonClick(cr.crId, cr.topic)}
+    className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out"
+  >
+    Sent Prototype
+  </button>
+  <button
+    onClick={() => handleButtonClickskip(cr.crId, cr.topic)}
+    className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out"
+  >
+    Develop without Prototype
+  </button>
+</div>
+
+
 
             </div>
 

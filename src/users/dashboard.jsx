@@ -176,23 +176,21 @@ const Dashboard = () => {
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center w-40 h-10">
-                  <svg
-                    className="w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      d="M10 4v12m-4-4h8"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                <svg
+  className="w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 20 20"
+  fill="none"
+  stroke="currentColor"
+  strokeWidth="2"
+  strokeLinecap="round"
+  strokeLinejoin="round"
+>
+  <path d="M5 3H15V17H5zM5 3L10 8L15 3" />
+</svg>
+
                   <span className="ms-3 text-black justify-center">
-                    Approve Prototypes
+                     Prototypes
                   </span>
                 </div>
               </button>

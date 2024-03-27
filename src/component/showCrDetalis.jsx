@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 const ShowCrDetails = () => {
     const { crId } = useParams();
     const [cr, setCr] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const [crs, setCrs] = useState([]);
 
     useEffect(() => {
         const fetchCrDetails = async () => {
@@ -34,12 +36,53 @@ const ShowCrDetails = () => {
         const fileUrl = `${api.defaults.baseURL}/uploads/cr/` + cr.filePath;
         // Open the file in a new tab
         window.open(fileUrl, '_blank');
-    }
-
-    const handleButtonClick = (crId) => {
-        console.log("CR ID:", crId);
-        navigate(`/dashboard/crProtoType/${crId}`);
     };
+
+    const fetchCrs = async () => {
+        try {
+          const accessToken = localStorage.getItem('accessToken');
+          const response = await axios.get(`${api.defaults.baseURL}/crs`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+          // Filter CRs with status "start-development"
+          const filteredCrs = response.data.filter(cr =>
+            cr.status !== 'Starting Development' && cr.status !== 'Sent prototype' && cr.status !== 'Completed');
+          setCrs(filteredCrs);
+        } catch (error) {
+          console.error('Error fetching crs:', error);
+        }
+      };
+
+    const handleButtonClick = async (crId) => {
+            try {
+              const accessToken = localStorage.getItem('accessToken');
+              const userId = localStorage.getItem('userId'); // Retrieve the userId from localStorage
+        
+              // Log the userId before making the API call
+              console.log(userId);
+        
+              await axios.put(
+                `${api.defaults.baseURL}/crs/${crId}/start-development`,
+                { userId }, // Include userId in the request payload
+                {
+                  headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                  },
+                }
+              );
+        
+              // Refresh the CRs after updating the status
+              fetchCrs();
+              
+              toast.success('CR is now in development!');
+              navigate(`/dashboard/devShowCrDetails/${crId}/`);
+            } catch (error) {
+              console.error('Error starting development:', error);
+            }};
+    
+
 
     if (loading) {
         return <div>Loading...</div>;
@@ -83,9 +126,15 @@ const ShowCrDetails = () => {
                     <div className='bg-gray-200 p-4 h-auto rounded-lg' dangerouslySetInnerHTML={{ __html: cr.description }} />
                 </div>
                 <div className="text-center my-4">
-                    <button onClick={handleViewAttachment} className="inline-block text-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-1">
-                        View attachment
-                    </button>
+                <button onClick={handleViewAttachment} className="inline-block text-center bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mt-1">
+  View Attachment
+</button>
+
+<button onClick={() => handleButtonClick(crId)} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4">
+  Get
+</button>
+
+
 
                 </div>
             </div>

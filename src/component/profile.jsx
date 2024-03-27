@@ -3,6 +3,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import api from "../api";
 import { getLoginInfo } from "../utils/LoginInfo";
+import {
+  useTable,
+  useFilters,
+  useGlobalFilter,
+  useAsyncDebounce,
+} from "react-table";
 
 function Profile({ userInfo }) {
   return (
@@ -48,15 +54,18 @@ function Approveprototype() {
   };
 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
+    const value = e.target.value.toLowerCase();
+    setSearchTerm(value);
   };
-
   const filteredCrPrototypes = crprototype.filter((pr) => {
     return (
       pr &&
       pr.cr &&
       pr.cr.userId &&
-      pr.cr.userId.userId === getLoginInfo()?.sub 
+      pr.cr.userId.userId === getLoginInfo()?.sub &&
+      (pr.crId.toString().toLowerCase().includes(searchTerm) ||
+        pr.topic.toLowerCase().includes(searchTerm) ||
+        pr.cr.status.toLowerCase().includes(searchTerm))
     );
   });
 
@@ -69,8 +78,41 @@ function Approveprototype() {
     navigate(`/dashboard/showprotoDetails/${prId}`);
   };
 
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "CR ID",
+        accessor: "crId",
+      },
+      {
+        Header: "Topic",
+        accessor: "topic",
+      },
+      {
+        Header: "Status",
+        accessor: "cr.status",
+      },
+      {
+        Header: "Action",
+        accessor: "prId",
+        Cell: ({ value }) => (
+          <button
+            onClick={() => handleActionClick(value)}
+            className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded"
+          >
+            View
+          </button>
+        ),
+      },
+    ],
+    []
+  );
+
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data: filteredCrPrototypes });
+
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg `}>
       <div className="max-w-4xl mx-auto">
         {/* Profile Component */}
         <Profile userInfo={getLoginInfo()} />
@@ -87,32 +129,34 @@ function Approveprototype() {
         </div>
 
         {/* Table */}
-        <table className="w-full table-auto">
-          <thead>
-            <tr>
-              <th className="px-4 py-2">CR ID</th>
-              <th className="px-4 py-2">Topic</th>
-              <th className="px-4 py-2">Status</th>
-              <th className="px-4 py-2">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredCrPrototypes.map((pr) => (
-              <tr key={pr.prId}>
-                <td className="px-4 py-2">{pr.crId}</td>
-                  {/* <td>{pr.cr.userId.userId}</td> */}
-                <td className="px-4 py-2">{pr.topic}</td>
-                <td className="px-4 py-2">{pr.cr.status}</td>
-                <td className="px-4 py-2">
-                  <button
-                    onClick={() => handleActionClick(pr.prId)}
-                    className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded"
-                  >
-                    View
-                  </button>
-                </td>
+        <table {...getTableProps()} className="w-full table-auto">
+          
+        <thead className="bg-yellow-400">
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()} className="px-4 py-2">
+                    {column.render("Header")}
+                  </th>
+                ))}
               </tr>
             ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td {...cell.getCellProps()} className="px-4 py-2">
+                        {cell.render("Cell")}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

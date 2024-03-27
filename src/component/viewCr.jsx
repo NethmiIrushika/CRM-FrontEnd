@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { FaEye,FaEdit } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import ChangePriorityPopup from '../popup/changeprioritypopup';
+import { format } from 'date-fns';
 
 function Crview() {
   const [crs, setCrs] = useState([]);
@@ -107,20 +108,18 @@ useEffect(() => {
     setEditPriority(false);
   };
 
+  const formatDate = (date) => {
+    return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); // Format date using date-fns
+  };
+
   const columns = React.useMemo(
     () => [
       { id: 'crId', Header: 'CR ID', accessor: 'crId' },
       { id: 'name', Header: 'Name', accessor: 'name' },
       { id: 'topic', Header: 'Topic', accessor: 'topic' },
-      { id: 'date', Header: 'Date/Time', accessor: 'createdAt' },
+      { id: 'date', Header: 'Date/Time', accessor: 'createdAt', Cell: ({ value }) => formatDate(value) }, // Apply custom Cell renderer
       { id: 'priority', Header: 'Priority', accessor: 'priority' },
-      userType === 'Developer' && {
-        id: 'get',
-        Header: 'Get',
-        accessor: (row) => (
-          <button className="btn-primary" onClick={() => handleButtonClick(row.crId)}>Get</button>
-        ),
-      },
+  
       userType === 'SFA_User' && {
         id: 'priorityInput',
         Header: 'Change Priority',
@@ -144,11 +143,10 @@ useEffect(() => {
                 <button className="btn-secondary" onClick={() => closeEditPriority()}>Cancel</button>
               </>
             ) : (
-              
-            
-            <button className="btn-primary" onClick={() => handleEditPriority(row)}>
-              <FaEdit className="icon" /> {/* Add class for icon styling */}
-            </button>)}
+              <button className="btn-primary" onClick={() => handleEditPriority(row)}>
+                <FaEdit className="icon" /> 
+              </button>
+            )}
           </div>
         ),
       },
@@ -164,6 +162,7 @@ useEffect(() => {
     ].filter(Boolean),
     [userType]
   );
+  
 
   const handleActionClick = (crId) => {
     console.log('cr Id:', crId);
@@ -171,32 +170,7 @@ useEffect(() => {
   };
 
 
-  const handleButtonClick = async (crId) => {
-    try {
-      const accessToken = localStorage.getItem('accessToken');
-      const userId = localStorage.getItem('userId'); // Retrieve the userId from localStorage
 
-      // Log the userId before making the API call
-      console.log(userId);
-
-      await axios.put(
-        `${api.defaults.baseURL}/crs/${crId}/start-development`,
-        { userId }, // Include userId in the request payload
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      // Refresh the CRs after updating the status
-      fetchCrs();
-      
-      toast.success('CR is now in development!');
-      navigate(`/dashboard/ongingCr`);
-    } catch (error) {
-      console.error('Error starting development:', error);
-    }};
 
   const {
     getTableProps,

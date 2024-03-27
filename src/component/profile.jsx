@@ -86,7 +86,7 @@ function Approveprototype() {
       },
       {
         Header: "Topic",
-        accessor: "topic",
+        accessor: "cr.topic",
       },
       {
         Header: "Status",

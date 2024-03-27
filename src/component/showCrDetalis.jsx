@@ -80,7 +80,7 @@ const ShowCrDetails = () => {
                 
                 <div className="col-span-2 ">
                     <p className='font-semibold text-left'> Description:</p>
-                    <div className='bg-gray-200 p-4 h-auto rounded-lg' dangerouslySetInnerHTML={{ __html: cr.description }} />
+                    <div className='bg-gray-200 p-4 h-auto rounded-lg text-left' dangerouslySetInnerHTML={{ __html: cr.description }} />
                 </div>
                 <div className="text-center my-4">
                     <button onClick={handleViewAttachment} className="inline-block text-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-1">

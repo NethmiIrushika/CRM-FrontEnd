@@ -334,7 +334,7 @@ useEffect(() => {
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()} className="bg-gray-50">
+          <tbody {...getTableBodyProps()} >
   {filteredRows.map((row, i) => {
     prepareRow(row);
 

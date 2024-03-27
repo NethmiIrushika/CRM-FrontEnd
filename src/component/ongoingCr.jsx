@@ -80,8 +80,8 @@ function OngingCr() {
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
-  
-  
+
+
   // .filter((cr) => cr.getCr[0].user.userId === loggedInUserId); 
 
   const handleActionClick = (crId) => {
@@ -93,52 +93,67 @@ function OngingCr() {
 
   return (
     <div className="container mx-auto px-4 full">
-    <div className="mb-4 flex justify-end">
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={handleSearchChange}
-        placeholder="Search..."
-        className="px-4 py-2 border border-gray-500 rounded w-64"
-      />
+      <div className="mb-4 flex justify-end">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          placeholder="Search..."
+          className="px-4 py-2 border border-gray-500 rounded w-64"
+        />
+      </div>
+
+      <div className="my-4">
+        {filteredCRs.map((cr) => (
+          <div className="bg-white rounded shadow p-4 mb-6" key={cr.crId} >
+            <div className="p-8 grid grid-cols-2 gap-2  ">
+              <div className="col-span-2 ">
+                <p className=" text-lg font-bold text-right">
+                  <span className="text-black font-semibold">Change Request Status: </span>
+                  {cr.status === 'Pending' ? (
+                    <span className="text-red-500 font-bold">{cr.status}</span>
+                  ) : cr.status === 'Starting Development' ? (
+                    <span className="text-green-500 font-bold">{cr.status}</span>
+                  ) : (
+                    <span>{cr.status}</span>
+                  )}
+                </p>
+                <p className="text-lg font-bold text-stone-950  text-left">Topic: {cr.topic}</p>
+              </div>
+              <div className="col-span-1">
+                <p className=" font-semibold text-left">
+                  CR ID: {cr.crId}
+                </p>
+                <p className=" font-semibold text-left">
+                  CR Created At: {cr.createdAt}
+                </p>
+              </div>
+              <div className="col-span-1">
+                <p className=" font-semibold text-left">
+                  User ID: {cr.getCr[0].user.userId}
+                </p>
+                <p className="font-semibold text-left">
+                  SFA_User Name:  {cr.name}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => handleButtonClick(cr.crId, cr.topic)}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded mr-2 transition duration-300 ease-in-out"
+            >
+              Sent Prototype
+            </button>
+            <button
+              onClick={() => handleActionClick(cr.crId)}
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded transition duration-300 ease-in-out"
+            >
+              View CR
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
-  
-    <div className="my-4">
-      {filteredCRs.map((cr) => (
-        <div key={cr.crId} className="border rounded p-4 mb-4 shadow-md">
-          <p className="text-lg font-semibold mb-2">
-            <strong>CR ID: </strong> {cr.crId}
-          </p>
-          <p className="text-gray-700 mb-2">
-            <strong>SFA_User Name: </strong> {cr.name}
-          </p>
-          <p className="text-gray-700 mb-2">
-            <strong>Topic: </strong> {cr.topic}
-          </p>
-          <p className="text-gray-700 mb-2">
-            <strong>Status: </strong> {cr.status}
-          </p>
-          <p className="text-gray-700 mb-2">
-          <strong>User ID: </strong> {cr.getCr[0].user.userId} {/* Assuming each CR has only one Getcr entry */}
-          </p>
-  
-          <button
-            onClick={() => handleButtonClick(cr.crId, cr.topic)}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 transition duration-300 ease-in-out"
-          >
-            Sent Prototype
-          </button>
-          <button
-            onClick={() => handleActionClick(cr.crId)}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
-          >
-            View CR
-          </button>
-        </div>
-      ))}
-    </div>
-  </div>
-  
+
   );
 }
 

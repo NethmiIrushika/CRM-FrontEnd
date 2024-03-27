@@ -36,6 +36,41 @@ const DevShowCrDetails = () => {
         window.open(fileUrl, '_blank');
     }
 
+    const handleButtonClickskip = async () => {
+        try {
+            const accessToken = localStorage.getItem('accessToken');
+            
+            // Send a PUT request to update the status
+            await axios.put(
+                `${api.defaults.baseURL}/crs/${crId}/status`,
+                { status: 'Develop without Prototype' },
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
+    
+            // Create CR prototype
+            const userId = localStorage.getItem('userId'); // assuming userId is stored in localStorage
+            const popupstatus = "Develop without Prototype";
+            await axios.post(
+                `${api.defaults.baseURL}/crprototype`,
+                { crId, userId, popupstatus  }, // Send the crId and userId in the request body
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
+    
+            navigate(`/dashboard/approveORreject`); // Redirect to the dashboard
+        } catch (error) {
+            console.error('Error updating CR status or creating CR prototype:', error);
+        }
+    };
+    
+
     const handleButtonClick = (crId, topic) => {
         console.log("CR ID:", crId);
         console.log('Topic:', topic)
@@ -86,6 +121,9 @@ const DevShowCrDetails = () => {
                     </button>
                     <button onClick={() => handleButtonClick(cr.crId, cr.topic)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded ml-2 transition-colors duration-300 ease-in-out">
                         Sent Prototype
+                    </button>
+                    <button onClick={() => handleButtonClickskip(cr.crId, cr.topic)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out">
+                        Develop without Prototype
                     </button>
                 </div>
 

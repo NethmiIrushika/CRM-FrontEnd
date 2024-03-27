@@ -63,7 +63,7 @@ useEffect(() => {
       });
       // Filter CRs with status "start-development"
       const filteredCrs = response.data.filter(cr =>
-        cr.status !== 'Starting Development' && cr.status !== 'Sent prototype' && cr.status !== 'Completed');
+        cr.status !== 'Starting Development' && cr.status !== 'Sent prototype' && cr.status !== 'Completed'&& cr.status !== 'Develop without Prototype');
       setCrs(filteredCrs);
     } catch (error) {
       console.error('Error fetching crs:', error);
@@ -125,7 +125,7 @@ useEffect(() => {
         Header: 'Change Priority',
         accessor: (row) => row,
         Cell: ({ row }) => (
-          <div className="flex items-center">
+          <div >
             {editPriority && selectedCr?.crId === row.original.crId ? (
               <>
                 <input
@@ -282,8 +282,8 @@ useEffect(() => {
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2" key={column.id}>
-                    <div className="flex items-center justify-between text-center">
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2 border " key={column.id}>
+                    <div className="flex justify-between text-left">
                       <span>{column.render('Header')}</span>
                       <span>
                         {column.isSorted ? (
@@ -308,17 +308,17 @@ useEffect(() => {
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()} className="bg-gray-50">
+          <tbody {...getTableBodyProps()} >
   {filteredRows.map((row, i) => {
     prepareRow(row);
 
     return (
       <tr
-        className={`border-b text-center ${getRowProps(null, { row, column: null }).className}`}
+        className={`border-b text-left ${getRowProps(null, { row, column: null }).className}`}
         key={row.id}
       >
         {row.cells.map((cell) => (
-          <td {...cell.getCellProps()} className="px-4 py-5 text-center" key={cell.column.id}>
+          <td {...cell.getCellProps()} className="px-4 py-5 text-left  border" key={cell.column.id}>
             {cell.render('Cell')}
           </td>
         ))}

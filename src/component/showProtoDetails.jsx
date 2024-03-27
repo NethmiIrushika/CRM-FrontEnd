@@ -102,19 +102,21 @@ const ShowProtoDetails = () => {
   }
   return (
     <div className="container mx-auto h-auto mb-4">
-      <h1 className="text-2xl font-bold my-4">View Prototype Details</h1>
-      <div className="p-8 grid grid-cols-2 gap-4 bg-white rounded-lg shadow-md">
+      <h1 className="text-xl font-bold my-4">View Prototype Details</h1>
+      <div className="p-8 grid grid-cols-2 gap-2 bg-white rounded-lg shadow-md">
         <div className="col-span-2 ">
-          <p className="text-xl font-bold text-stone-950 mb-3 text-left">
+          <p className="text-lg font-bold text-stone-950 text-right"> Status: <span className="font-bold text-red-500"> Pending Decision</span></p>
+          <p className="text-lg font-bold text-stone-950 text-left">
             Topic: {pr.topic}
           </p>
         </div>
         <div className="col-span-1">
-          <p className="mb-2 text-left">Change Request ID: {pr.crId}</p>
+          <p className="font-semibold text-left">Change Request ID: {pr.crId}</p>
+          <p className="font-semibold text-left">Prototype Created At: {pr.createdAt} </p>
         </div>
         <div className="col-span-2 ">
-          <p className="mb-2 text-left"> Description:</p>
-            <div className="bg-gray-200 p-4 h-auto rounded-lg" dangerouslySetInnerHTML={{ __html: pr.description }} />
+          <p className="font-semibold text-left"> Description:</p>
+            <div className="bg-gray-200 p-4 h-auto rounded-lg text-left" dangerouslySetInnerHTML={{ __html: pr.description }} />
           
         </div>
         <div className="text-center my-4">

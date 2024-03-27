@@ -114,10 +114,10 @@ function Approveprototype() {
   return (
     <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg `}>
       <div className="max-w-4xl mx-auto">
-        {/* Profile Component */}
+
         <Profile userInfo={getLoginInfo()} />
 
-        {/* Search Input */}
+
         <div className="mb-4 flex justify-end">
           <input
             type="text"

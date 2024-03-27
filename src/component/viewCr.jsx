@@ -62,7 +62,7 @@ useEffect(() => {
       });
       // Filter CRs with status "start-development"
       const filteredCrs = response.data.filter(cr =>
-        cr.status !== 'Starting Development' && cr.status !== 'Sent prototype' && cr.status !== 'Completed');
+        cr.status !== 'Starting Development' && cr.status !== 'Sent prototype' && cr.status !== 'Completed'&& cr.status !== 'Develop without Prototype');
       setCrs(filteredCrs);
     } catch (error) {
       console.error('Error fetching crs:', error);

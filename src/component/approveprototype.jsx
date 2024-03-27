@@ -39,7 +39,8 @@ function Approveprototype() {
     pr.popupstatus !== "Rejected" &&
     pr.popupstatus !== "Approved" && 
     pr.rejectionReason !== "" &&
-    pr.cr.status !== "Completed";
+    pr.cr.status !== "Completed" &&
+    pr.cr.status !== "Develop without Prototype";
 
   });
   

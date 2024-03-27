@@ -93,8 +93,10 @@ function ApproveORreject() {
   const filteredCrPrototypes = crprototype.filter((pr) => {
     if (pr && pr.popupstatus) {
       return (
-        pr.popupstatus.toLowerCase() === "approved" ||
-        pr.popupstatus.toLowerCase() === "rejected"
+      (pr.popupstatus.toLowerCase() === "approved" ||
+        pr.popupstatus.toLowerCase() === "rejected" ||
+        pr.popupstatus === "Develop without Prototype") 
+        // && (pr.cr.status === "Sent prototype" && pr.popupstatus.toLowerCase() === "rejected" )
       );
     }
     return false;

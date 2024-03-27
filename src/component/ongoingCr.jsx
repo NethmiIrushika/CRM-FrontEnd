@@ -74,7 +74,7 @@ function OngingCr() {
   };
 
   const filteredCRs = crs.filter(cr =>
-    cr.getCr[0].user.userId === loggedInUserId &&
+    // cr.getCr[0].user.userId === loggedInUserId &&
     cr.topic !== undefined &&
     Object.values(cr).some(value =>
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())

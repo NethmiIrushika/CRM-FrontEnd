@@ -64,7 +64,7 @@ const DevShowCrDetails = () => {
                 }
             );
     
-            navigate(`/dashboard`); // Redirect to the dashboard
+            navigate(`/dashboard/approveORreject`); // Redirect to the dashboard
         } catch (error) {
             console.error('Error updating CR status or creating CR prototype:', error);
         }

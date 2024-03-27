@@ -113,7 +113,7 @@ function CompletedCR() {
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()} >
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2">
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())} className="px-4 py-2 border">
                     <div className="flex items-center justify-between text-center">
                       <span>{column.render('Header')}</span>
                       <span>
@@ -139,7 +139,7 @@ function CompletedCR() {
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()} className="bg-gray-50">
+          <tbody {...getTableBodyProps()} >
             {filteredRows.map((row, index) => {
               prepareRow(row);
               // Remove HTML tags from the description
@@ -147,7 +147,7 @@ function CompletedCR() {
               return (
                 <tr {...row.getRowProps()} className="border-b text-center" key={row.original.userId}>
                   {row.cells.map((cell, cellIndex) => (
-                    <td {...cell.getCellProps()} className="px-4 py-2 text-center" key={cellIndex}>
+                    <td {...cell.getCellProps()} className="px-4 py-2 text-left border" key={cellIndex}>
                       {/* Render the description without HTML tags */}
                       {cell.column.id === 'description' ? descriptionWithoutTags : cell.render('Cell')}
                     </td>
@@ -160,7 +160,7 @@ function CompletedCR() {
       </div>
       <div className="pagination">
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-          {'<'}
+          {'<<'}
         </button>{' '}
         <button onClick={() => previousPage()} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
           {'<'}
@@ -169,7 +169,7 @@ function CompletedCR() {
           {'>'}
         </button>{' '}
         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-          {'>'}
+          {'>>'}
         </button>{' '}
       </div>
     </div>

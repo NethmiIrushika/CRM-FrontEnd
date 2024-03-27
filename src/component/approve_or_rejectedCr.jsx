@@ -158,7 +158,7 @@ function ApproveORreject() {
 
       <div className="mt-4 container mx-auto  h-auto">
         {filteredCrPrototypes.map((pr) => (
-          <div className="bg-white rounded shadow p-4 mb-4" key={pr.prId} >
+          <div className="bg-white rounded shadow p-4 mb-6" key={pr.prId} >
             <div className="p-8 grid grid-cols-2 gap-2  ">
               <div className="col-span-2 ">
               <p className=" text-lg font-semibold text-right">Prototype Status: <span className={`font-bold ${pr.popupstatus === 'Rejected' ? 'text-red-500' : pr.popupstatus === 'Approved' ? 'text-green-500' : 'text-black'}`}>{pr.popupstatus}</span></p>

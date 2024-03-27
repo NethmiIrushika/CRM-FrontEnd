@@ -69,7 +69,7 @@ const ShowCrDetails = () => {
                 </div>
                 <div className="col-span-1">
                     <p className="font-semibold text-left">Change Request ID: {cr.crId}</p>
-                    <p className="font-semibold text-left">SFA User {cr.name}</p>
+                    <p className="font-semibold text-left">SFA User: {cr.name}</p>
                     
                 </div>
                 <div className="col-span-1">

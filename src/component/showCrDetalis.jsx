@@ -107,12 +107,14 @@ const ShowCrDetails = () => {
   const updateCr = async (updatedCr) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
-      const response = await axios.get(`${api.defaults.baseURL}/crs`, {
+      const response = await axios.put(`${api.defaults.baseURL}/crs/${updatedCr.crId}`, {
+        hodApprovel: updatedCr.hodApprovel
+      }, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      setCr(response.data); // Update CR state instead of Users
+      setCr(response.data);
       if (updatedCr.hodApprovel === 'approved') {
         toast.success(` ${updatedCr.firstname}  ${updatedCr.hodApprovel}`, {
           className: 'toast-success',
@@ -128,7 +130,6 @@ const ShowCrDetails = () => {
       console.error('Error updating CR:', error);
     }
   };
-
 
 
   return (

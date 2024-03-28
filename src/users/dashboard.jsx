@@ -1,22 +1,39 @@
 /* eslint-disable react/no-unknown-property */
-import React from "react";
+import React,{useState} from "react";
 import logoImage from "../assets/dashboardr.png";
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar";
 import { getLoginInfo } from "../utils/LoginInfo";
+import LogoutPopup from '../popup/logoutpopup';
 
 const Dashboard = () => {
   let navigate = useNavigate();
+  const [showLogoutPopup, setShowLogoutPopup] = useState(false);
   const userType = getLoginInfo()?.userType;
-  const handleLogout = () => {
-    const confirmLogout = window.confirm(
-      "Do you want to exit CR Management System?"
-    );
+  
+  // const handleLogout = () => {
+  //   const confirmLogout = window.confirm(
+  //     "Do you want to exit CR Management System?"
+  //   );
 
-    if (confirmLogout) {
-      localStorage.removeItem("accessToken");
-      navigate("/userLogin");
-    }
+  //   if (confirmLogout) {
+  //     localStorage.removeItem("accessToken");
+  //     navigate("/userLogin");
+  //   }
+  // };
+
+
+  const handleLogout =() => {
+    setShowLogoutPopup(true);
+  };
+
+  const handleConfirmLogout =() => {
+    localStorage.removeItem('accessToken');
+    navigate('/userLogin');
+  };
+
+  const handleCancelLogout =() =>{
+    setShowLogoutPopup(false);
   };
 
   return (
@@ -343,6 +360,11 @@ const Dashboard = () => {
           <Outlet />
         </div>
       </div>
+      <LogoutPopup
+        show={showLogoutPopup}
+        onConfirm={handleConfirmLogout}
+        onClose={handleCancelLogout}
+      />
     </>
   );
 };

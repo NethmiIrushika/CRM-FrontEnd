@@ -159,6 +159,11 @@ function Crview() {
           </button>
         ),
       },
+      userType === 'SFA_User' &&{
+        id: 'approve',
+        Header: 'HOD Approvel',
+        accessor: 'HOD Approvel'
+      },
     ].filter(Boolean),
     [userType]
   );
@@ -254,8 +259,11 @@ function Crview() {
     );
   }, [page, searchTerm]);
 
-  return (
+  
+return (
     <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg `}>
+
+      
 
       <ChangePriorityPopup
         editPriority={editPriority}

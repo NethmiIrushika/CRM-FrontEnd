@@ -54,7 +54,7 @@ function UserLogin() {
         
           toast.success('You have  successfully logged in!');
             
-          if (data.userType === 'Developer' || data.userType === 'SFA_User') {
+          if (data.userType === 'Developer' || data.userType === 'SFA_User' ||data.userType === 'HOD') {
             navigate('/dashboard/viewCr');
           } else if (data.userType === 'Admin') {
             navigate('/dashboard/useraccount');

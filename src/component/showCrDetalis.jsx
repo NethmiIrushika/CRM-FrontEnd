@@ -4,6 +4,8 @@ import api from "../api";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getLoginInfo } from "../utils/LoginInfo";
+import StatusPopupcr from '../popup/statuspopupcr';
+
 
 const ShowCrDetails = () => {
   const { crId } = useParams();
@@ -12,6 +14,7 @@ const ShowCrDetails = () => {
   const navigate = useNavigate();
   const [crs, setCrs] = useState([]);
   const userType = getLoginInfo()?.userType;
+  const [showStatusPopup, setShowStatusPopup] = useState(false);
 
   useEffect(() => {
     const fetchCrDetails = async () => {
@@ -100,8 +103,49 @@ const ShowCrDetails = () => {
     return <div>No CR found</div>;
   }
 
+
+  const updateCr = async (updatedCr) => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      const response = await axios.get(`${api.defaults.baseURL}/crs`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      setCr(response.data); // Update CR state instead of Users
+      if (updatedCr.hodApprovel === 'approved') {
+        toast.success(` ${updatedCr.firstname}  ${updatedCr.hodApprovel}`, {
+          className: 'toast-success',
+        });
+      } else if (updatedCr.hodApprovel === 'rejected') {
+        toast.error(` ${updatedCr.firstname}  ${updatedCr.hodApprovel}`, {
+          className: 'toast-error',
+        });
+      } else {
+        toast.success(` ${updatedCr.firstname} ${updatedCr.hodApprovel}`);
+      }
+    } catch (error) {
+      console.error('Error updating CR:', error);
+    }
+  };
+
+
+
   return (
+
+
+
     <div className="container mx-auto  h-auto  ">
+
+      {showStatusPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
+          <StatusPopupcr
+            cr={cr} // Pass the cr object here
+            close={() => setShowStatusPopup(false)}
+            updateUser={updateCr}
+          />
+        </div>
+      )}
       <h1 className="text-xl font-bold my-4">View CR Details</h1>
       <div className="p-8 grid grid-cols-2 gap-2 bg-white rounded-lg shadow-md4">
         <div className="col-span-2 ">
@@ -143,22 +187,31 @@ const ShowCrDetails = () => {
           />
         </div>
         <div className="text-center my-4">
-  <button
-    onClick={handleViewAttachment}
-    className="inline-block text-center bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mt-1"
-  >
-    View Attachment
-  </button>
+          <button
+            onClick={handleViewAttachment}
+            className="inline-block text-center bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mt-1"
+          >
+            View Attachment
+          </button>
 
-  {userType === 'Developer' && cr.priority === '1' &&
-    <button
-      onClick={() => handleButtonClick(crId)}
-      className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-4 ml-2" // Added ml-2 for left margin
-    >
-      Get To Development
-    </button>
-  }
-</div>
+          {userType === 'Developer' && cr.priority === '1' &&
+            <button
+              onClick={() => handleButtonClick(crId)}
+              className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-4 ml-2" // Added ml-2 for left margin
+            >
+              Get To Development
+            </button>
+          }
+
+          {userType === 'HOD' &&
+            <button
+              onClick={() => setShowStatusPopup(true)}
+              className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-4 ml-2" // Added ml-2 for left margin
+            >
+              Approve
+            </button>
+          }
+        </div>
 
       </div>
     </div>

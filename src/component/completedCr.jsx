@@ -106,8 +106,11 @@ function CompletedCR() {
           className="px-4 py-2 border border-gray-500 rounded"
         />
       </div>
-
-      <div className="overflow-x-auto">
+{crs.length === 0 ?(<div className="flex justify-center items-center h-full mt-4">
+          <p className="text-xl text-black-500 mt-10">There are not any  Completed Change Requests in this system!!</p>
+        </div>):(
+          <div>
+            <div className="overflow-x-auto">
         <table {...getTableProps()} className="table-fixed w-full border-collapse">
           <thead className="bg-yellow-400">
             {headerGroups.map((headerGroup) => (
@@ -172,6 +175,9 @@ function CompletedCR() {
           {'>>'}
         </button>{' '}
       </div>
+          </div>
+        )}
+      
     </div>
   );
 }

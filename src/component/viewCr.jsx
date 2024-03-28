@@ -162,7 +162,7 @@ function Crview() {
       userType === 'SFA_User' &&{
         id: 'approve',
         Header: 'HOD Approvel',
-        accessor: 'HOD Approvel'
+        accessor: 'hodApprovel'
       },
     ].filter(Boolean),
     [userType]
@@ -253,11 +253,26 @@ function Crview() {
   };
 
   const filteredRows = React.useMemo(() => {
-    return page.filter((row) => Object.values(row.original).some((cellValue) =>
-      cellValue && cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    )
+    let filteredData = page;
+  
+    // Apply filtering based on user type
+    if (userType === 'SFA_User') {
+      filteredData = filteredData.filter(row => row.original.hodApprovel === 'approved');
+    }
+    if (userType === 'Developer') {
+      filteredData = filteredData.filter(row => row.original.hodApprovel === 'approved');
+    }
+  
+    // Apply search term filtering
+    filteredData = filteredData.filter(row =>
+      Object.values(row.original).some(cellValue =>
+        cellValue && cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      )
     );
-  }, [page, searchTerm]);
+  
+    return filteredData;
+  }, [page, searchTerm, userType]);
+  
 
   
 return (

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import React,{useState} from "react";
+import React, { useState } from "react";
 import logoImage from "../assets/dashboardr.png";
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar";
@@ -10,7 +10,7 @@ const Dashboard = () => {
   let navigate = useNavigate();
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
   const userType = getLoginInfo()?.userType;
-  
+
   // const handleLogout = () => {
   //   const confirmLogout = window.confirm(
   //     "Do you want to exit CR Management System?"
@@ -23,16 +23,16 @@ const Dashboard = () => {
   // };
 
 
-  const handleLogout =() => {
+  const handleLogout = () => {
     setShowLogoutPopup(true);
   };
 
-  const handleConfirmLogout =() => {
+  const handleConfirmLogout = () => {
     localStorage.removeItem('accessToken');
     navigate('/userLogin');
   };
 
-  const handleCancelLogout =() =>{
+  const handleCancelLogout = () => {
     setShowLogoutPopup(false);
   };
 
@@ -88,22 +88,41 @@ const Dashboard = () => {
               </button>
             </li>
             <li>
-  <button
-    onClick={() => navigate("viewCr")}
-    className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white"
-  >
-    <div className="flex items-center  w-40 h-10">
+              <button
+              
+                onClick={() => navigate("viewCr")}
+                className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white"
+              >
+                <div className="flex items-center  w-40 h-10">
 
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red">
-        <path d="M9 12a3 3 0 1 1 6 0a3 3 0 1 1-6 0zM12 2c-4.97 0-9 4.03-9 9s4.03 9 9 9s9-4.03 9-9s-4.03-9-9-9zm0 4a5 5 0 0 0-5 5a5 5 0 0 0 10 0a5 5 0 0 0-5-5z"></path>
-      </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red">
+                    <path d="M9 12a3 3 0 1 1 6 0a3 3 0 1 1-6 0zM12 2c-4.97 0-9 4.03-9 9s4.03 9 9 9s9-4.03 9-9s-4.03-9-9-9zm0 4a5 5 0 0 0-5 5a5 5 0 0 0 10 0a5 5 0 0 0-5-5z"></path>
+                  </svg>
 
-      <span className="ms-3 text-black justify-center">
-        CR View
-      </span>
-    </div>
-  </button>
-</li>
+                  <span className="ms-3 text-black justify-center">
+                    CR View
+                  </span>
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
+              onClick={() => navigate("OngoingApprovelCr")}
+                style={{ display: userType !== "SFA_User" ? "none" : "" }}
+                className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white"
+              >
+                <div className="flex items-center  w-40 h-10">
+
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red">
+                    <path d="M9 12a3 3 0 1 1 6 0a3 3 0 1 1-6 0zM12 2c-4.97 0-9 4.03-9 9s4.03 9 9 9s9-4.03 9-9s-4.03-9-9-9zm0 4a5 5 0 0 0-5 5a5 5 0 0 0 10 0a5 5 0 0 0-5-5z"></path>
+                  </svg>
+
+                  <span className="ms-3 text-black justify-center">
+                    Ongoing approvel
+                  </span>
+                </div>
+              </button>
+            </li>
 
 
             <li>
@@ -193,21 +212,21 @@ const Dashboard = () => {
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center w-40 h-10">
-                <svg
-  className="w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 20 20"
-  fill="none"
-  stroke="currentColor"
-  strokeWidth="2"
-  strokeLinecap="round"
-  strokeLinejoin="round"
->
-  <path d="M5 3H15V17H5zM5 3L10 8L15 3" />
-</svg>
+                  <svg
+                    className="w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M5 3H15V17H5zM5 3L10 8L15 3" />
+                  </svg>
 
                   <span className="ms-3 text-black justify-center">
-                     Prototypes
+                    Prototypes
                   </span>
                 </div>
               </button>

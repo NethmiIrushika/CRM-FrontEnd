@@ -20,7 +20,7 @@ import CompletedCR from './component/completedCr'
 import ShowProtoDetails from './component/showProtoDetails';
 import DevShowCrDetails from './component/devShowCrDetails';
 import Profile from './component/profile';
-
+import OngoingApprovelCr from './component/ongoingApprovelCr';
 import Notificaton from './component/notificaton'
 import CompleteView from './component/completeView';
 
@@ -54,6 +54,7 @@ function App() {
               <Route path="approveORreject" element={<ProtectedRoute><ApproveORreject/></ProtectedRoute>}/>
               <Route path="completedCR" element={<ProtectedRoute><CompletedCR/></ProtectedRoute>}/>
               <Route path="notificaton" element={<ProtectedRoute><Notificaton/></ProtectedRoute>}/>
+              <Route path="ongoingApprovelCr" element={<ProtectedRoute><OngoingApprovelCr/></ProtectedRoute>}/>
             </Route>
           </Routes>
         </Router>

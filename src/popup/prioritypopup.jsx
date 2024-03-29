@@ -18,9 +18,9 @@ function PriorityPopup({ show, priority, onClose }) {
       {(close) => (
         <div className='flex justify-center items-center h-80 bg-gray-100 w-80 rounded-lg'>
           <div>
-            <p className="text-xl font-semibold mb-2 text-center">Priority Information</p>
+            <p className="text-xl font-semibold mb-2 text-center">Pending Approvel</p>
             <p className="text-lg text-center">
-              The priority number of your CR is <span className="font-bold text-xl text-center">{priority}</span>
+              Your CR is pending the approvel from Head of Department!!
             </p>
             <div className="flex justify-center">
             <button onClick={onClose} className="inline-block w-1/2 mr-1 py-2 px-4 bg-yellow-300 text-white rounded-l-md hover:bg-yellow-500 focus:outline-none focus:bg-yellow-500 text-center">Close</button>

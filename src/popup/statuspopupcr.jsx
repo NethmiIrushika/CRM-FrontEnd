@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import api from '../api';
+import { useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const StatusPopupcr = ({ cr, close, updateCr }) => {
-  const [newCrStatus, setNewCrStatus] = useState(cr.hodApprovel);
+  const [newCrStatus, setNewCrStatus] = useState(cr.hodApprovel || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+const navigate = useNavigate();
   const changeStatus = async () => {
     setLoading(true);
     try {
       await axios.put(`${api.defaults.baseURL}/crs/${cr.crId}/update-hod-approval`, { hodApprovel: newCrStatus });
       close();
       updateCr({ ...cr, hodApprovel: newCrStatus });
+      navigate('/dashboard/viewCr');
     } catch (error) {
       setError('Error changing CR status. Please try again later.');
       console.error('Error changing CR status:', error);

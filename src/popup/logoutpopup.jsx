@@ -23,8 +23,8 @@ function LogoutPopup({ show, onConfirm, onClose }) {
               Do you want to exit the CR Management System?
             </p>
             <div className="flex justify-between">
-              <button onClick={onClose} className="inline-block w-1/2 py-2 px-4 bg-red-400 text-white rounded-l-md hover:bg-red-500 focus:outline-none mr-1">No</button>
-              <button onClick={onConfirm} className="inline-block w-1/2 py-2 px-4 bg-yellow-300 text-white rounded-r-md hover:bg-yellow-500 focus:outline-none focus:bg-yellow-500">Yes</button>
+              <button onClick={onClose} className="inline-block w-1/2 py-2 px-4 bg-yellow-400 text-white rounded-l-md hover:bg-yellow-400 focus:outline-none mr-1">Yes </button>
+              <button onClick={onConfirm} className="inline-block w-1/2 py-2 px-4 bg-yellow-400 text-white rounded-r-md hover:bg-yellow-400 focus:outline-none bg-yellow-400"> No </button>
             </div>
           </div>
         </div>

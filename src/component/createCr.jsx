@@ -18,6 +18,7 @@ const Insert = () => {
     status: 'Pending',
     date: '',
     priority: 0,
+    crtype: '',
   });
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
@@ -65,6 +66,7 @@ const Insert = () => {
       formDataToSend.append('description', formData.description);
       formDataToSend.append('status', formData.status);
       formDataToSend.append('userId', userId);
+      formDataToSend.append('crtype', formData.crtype);
   
       const response = await axios.post(`${api.defaults.baseURL}/crs/create`, formDataToSend, {
         headers: {
@@ -131,6 +133,29 @@ console.log(showPriorityPopup);
               required
             />
           </div>
+
+          <div className="mb-4">
+              <label
+                htmlFor="crtype"
+                className="block text-sm font-medium text-gray-700"
+              >
+                CR Type:
+              </label>
+              <select
+                id="crtype"
+                name="crtype"
+                value={formData.crtype}
+                onChange={handleChange}
+                className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                required
+              >
+                <option value="">Select CR Type</option>
+                <option value="Enhancement/Report/Form Modification">Enhancement/Report/Form Modification</option>
+                <option value="Update & Fix Security">Update & Fix Security</option>
+                <option value="A Modification">A Modification</option>
+                <option value="Security">Security</option>
+              </select>
+            </div>
 
           <div>
             <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">

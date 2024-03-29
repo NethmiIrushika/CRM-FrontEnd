@@ -14,6 +14,7 @@ function Register() {
     cpassword: "",
     department: "",
     userType: "",
+    extension: "",
     status: "pending",
   });
 
@@ -107,6 +108,25 @@ function Register() {
                 name="username"
                 id="username"
                 value={formData.username}
+                onChange={handleChange}
+                className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                required
+              />
+            </div>
+
+            
+            <div className="mb-4">
+              <label
+                htmlFor="extension"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Extension:
+              </label>
+              <input
+                type="number"
+                name="extension"
+                id="extension"
+                value={formData.extension}
                 onChange={handleChange}
                 className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 required

@@ -118,7 +118,9 @@ const ShowCrDetails = () => {
       if (updatedCr.hodApprovel === 'approved') {
         toast.success(` ${updatedCr.firstname}  ${updatedCr.hodApprovel}`, {
           className: 'toast-success',
+        
         });
+        
       } else if (updatedCr.hodApprovel === 'rejected') {
         toast.error(` ${updatedCr.firstname}  ${updatedCr.hodApprovel}`, {
           className: 'toast-error',
@@ -126,6 +128,8 @@ const ShowCrDetails = () => {
       } else {
         toast.success(` ${updatedCr.firstname} ${updatedCr.hodApprovel}`);
       }
+      navigate('/dashboard/viewCr')
+      
     } catch (error) {
       console.error('Error updating CR:', error);
     }

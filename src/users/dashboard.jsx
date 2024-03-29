@@ -118,7 +118,7 @@ const Dashboard = () => {
                   </svg>
 
                   <span className="ms-3 text-black justify-center">
-                    Ongoing approvel
+                    Ongoing approval
                   </span>
                 </div>
               </button>

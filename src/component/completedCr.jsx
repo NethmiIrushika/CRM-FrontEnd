@@ -22,7 +22,7 @@ function CompletedCR() {
           },
         });
         // console.log(accessToken);
-        const completedCRs = response.data.filter(cr => cr.status === "Completed");
+        const completedCRs = response.data.filter(cr => cr.status === "Development Completed");
 
         setCrs(completedCRs);
 

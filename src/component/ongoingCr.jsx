@@ -28,7 +28,7 @@ function OngingCr() {
         });
 
         const startingDevelopmentCRs = response.data.filter(
-          (cr) => cr.status === "Starting Development"
+          (cr) => cr.status === "Taken For Development"
         );
 
         setCrs(startingDevelopmentCRs);
@@ -130,7 +130,7 @@ function OngingCr() {
               </div>
               <div className="col-span-1">
                 <p className=" font-semibold text-left">
-                  User ID: {cr.getCr[0].user.userId}
+                  Developer Name: {cr.getCr[0].user.firstname}
                 </p>
                 <p className="font-semibold text-left">
                   SFA_User Name:  {cr.name}

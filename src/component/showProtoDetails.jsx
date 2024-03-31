@@ -105,7 +105,7 @@ const ShowProtoDetails = () => {
       <h1 className="text-xl font-bold my-4">View Prototype Details</h1>
       <div className="p-8 grid grid-cols-2 gap-2 bg-white rounded-lg shadow-md">
         <div className="col-span-2 ">
-          <p className="text-lg font-bold text-stone-950 text-right"> Status: <span className="font-bold text-red-500"> Pending Decision</span></p>
+          <p className="text-lg font-bold text-stone-950 text-right">Prototype Status: <span className="font-bold text-red-500"> Pending Decision</span></p>
           <p className="text-lg font-bold text-stone-950 text-left">
             Topic: {pr.topic}
           </p>

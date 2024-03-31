@@ -54,12 +54,10 @@ const CompleteView = () => {
         }
     };
 
-    const handleProtoViewAttachment = () => {
-        if (pr && pr.filePath) {
-            const fileUrl = `${api.defaults.baseURL}/uploads/prototype/${pr.filePath}`;
-            window.open(fileUrl, '_blank');
-        }
-    };
+    const handleActionClick = (prId) => {
+        console.log("cr Id:", prId);
+        navigate(`/dashboard/showprotoDetails/${prId}`);
+      };
 
     if (loading) {
         return <div>Loading...</div>;
@@ -107,10 +105,10 @@ const CompleteView = () => {
                         View CR attachment
                     </button>
                     <button
-                        onClick={handleProtoViewAttachment}
+                        onClick={handleActionClick}
                         className="inline-block bg-yellow-400 hover:bg-yellow-500 font-bold text-black px-2 py-2 rounded mt-1 ml-2"
                     >
-                        View Prototype Attachment
+                        View Prototype Details
                     </button>
 
                 

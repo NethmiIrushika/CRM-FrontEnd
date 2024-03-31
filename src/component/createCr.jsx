@@ -15,7 +15,7 @@ const Insert = () => {
     department: getLoginInfo()?.department,
     topic: '',
     description: '',
-    status: 'Pending',
+    status: 'Need CR Approvel',
     date: '',
     priority: 0,
     crtype: '',
@@ -92,7 +92,7 @@ const Insert = () => {
       toast.success('You have successfully made a change request!');
       setShowPriorityPopup(true);
 setTimeout(() => {
-  navigate('/dashboard/viewCr');
+  navigate('/dashboard/ongoingApprovelCr');
 }, 2000);
      
       

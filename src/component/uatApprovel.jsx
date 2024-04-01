@@ -4,6 +4,7 @@ import axios from "axios";
 import api from "../api";
 import { getLoginInfo } from "../utils/LoginInfo";
 import { format } from "date-fns"; // Import format function from date-fns
+import { toast } from "react-toastify";
 
 function UatApprove() {
   const [crprototype, setCrprototype] = useState([]);
@@ -63,8 +64,9 @@ function UatApprove() {
           },
         }
       );
-
+      toast.success('You approve the UAT')
       navigate(`/dashboard/completedCR`);
+      
     } catch (error) {
       console.error("Error UAT approvel", error);
     }
@@ -86,7 +88,12 @@ function UatApprove() {
         />
       </div>
 
-      <div className="grid grid-cols-1 gap-4">
+      {filteredCrPrototypes.length === 0?(
+        <div className="flex justify-center items-center h-full mt-4">
+        <p className="text-xl text-black-500 mt-10">There is not any UAT to approve!!</p>
+      </div>
+      ):(
+        <div className="grid grid-cols-1 gap-4">
         {filteredCrPrototypes.map((pr) => (
           <div key={pr.prId} className="bg-white rounded-lg shadow-md p-6">
             <div className="grid grid-cols-2 gap-2">
@@ -128,7 +135,7 @@ function UatApprove() {
             </div>
             <button
               onClick={() => handleActionClick(pr.prId)}
-              className="mt-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded"
+              className="mt-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 mr-2 rounded"
             >
               View
             </button>
@@ -142,6 +149,8 @@ function UatApprove() {
           
         ))}
       </div>
+      )}
+      
     </div>
   );
 }

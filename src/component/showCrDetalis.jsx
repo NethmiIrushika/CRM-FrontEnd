@@ -107,26 +107,26 @@ const ShowCrDetails = () => {
   const updateCr = async (updatedCr) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
-      const response = await axios.put(`${api.defaults.baseURL}/crs/${updatedCr.crId}`, {
+      const response = await axios.get(`${api.defaults.baseURL}/crs/${updatedCr.crId}`, {
         hodApprovel: updatedCr.hodApprovel
       }, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      setCr(response.data);
+      setCrs(response.data);
       if (updatedCr.hodApprovel === 'approved') {
-        toast.success(` ${updatedCr.firstname}  ${updatedCr.hodApprovel}`, {
+        toast.success(`CR Id ${updatedCr.crId}  is  ${updatedCr.hodApprovel}`, {
           className: 'toast-success',
         
         });
         
       } else if (updatedCr.hodApprovel === 'rejected') {
-        toast.error(` ${updatedCr.firstname}  ${updatedCr.hodApprovel}`, {
+        toast.error(`CR Id ${updatedCr.crId} is  ${updatedCr.hodApprovel}`, {
           className: 'toast-error',
         });
       } else {
-        toast.success(` ${updatedCr.firstname} ${updatedCr.hodApprovel}`);
+        toast.success(` ${updatedCr.crId} ${updatedCr.hodApprovel}`);
       }
       navigate('/dashboard/viewCr')
       
@@ -147,7 +147,7 @@ const ShowCrDetails = () => {
           <StatusPopupcr
             cr={cr} // Pass the cr object here
             close={() => setShowStatusPopup(false)}
-            updateUser={updateCr}
+            update={updateCr}
           />
         </div>
       )}

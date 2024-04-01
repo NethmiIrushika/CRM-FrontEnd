@@ -267,7 +267,7 @@ function OngoingApprovelCr() {
         </div>
         {crs.length === 0 ? (
           <div className="flex justify-center items-center h-full mt-4">
-            <p className="text-xl text-black-500 mt-10">There are not any Change Requests Pending in this system!!</p>
+            <p className="text-xl text-black-500 mt-10">There are not any Change Requests to Approve in this system!!</p>
           </div>
         ) : (<div>
           <div className="overflow-x-auto">

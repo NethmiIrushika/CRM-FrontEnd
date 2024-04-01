@@ -103,6 +103,11 @@ function OngingCr() {
         />
       </div>
 
+      {filteredCRs.length === 0?(
+        <div className="flex justify-center items-center h-full mt-4">
+        <p className="text-xl text-black-500 mt-10">You do not have any pending CRs to send prototypes!!</p>
+      </div>
+      ):(
       <div className="my-4">
         {filteredCRs.map((cr) => (
           <div className="bg-white rounded shadow p-4 mb-6" key={cr.crId} >
@@ -152,6 +157,7 @@ function OngingCr() {
           </div>
         ))}
       </div>
+      )}
     </div>
 
   );

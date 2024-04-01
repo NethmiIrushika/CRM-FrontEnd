@@ -161,6 +161,11 @@ function ApproveORreject() {
         />
       </div>
 
+      {filteredCrPrototypes.length === 0?(
+        <div className="flex justify-center items-center h-full mt-4">
+          <p className="text-xl text-black-500 mt-10">There are not any prototype to approve!!</p>
+        </div>
+      ):(
       <div className="mt-4 container mx-auto  h-auto">
         {filteredCrPrototypes.map((pr) => (
           <div className="bg-white rounded shadow p-4 mb-6" key={pr.prId} >
@@ -220,6 +225,7 @@ function ApproveORreject() {
           </div>
         ))}
       </div>
+      )}
     </div>
   );
   

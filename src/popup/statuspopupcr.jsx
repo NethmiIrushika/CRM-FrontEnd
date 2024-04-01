@@ -4,17 +4,17 @@ import api from '../api';
 import { useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-const StatusPopupcr = ({ cr, close, updateCr }) => {
+const StatusPopupcr = ({ cr, close, update }) => {
   const [newCrStatus, setNewCrStatus] = useState(cr.hodApprovel || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-const navigate = useNavigate();
+const navigate = useNavigate()
   const changeStatus = async () => {
     setLoading(true);
     try {
       await axios.put(`${api.defaults.baseURL}/crs/${cr.crId}/update-hod-approval`, { hodApprovel: newCrStatus });
       close();
-      updateCr({ ...cr, hodApprovel: newCrStatus });
+      update({ ...cr, hodApprovel: newCrStatus });
       navigate('/dashboard/viewCr');
     } catch (error) {
       setError('Error changing CR status. Please try again later.');

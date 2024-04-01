@@ -74,7 +74,12 @@ function Approveprototype() {
         />
       </div>
 
-      <div className="grid grid-cols-1 gap-4">
+      {filteredCrPrototypes.length === 0?(
+        <div className="flex justify-center items-center h-full mt-4">
+          <p className="text-xl text-black-500 mt-10">There are not any prototype to approve!!</p>
+        </div>
+      ):(
+        <div className="grid grid-cols-1 gap-4">
         {filteredCrPrototypes.map((pr) => (
           <div key={pr.prId} className="bg-white rounded-lg shadow-md p-6">
             <div className="grid grid-cols-2 gap-2">
@@ -122,6 +127,7 @@ function Approveprototype() {
           </div>
         ))}
       </div>
+      )}
     </div>
   );
 }

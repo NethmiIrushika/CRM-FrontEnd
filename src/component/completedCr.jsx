@@ -146,7 +146,7 @@ function CompletedCR() {
             {filteredRows.map((row, index) => {
               prepareRow(row);
               // Remove HTML tags from the description
-              const descriptionWithoutTags = row.original.description.replace(/(<([^>]+)>)/gi, '');
+              // const descriptionWithoutTags = row.original.description.replace(/(<([^>]+)>)/gi, '');
               return (
                 <tr {...row.getRowProps()} className="border-b text-center" key={row.original.userId}>
                   {row.cells.map((cell, cellIndex) => (

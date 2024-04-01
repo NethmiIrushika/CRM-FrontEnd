@@ -56,7 +56,7 @@ function Register() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-white">
-      <div className="p-4 max-w-3xl w-full">
+      <div className="p-4 max-w-3xl w-full ">
         <div className="p-6 shadow">
           <h2 className="text-2xl font-semibold mb-6">Register</h2>
 
@@ -248,7 +248,7 @@ function Register() {
 
             <button
               type="submit"
-              className="w-40 center bg-blue-500 text-white py-2.5 rounded-md hover:bg-blue-600 transition duration-300 mt-1"
+              className="w-40 center bg-yellow-300 text-white py-2.5 rounded-md hover:bg-yellow-600 transition duration-300 mt-1"
             >
               Submit
             </button>

@@ -24,6 +24,7 @@ import OngoingApprovelCr from './component/ongoingApprovelCr';
 import Notificaton from './component/notificaton'
 import CompleteView from './component/completeView';
 import UatApprove from './component/uatApprovel';
+import OtherPr from './component/otherpr';
 
 
 
@@ -46,6 +47,7 @@ function App() {
               <Route path="profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
               <Route path="log" element={<ProtectedRoute><Log/></ProtectedRoute>}/>
               <Route path="crProtoType/:crId" element={<ProtectedRoute><CrProtoType/></ProtectedRoute>}/>
+              <Route path="otherPr/:crId" element={<ProtectedRoute><OtherPr/></ProtectedRoute>}/>
               <Route path="ongingCr" element={<ProtectedRoute><OngingCr/></ProtectedRoute>}/>
               <Route path="showCrDetails/:crId" element={<ProtectedRoute><ShowCrDetails/></ProtectedRoute>}/>
               <Route path="completeView/:crId" element={<ProtectedRoute><CompleteView/></ProtectedRoute>}/>

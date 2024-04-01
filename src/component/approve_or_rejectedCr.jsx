@@ -97,7 +97,10 @@ function ApproveORreject() {
       pr.popupstatus === "Develop without Prototype") ||
          pr.popupstatus.toLowerCase() === "rejected" 
 
-         && (pr.cr.status === "Sent prototype" && pr.popupstatus.toLowerCase() === "rejected" )
+         
+         
+         &&(pr.cr.status === "Need Approvel For Prototype" || pr.popupstatus.toLowerCase() === "rejected" ) &&
+         (pr.cr.status === "Need Approvel For Prototype" || pr.popupstatus.toLowerCase() === "second prototype" )
       );
     }
     return false;
@@ -134,7 +137,7 @@ function ApproveORreject() {
 
   const handleButtonClick = (crId,topic) => {
 
-    navigate(`/dashboard/crProtoType/${crId}`,{ state: { topic: topic } });
+    navigate(`/dashboard/otherPr/${crId}`,{ state: { topic: topic } });
   };
 
   const handleActionClick = (crId) => {

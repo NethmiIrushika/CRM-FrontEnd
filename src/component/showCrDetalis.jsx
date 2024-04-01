@@ -15,6 +15,12 @@ const ShowCrDetails = () => {
   const [crs, setCrs] = useState([]);
   const userType = getLoginInfo()?.userType;
   const [showStatusPopup, setShowStatusPopup] = useState(false);
+  const extension = getLoginInfo()?.extension;
+  console.log(extension)
+
+  // const extension = localStorage.getItem("extension");
+  // console.log(extension);
+  
 
   useEffect(() => {
     const fetchCrDetails = async () => {
@@ -89,7 +95,8 @@ const ShowCrDetails = () => {
       fetchCrs();
 
       toast.success("CR is now in development!");
-      navigate(`/dashboard/devShowCrDetails/${crId}/`);
+      navigate(`/dashboard/showCrDetails/${crId}/`);
+      window.location.reload();
     } catch (error) {
       console.error("Error starting development:", error);
     }
@@ -177,11 +184,19 @@ const ShowCrDetails = () => {
           </p>
           <p className="font-semibold text-left">SFA User: {cr.name}</p>
         </div>
+        { userType !== 'Developer' && userType !== 'HOD' && userType !== 'Admin' && userType !== 'SFA_User' && userType !== 'Developer' || cr.status !== 'Starting Development' &&
         <div className="col-span-1">
-          <p className="font-semibold text-left">
+   <p className="font-semibold text-left">
             Change Request Priority: {cr.priority}
           </p>
           <p className="font-semibold text-left">Department: {cr.department}</p>
+        </div>}
+
+        <div className="col-span-1">
+          <p className="font-semibold text-left">
+            CR Type: {cr.crtype}
+          </p>
+          <p className="font-semibold text-left">Extension: {extension} </p>
         </div>
 
         <div className="col-span-2 ">
@@ -207,6 +222,19 @@ const ShowCrDetails = () => {
               Get To Development
             </button>
           }
+
+{userType === 'Developer' && cr.status === 'Starting Development' &&<button
+    onClick={() => handleButtonClick(cr.crId, cr.topic)}
+    className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out"
+  >
+    Sent Prototype
+  </button>}
+  {userType === 'Developer' && cr.status === 'Starting Development' &&<button
+    onClick={() => handleButtonClickskip(cr.crId, cr.topic)}
+    className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out"
+  >
+    Develop without Prototype
+  </button>}
 
           {userType === 'HOD' &&
             <button

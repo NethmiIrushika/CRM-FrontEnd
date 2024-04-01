@@ -195,7 +195,7 @@ function ApproveORreject() {
             onClick={() => handleActionClick(pr.crId)}
               className="mt-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
             >
-              View Deatails
+              View Details
             </button>
  
             {pr.rejectionReason && (

@@ -128,7 +128,7 @@ const ShowCrDetails = () => {
       } else {
         toast.success(` ${updatedCr.firstname} ${updatedCr.hodApprovel}`);
       }
-      navigate('/dashboard/viewCr')
+      navigate('/dashboard/ongoingApprovelCr')
       
     } catch (error) {
       console.error('Error updating CR:', error);
@@ -158,9 +158,9 @@ const ShowCrDetails = () => {
             <span className="text-black font-semibold">
               Change Request Status:{" "}
             </span>
-            {cr.status === "Pending" ? (
+            {cr.status === "Need CR Approvel" ? (
               <span className="text-red-500 font-bold">{cr.status}</span>
-            ) : cr.status === "Start Development" ? (
+            ) : cr.status === "Pending to get development" ? (
               <span className="text-green-500 font-bold">{cr.status}</span>
             ) : (
               <span>{cr.status}</span>

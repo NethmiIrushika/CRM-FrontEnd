@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import api from "../api";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ShowProtoDetails = () => {
   const [showModal, setShowModal] = useState(false);
@@ -69,6 +70,7 @@ const ShowProtoDetails = () => {
             },
           }
         );
+        toast.success("Prototype approved successfully");
       } else if (action === "reject") {
         const reason = prompt("Enter rejection reason:");
         response = await axios.put(
@@ -80,6 +82,7 @@ const ShowProtoDetails = () => {
             },
           }
         );
+        toast.error("Prototype rejected");
       }
       if (response && response.data) {
         const updatedCRPrototype = response.data;
@@ -88,6 +91,7 @@ const ShowProtoDetails = () => {
             cr.prId === updatedCRPrototype.prId ? updatedCRPrototype : cr
           )
         );
+        
       }
       setShowModal(false);
       navigate("/dashboard/viewcr");

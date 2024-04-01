@@ -56,14 +56,14 @@ function Register() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-white">
-      <div className="p-4 max-w-3xl w-full">
+      <div className="p-4 max-w-4xl w-full">
         <div className="p-6 shadow">
           <h2 className="text-2xl font-semibold mb-6">Register</h2>
 
           {error && <div className="text-red-500 mb-4">{error}</div>}
           <form onSubmit={handleSubmit}>
             <div className="p-6 grid grid-cols-2 gap-2 ">
-              <div className="mb-4 mr-4">
+              <div className="mb-4 mr-14">
                 <label
                   htmlFor="firstname"
                   className="block text-sm font-medium text-gray-700"
@@ -80,7 +80,7 @@ function Register() {
                   required
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-4 ml-14">
                 <label
                   htmlFor="lastname"
                   className="block text-sm font-medium text-gray-700"
@@ -97,7 +97,7 @@ function Register() {
                   required
                 />
               </div>
-              <div className="mb-4 mr-4">
+              <div className="mb-4 mr-14">
                 <label
                   htmlFor="username"
                   className="block text-sm font-medium text-gray-700"
@@ -117,7 +117,7 @@ function Register() {
               </div>
 
 
-              <div className="mb-4">
+              <div className="mb-4 ml-14">
                 <label
                   htmlFor="extension"
                   className="block text-sm font-medium text-gray-700"
@@ -134,7 +134,7 @@ function Register() {
                   required
                 />
               </div>
-              <div className="mb-4 mr-4">
+              <div className="mb-4 mr-14">
                 <label
                   htmlFor="password"
                   className="block text-sm font-medium text-gray-700"
@@ -164,7 +164,7 @@ function Register() {
                   </button>
                 </div>
               </div>
-              <div className="mb-4">
+              <div className="mb-4 ml-14">
                 <label
                   htmlFor="cpassword"
                   className="block text-sm font-medium text-gray-700"
@@ -194,7 +194,7 @@ function Register() {
                   </button>
                 </div>{" "}
               </div>
-              <div className="mb-4 mr-4">
+              <div className="mb-4 mr-14">
                 <label
                   htmlFor="userType"
                   className="block text-sm font-medium text-gray-700"
@@ -214,7 +214,7 @@ function Register() {
                   <option value="SFA_User">SFA_User</option>
                 </select>
               </div>
-              <div className="mb-4">
+              <div className="mb-4 ml-14">
                 <label
                   htmlFor="department"
                   className="block text-sm font-medium text-gray-700"
@@ -248,7 +248,7 @@ function Register() {
 
             <button
               type="submit"
-              className="w-40 center bg-blue-500 text-white py-2.5 rounded-md hover:bg-blue-600 transition duration-300 mt-1"
+              className="w-40 center bg-yellow-500 text-white py-2.5 rounded-md hover:bg-yellow-500 transition duration-300 mt-1"
             >
               Submit
             </button>

@@ -86,7 +86,7 @@ function OngingCr() {
 
   const handleActionClick = (crId) => {
     console.log('cr Id:', crId);
-    navigate(`/dashboard/devShowCrDetails/${crId}/`);
+    navigate(`/dashboard/ShowCrDetails/${crId}/`);
   };
 
 

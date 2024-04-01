@@ -4,7 +4,7 @@ import logoImage from "../assets/dashboardr.png";
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar";
 import { getLoginInfo } from "../utils/LoginInfo";
-import LogoutPopup from '../popup/logoutpopup';
+import LogoutPopup from "../popup/logoutpopup";
 
 const Dashboard = () => {
   let navigate = useNavigate();
@@ -22,14 +22,13 @@ const Dashboard = () => {
   //   }
   // };
 
-
   const handleLogout = () => {
     setShowLogoutPopup(true);
   };
 
   const handleConfirmLogout = () => {
-    localStorage.removeItem('accessToken');
-    navigate('/userLogin');
+    localStorage.removeItem("accessToken");
+    navigate("/userLogin");
   };
 
   const handleCancelLogout = () => {
@@ -87,15 +86,52 @@ const Dashboard = () => {
                 </div>
               </button>
             </li>
+
             <li>
               <button
-              
+                onClick={() => navigate("OngoingApprovelCr")}
+                style={{
+                  display:
+                    userType === "SFA_User" || userType === "HOD" ? "" : "none",
+                }}
+                className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white"
+              >
+                <div className="flex items-center  w-40 h-10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-eye w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
+                  >
+                    <path d="M9 12a3 3 0 1 1 6 0a3 3 0 1 1-6 0zM12 2c-4.97 0-9 4.03-9 9s4.03 9 9 9s9-4.03 9-9s-4.03-9-9-9zm0 4a5 5 0 0 0-5 5a5 5 0 0 0 10 0a5 5 0 0 0-5-5z"></path>
+                  </svg>
+
+                  <span className="ml-3 text-black text-left">
+                    Pending Approval
+                  </span>
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
                 onClick={() => navigate("viewCr")}
                 className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white"
               >
                 <div className="flex items-center  w-40 h-10">
-
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-eye w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
+                  >
                     <path d="M9 12a3 3 0 1 1 6 0a3 3 0 1 1-6 0zM12 2c-4.97 0-9 4.03-9 9s4.03 9 9 9s9-4.03 9-9s-4.03-9-9-9zm0 4a5 5 0 0 0-5 5a5 5 0 0 0 10 0a5 5 0 0 0-5-5z"></path>
                   </svg>
 
@@ -105,25 +141,6 @@ const Dashboard = () => {
                 </div>
               </button>
             </li>
-            <li>
-              <button
-              onClick={() => navigate("OngoingApprovelCr")}
-                style={{ display: userType !== "SFA_User" ? "none" : "" }}
-                className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white"
-              >
-                <div className="flex items-center  w-40 h-10">
-
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red">
-                    <path d="M9 12a3 3 0 1 1 6 0a3 3 0 1 1-6 0zM12 2c-4.97 0-9 4.03-9 9s4.03 9 9 9s9-4.03 9-9s-4.03-9-9-9zm0 4a5 5 0 0 0-5 5a5 5 0 0 0 10 0a5 5 0 0 0-5-5z"></path>
-                  </svg>
-
-                  <span className="ms-3 text-black justify-center">
-                    Ongoing approval
-                  </span>
-                </div>
-              </button>
-            </li>
-
 
             <li>
               <button
@@ -176,29 +193,6 @@ const Dashboard = () => {
                   </svg>
 
                   <span className="ms-3 text-black justify-center">
-                    Ongoing CR
-                  </span>
-                </div>
-              </button>
-            </li>
-
-            <li>
-              <button
-                onClick={() => navigate("approveORreject")}
-                style={{ display: userType !== "Developer" ? "none" : "" }}
-                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
-              >
-                <div className="flex items-center w-40 h-10">
-                  <svg
-                    className=" w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 18 18"
-                  >
-                    <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z"></path>
-                  </svg>
-                  <span className="ms-3 text-black justify-center">
                     Prototypes
                   </span>
                 </div>
@@ -227,6 +221,57 @@ const Dashboard = () => {
 
                   <span className="ms-3 text-black justify-center">
                     Prototypes
+                  </span>
+                </div>
+              </button>
+            </li>
+
+            <li>
+              <button
+                onClick={() => navigate("approveORreject")}
+                style={{ display: userType !== "Developer" ? "none" : "" }}
+                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
+              >
+                <div className="flex items-center w-40 h-10">
+                  <svg
+                    className=" w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 18 18"
+                  >
+                    <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z"></path>
+                  </svg>
+                  <span className="ms-3 text-black justify-center">
+                    Ongoing CR
+                  </span>
+                </div>
+              </button>
+            </li>
+
+            <li>
+              <button
+                onClick={() => navigate("UatApprove")}
+                style={{ display: userType !== "SFA_User" ? "none" : "" }}
+                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
+              >
+                <div className="flex items-center w-40 h-10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    class="w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 0c-6.617 0-12 5.383-12 12s5.383 12 12 12 12-5.383 12-12-5.383-12-12-12zm0 22c-5.514 0-10-4.486-10-10s4.486-10 10-10 10 4.486 10 10-4.486 10-10 10zm1-16v6h-2v-6h2zm-1 12c-3.313 0-6-2.687-6-6h2c0 2.206 1.794 4 4 4s4-1.794 4-4h2c0 3.313-2.687 6-6 6z" />
+                  </svg>
+
+                  <span className="ms-3 text-black justify-center">
+                    UAT Approvel
                   </span>
                 </div>
               </button>

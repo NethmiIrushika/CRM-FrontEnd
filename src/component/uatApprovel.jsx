@@ -5,11 +5,12 @@ import api from "../api";
 import { getLoginInfo } from "../utils/LoginInfo";
 import { format } from "date-fns"; // Import format function from date-fns
 
-function Approveprototype() {
+function UatApprove() {
   const [crprototype, setCrprototype] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loggedInUserId, setLoggedInUserId] = useState(null);
   const navigate = useNavigate();
+  const name = getLoginInfo()?.firstname;
 
   const fetchCrprototype = async () => {
     try {
@@ -35,17 +36,9 @@ function Approveprototype() {
 
   const filteredCrPrototypes = crprototype.filter((pr) => {
     return (
-      pr &&
-      pr.cr &&
-      pr.cr.userId &&
-      pr.cr.userId.userId === getLoginInfo()?.sub &&
-      pr.popupstatus !== "Rejected" &&
-      pr.popupstatus !== "Approved" &&
-      pr.rejectionReason !== "" &&
-      pr.cr.status !== "Completed" &&
-      pr.cr.status !== "Develop without Prototype"&&
-      pr.cr.status !== "Need UAT Approvel"&&
-      pr.cr.status !== "Development Completed"
+
+      pr.cr.status === "Need UAT Approvel" 
+
     );
   });
 
@@ -53,9 +46,28 @@ function Approveprototype() {
     fetchCrprototype();
   }, []);
 
-  const handleActionClick = (prId) => {
-    console.log("cr Id:", prId);
-    navigate(`/dashboard/showprotoDetails/${prId}`);
+  const handleActionClick = (crId) => {
+    console.log('cr Id:', crId);
+    navigate(`/dashboard/completeView/${crId}/`);
+  };
+
+  const handlButtonClick = async (prId) => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      await axios.put(
+        `${api.defaults.baseURL}/crprototype/${prId}/afteruatapprovel`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      navigate(`/dashboard/completedCR`);
+    } catch (error) {
+      console.error("Error UAT approvel", error);
+    }
   };
 
   const formatDate = (date) => {
@@ -103,7 +115,8 @@ function Approveprototype() {
                   <p className="text-center">
                     The Change Request with ID:{" "}
                     <span className="font-semibold text-lg">{pr.crId}</span>{" "}
-                    you created at :{" "}
+                    {" "}
+                    <span className="font-semibold text-lg">{" created by "}{name}</span>{" "}created at :{" "}
                     <span className="font-semibold">
                       {formatDate(pr.cr.createdAt)} {/* Format date */}
                     </span>{" "}
@@ -119,11 +132,18 @@ function Approveprototype() {
             >
               View
             </button>
+            <button
+              onClick={() => handlButtonClick(pr.prId)}
+              className="mt-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded"
+            >
+              Approve
+            </button>
           </div>
+          
         ))}
       </div>
     </div>
   );
 }
 
-export default Approveprototype;
+export default UatApprove;

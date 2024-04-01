@@ -63,7 +63,7 @@ function OngoingApprovelCr() {
         });
         // Filter CRs with status "start-development"
         const filteredCrs = response.data.filter(cr =>
-          cr.status !== 'Starting Development' && cr.status !== 'Sent prototype' && cr.status !== 'Completed' && cr.status !== 'Develop without Prototype');
+          cr.status === 'Need CR Approvel' );
         setCrs(filteredCrs);
       } catch (error) {
         console.error('Error fetching crs:', error);
@@ -127,11 +127,12 @@ function OngoingApprovelCr() {
             </button>
           ),
         },
-        userType === 'HOD' &&{
-        id: 'approve',
-        Header: 'HOD Approvel',
-        accessor: 'hodApprovel'
-      },
+        userType === 'SFA_User' && {
+          id: 'approve',
+          Header: 'Status',
+          accessor: 'hodApprovel',
+          Cell: ({ value }) => value || 'Pending HOD Approval' // Default value if value is falsy
+        },
       ].filter(Boolean),
       [userType]
     );

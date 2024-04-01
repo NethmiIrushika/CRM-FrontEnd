@@ -44,13 +44,11 @@ function UserLogin() {
         const {data} = response;
         if (data.accessToken){
           localStorage.setItem('accessToken',response.data.accessToken);
-          console.log('accessToken:', response.data.accessToken);
+
           localStorage.setItem('userId', data.userId);
-          console.log('userId:', data.userId); 
+
           localStorage.setItem('userType', data.userType);
-          console.log('userType', data.userType);
-          localStorage.setItem('uniqueKey', data.uniqueKey);
-          console.log('uniqueKey', data.uniqueKey);
+
         
           toast.success('You have  successfully logged in!');
             
@@ -101,7 +99,7 @@ function UserLogin() {
               </button>
             </div>
           </div>
-          <button type="submit" className="w-full bg-blue-500 text-white py-2.5 rounded-md hover:bg-blue-600 transition duration-300">
+          <button type="submit" className="w-full bg-yellow-400 text-white py-2.5 rounded-md hover:bg-yellow-600 transition duration-300">
             Login
           </button>
         </form>

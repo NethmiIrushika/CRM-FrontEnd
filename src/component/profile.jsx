@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -53,16 +54,16 @@ function Approveprototype() {
     setSearchTerm(value);
   };
   const filteredCrPrototypes = crprototype.filter((pr) => {
-    return pr && pr.cr && pr.cr.userId && pr.cr.userId.userId === getLoginInfo()?.sub;
+    return  pr.cr.userId.userId === getLoginInfo()?.sub;
   });
 
   useEffect(() => {
     fetchCrprototype();
   }, []);
 
-  const handleActionClick = (prId) => {
-    console.log("cr Id:", prId);
-    navigate(`/dashboard/showprotoDetails/${prId}`);
+  const handleActionClick = (crId) => {
+    console.log('cr Id:', crId);
+    navigate(`/dashboard/completeView/${crId}/`);
   };
 
   // Define columns and data for the React data table

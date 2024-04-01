@@ -83,7 +83,7 @@ function Approveprototype() {
                   <span className="text-black-400">Status: </span>
                   <span
                     className={`${
-                      pr.cr.status === "Sent prototype"
+                      pr.cr.status === "Need Approvel For Prototype"
                         ? "text-blue-500"
                         : pr.cr.status === "Pending"
                         ? "text-red-500"

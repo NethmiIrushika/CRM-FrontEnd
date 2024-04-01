@@ -252,7 +252,10 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("UatApprove")}
-                style={{ display: userType !== "SFA_User" ? "none" : "" }}
+                style={{
+                  display:
+                    userType === "SFA_User" || userType === "HOD" ? "" : "none",
+                }}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center w-40 h-10">

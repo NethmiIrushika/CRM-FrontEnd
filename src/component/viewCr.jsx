@@ -118,7 +118,7 @@ function Crview() {
       { id: 'name', Header: 'Name', accessor: 'name' },
       { id: 'topic', Header: 'Topic', accessor: 'topic' },
       { id: 'date', Header: 'Date/Time', accessor: 'createdAt', Cell: ({ value }) => formatDate(value) }, // Apply custom Cell renderer
-      userType !== 'HOD' &&{ id: 'priority', Header: 'Priority', accessor: 'priority' },
+      { id: 'priority', Header: 'Priority', accessor: 'priority' },
   
       userType === 'SFA_User' && {
         id: 'priorityInput',
@@ -258,7 +258,7 @@ function Crview() {
       filteredData = filteredData.filter(row => row.original.hodApprovel === 'approved');
     }
     if (userType === 'HOD') {
-      filteredData = filteredData.filter(row => row.original.hodApprovel !== 'approved' && row.original.hodApprovel !== 'rejected');
+      filteredData = filteredData.filter(row => row.original.hodApprovel === 'approved' );
     }
   
     // Apply search term filtering

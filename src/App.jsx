@@ -22,6 +22,7 @@ import Profile from './component/profile';
 import OngoingApprovelCr from './component/ongoingApprovelCr';
 import Notificaton from './component/notificaton'
 import CompleteView from './component/completeView';
+import UatApprove from './component/uatApprovel';
 
 
 
@@ -53,6 +54,8 @@ function App() {
               <Route path="completedCR" element={<ProtectedRoute><CompletedCR/></ProtectedRoute>}/>
               <Route path="notificaton" element={<ProtectedRoute><Notificaton/></ProtectedRoute>}/>
               <Route path="ongoingApprovelCr" element={<ProtectedRoute><OngoingApprovelCr/></ProtectedRoute>}/>
+              <Route path="uatApprove" element={<ProtectedRoute><UatApprove/></ProtectedRoute>}/>
+              
             </Route>
           </Routes>
         </Router>

@@ -6,68 +6,68 @@ import { Link, useNavigate } from "react-router-dom";
 function ApproveORreject() {
   const [crprototype, setCrprototype] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [selectedCR, setSelectedCR] = useState(null);
+  // const [showModal, setShowModal] = useState(false);
+  // const [selectedCR, setSelectedCR] = useState(null);
   const [loggedInUserId, setLoggedInUserId] = useState(null);
   const navigate = useNavigate();
 
-  const handleViewButtonClick = async (prId) => {
-    try {
-      const accessToken = localStorage.getItem("accessToken");
-      const response = await axios.get(
-        `${api.defaults.baseURL}/crprototype/${prId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      setSelectedCR(response.data);
-      setShowModal(true);
-    } catch (error) {
-      console.error("Error fetching CR prototype:", error);
-    }
-  };
+  // const handleViewButtonClick = async (prId) => {
+  //   try {
+  //     const accessToken = localStorage.getItem("accessToken");
+  //     const response = await axios.get(
+  //       `${api.defaults.baseURL}/crprototype/${prId}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //         },
+  //       }
+  //     );
+  //     setSelectedCR(response.data);
+  //     setShowModal(true);
+  //   } catch (error) {
+  //     console.error("Error fetching CR prototype:", error);
+  //   }
+  // };
 
-  const handleAction = async (action) => {
-    try {
-      const accessToken = localStorage.getItem("accessToken");
-      let response;
-      if (action === "approve") {
-        response = await axios.put(
-          `${api.defaults.baseURL}/crprototype/${selectedCR.prId}/approve`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-      } else if (action === "reject") {
-        const reason = prompt("Enter rejection reason:");
-        response = await axios.put(
-          `${api.defaults.baseURL}/crprototype/${selectedCR.prId}/reject`,
-          { reason },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-      }
-      if (response && response.data) {
-        const updatedCRPrototype = response.data;
-        setCrprototype((prevState) =>
-          prevState.map((cr) =>
-            cr.prId === updatedCRPrototype.prId ? updatedCRPrototype : cr
-          )
-        );
-      }
-      setShowModal(false);
-    } catch (error) {
-      console.error("Error updating CR prototype:", error);
-    }
-  };
+  // const handleAction = async (action) => {
+  //   try {
+  //     const accessToken = localStorage.getItem("accessToken");
+  //     let response;
+  //     if (action === "approve") {
+  //       response = await axios.put(
+  //         `${api.defaults.baseURL}/crprototype/${selectedCR.prId}/approve`,
+  //         {},
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${accessToken}`,
+  //           },
+  //         }
+  //       );
+  //     } else if (action === "reject") {
+  //       const reason = prompt("Enter rejection reason:");
+  //       response = await axios.put(
+  //         `${api.defaults.baseURL}/crprototype/${selectedCR.prId}/reject`,
+  //         { reason },
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${accessToken}`,
+  //           },
+  //         }
+  //       );
+  //     }
+  //     if (response && response.data) {
+  //       const updatedCRPrototype = response.data;
+  //       setCrprototype((prevState) =>
+  //         prevState.map((cr) =>
+  //           cr.prId === updatedCRPrototype.prId ? updatedCRPrototype : cr
+  //         )
+  //       );
+  //     }
+  //     setShowModal(false);
+  //   } catch (error) {
+  //     console.error("Error updating CR prototype:", error);
+  //   }
+  // };
 
   const fetchCrprototype = async () => {
     try {
@@ -94,9 +94,10 @@ function ApproveORreject() {
     if (pr && pr.popupstatus) {
       return (
       (pr.popupstatus.toLowerCase() === "approved" ||
-        pr.popupstatus.toLowerCase() === "rejected" ||
-        pr.popupstatus === "Develop without Prototype") 
-        // && (pr.cr.status === "Sent prototype" && pr.popupstatus.toLowerCase() === "rejected" )
+      pr.popupstatus === "Develop without Prototype") ||
+         pr.popupstatus.toLowerCase() === "rejected" 
+
+         && (pr.cr.status === "Sent prototype" && pr.popupstatus.toLowerCase() === "rejected" )
       );
     }
     return false;
@@ -106,7 +107,7 @@ function ApproveORreject() {
     try {
       const accessToken = localStorage.getItem("accessToken");
       const response = await axios.put(
-        `${api.defaults.baseURL}/crprototype/${prId}/completeTask`,
+        `${api.defaults.baseURL}/crprototype/${prId}/uatapprovel`,
         {},
         {
           headers: {
@@ -122,9 +123,9 @@ function ApproveORreject() {
           )
         );
       }
-      navigate(`/dashboard/completedCR`);
+      navigate(`/dashboard/viewCr`);
     } catch (error) {
-      console.error("Error completing task:", error);
+      console.error("Error UAT approvel", error);
     }
   };
 
@@ -132,8 +133,7 @@ function ApproveORreject() {
 
 
   const handleButtonClick = (crId,topic) => {
-    console.log("CR ID:", crId);
-    console.log("Topic: ", topic);
+
     navigate(`/dashboard/crProtoType/${crId}`,{ state: { topic: topic } });
   };
 
@@ -203,7 +203,7 @@ function ApproveORreject() {
                 onClick={() => handleButtonClick(pr.crId, pr.topic)}
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded ml-2 transition-colors duration-300 ease-in-out"
               >
-                Sent Prototype
+                Sent another Prototype
               </button>
             )}
             {pr.rejectionReason == null && (
@@ -211,7 +211,7 @@ function ApproveORreject() {
                 onClick={() => handleChangeStatusButtonClick(pr.prId)}
                 className="mt-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 ml-2 px-2 rounded"
               >
-                Complete Task
+               For UAT Approvel
               </button>
             )}
           </div>

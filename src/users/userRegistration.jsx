@@ -56,195 +56,199 @@ function Register() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-white">
-      <div className="p-4 max-w-md w-full">
+      <div className="p-4 max-w-3xl w-full ">
         <div className="p-6 shadow">
           <h2 className="text-2xl font-semibold mb-6">Register</h2>
+
           {error && <div className="text-red-500 mb-4">{error}</div>}
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label
-                htmlFor="firstname"
-                className="block text-sm font-medium text-gray-700"
-              >
-                First Name:
-              </label>
-              <input
-                type="text"
-                name="firstname"
-                id="firstname"
-                value={formData.firstname}
-                onChange={handleChange}
-                className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="lastname"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Last Name:
-              </label>
-              <input
-                type="text"
-                name="lastname"
-                id="lastname"
-                value={formData.lastname}
-                onChange={handleChange}
-                className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="username"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Email:
-              </label>
-
-              <input
-                type="email"
-                name="username"
-                id="username"
-                value={formData.username}
-                onChange={handleChange}
-                className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                required
-              />
-            </div>
-
-            
-            <div className="mb-4">
-              <label
-                htmlFor="extension"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Extension:
-              </label>
-              <input
-                type="number"
-                name="extension"
-                id="extension"
-                value={formData.extension}
-                onChange={handleChange}
-                className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Password:
-              </label>
-              <div className="relative">
+            <div className="p-6 grid grid-cols-2 gap-2 ">
+              <div className="mb-4 mr-4">
+                <label
+                  htmlFor="firstname"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  First Name:
+                </label>
                 <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  id="password"
-                  value={formData.password}
+                  type="text"
+                  name="firstname"
+                  id="firstname"
+                  value={formData.firstname}
                   onChange={handleChange}
                   className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   required
                 />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-700"
-                  onClick={togglePasswordVisibility}
-                >
-                  {showPassword ? (
-                    <FaEye className="h-5 w-5" />
-                  ) : (
-                    <FaEyeSlash className="h-5 w-5" />
-                  )}
-                </button>
               </div>
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="cpassword"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Confirm Password:
-              </label>
-              <div className="relative">
+              <div className="mb-4">
+                <label
+                  htmlFor="lastname"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Last Name:
+                </label>
                 <input
-                  type={showPassword ? "text" : "password"}
-                  name="cpassword"
-                  id="cpassword"
-                  value={formData.cpassword}
+                  type="text"
+                  name="lastname"
+                  id="lastname"
+                  value={formData.lastname}
                   onChange={handleChange}
                   className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   required
                 />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-700"
-                  onClick={togglePasswordVisibility}
+              </div>
+              <div className="mb-4 mr-4">
+                <label
+                  htmlFor="username"
+                  className="block text-sm font-medium text-gray-700"
                 >
-                  {showPassword ? (
-                    <FaEye className="h-5 w-5" />
-                  ) : (
-                    <FaEyeSlash className="h-5 w-5" />
+                  Email:
+                </label>
+
+                <input
+                  type="email"
+                  name="username"
+                  id="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  required
+                />
+              </div>
+
+
+              <div className="mb-4">
+                <label
+                  htmlFor="extension"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Extension:
+                </label>
+                <input
+                  type="number"
+                  name="extension"
+                  id="extension"
+                  value={formData.extension}
+                  onChange={handleChange}
+                  className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  required
+                />
+              </div>
+              <div className="mb-4 mr-4">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Password:
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    id="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-700"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? (
+                      <FaEye className="h-5 w-5" />
+                    ) : (
+                      <FaEyeSlash className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="cpassword"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Confirm Password:
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="cpassword"
+                    id="cpassword"
+                    value={formData.cpassword}
+                    onChange={handleChange}
+                    className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-700"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? (
+                      <FaEye className="h-5 w-5" />
+                    ) : (
+                      <FaEyeSlash className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>{" "}
+              </div>
+              <div className="mb-4 mr-4">
+                <label
+                  htmlFor="userType"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Usertype:
+                </label>
+                <select
+                  id="userType"
+                  name="userType"
+                  value={formData.userType}
+                  onChange={handleChange}
+                  className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  required
+                >
+                  <option value="">Select User Type</option>
+                  <option value="Developer">Developer</option>
+                  <option value="SFA_User">SFA_User</option>
+                </select>
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="department"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Department:
+                </label>
+                <select
+                  id="department"
+                  name="department"
+                  value={formData.department}
+                  onChange={handleChange}
+                  className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  required
+                >
+                  <option value="">Select Department</option>
+                  {formData.userType === "Developer" && (
+                    <option value="IT">IT</option>
                   )}
-                </button>
-              </div>{" "}
+                  {formData.userType === "SFA_User" && (
+                    <>
+                      <option value="SAP">SAP</option>
+                      <option value="Sales">Sales</option>
+                      <option value="Marketing">Marketing</option>
+                    </>
+                  )}
+                </select>
+              </div>
+              {/* User Type Selection */}
+
             </div>
-            <div className="mb-4">
-              <label
-                htmlFor="userType"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Usertype:
-              </label>
-              <select
-                id="userType"
-                name="userType"
-                value={formData.userType}
-                onChange={handleChange}
-                className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                required
-              >
-                <option value="">Select User Type</option>
-                <option value="Developer">Developer</option>
-                <option value="SFA_User">SFA_User</option>
-              </select>
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="department"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Department:
-              </label>
-              <select
-                id="department"
-                name="department"
-                value={formData.department}
-                onChange={handleChange}
-                className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                required
-              >
-                <option value="">Select Department</option>
-                {formData.userType === "Developer" && (
-                  <option value="IT">IT</option>
-                )}
-                {formData.userType === "SFA_User" && (
-                  <>
-                    <option value="SAP">SAP</option>
-                    <option value="Sales">Sales</option>
-                    <option value="Marketing">Marketing</option>
-                  </>
-                )}
-              </select>
-            </div>
-            {/* User Type Selection */}
-            
+
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2.5 rounded-md hover:bg-blue-600 transition duration-300"
+              className="w-40 center bg-yellow-300 text-white py-2.5 rounded-md hover:bg-yellow-600 transition duration-300 mt-1"
             >
               Submit
             </button>

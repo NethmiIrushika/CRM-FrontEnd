@@ -258,7 +258,7 @@ function Crview() {
       filteredData = filteredData.filter(row => row.original.hodApprovel === 'approved');
     }
     if (userType === 'HOD') {
-      filteredData = filteredData.filter(row => row.original.hodApprovel !== 'approved' && row.original.hodApprovel !== 'rejected');
+      filteredData = filteredData.filter(row => row.original.hodApprovel === 'approved' );
     }
   
     // Apply search term filtering

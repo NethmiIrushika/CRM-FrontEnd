@@ -38,7 +38,8 @@ function UatApprove() {
   const filteredCrPrototypes = crprototype.filter((pr) => {
     return (
 
-      pr.cr.status === "Need UAT Approvel" 
+      pr.cr.status === "Need UAT Approvel" &&
+      pr.popupstatus === "Need UAT Approvel" 
 
     );
   });
@@ -134,7 +135,7 @@ function UatApprove() {
               </div>
             </div>
             <button
-              onClick={() => handleActionClick(pr.prId)}
+              onClick={() => handleActionClick(pr.crId)}
               className="mt-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 mr-2 rounded"
             >
               View

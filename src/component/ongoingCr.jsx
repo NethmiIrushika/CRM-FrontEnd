@@ -117,8 +117,8 @@ function OngingCr() {
                   <span className="text-black font-semibold">Change Request Status: </span>
                   {cr.status === 'Pending' ? (
                     <span className="text-red-500 font-bold">{cr.status}</span>
-                  ) : cr.status === 'Starting Development' ? (
-                    <span className="text-green-500 font-bold">{cr.status}</span>
+                  ) : cr.status === 'Taken For Development' ? (
+                    <span className="text-amber-700 font-bold">{cr.status}</span>
                   ) : (
                     <span>{cr.status}</span>
                   )}

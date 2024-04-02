@@ -92,10 +92,10 @@ const DevShowCrDetails = () => {
                 <div className='col-span-2'>
                     <p className=" text-lg font-bold text-right">
                         <span className="text-black font-semibold">Status: </span>
-                        {cr.status === 'Pending' ? (
+                        {cr.status === 'Pending to get development' ? (
                             <span className="text-red-500 font-bold">{cr.status}</span>
-                        ) : cr.status === 'Starting Development' ? (
-                            <span className="text-green-500 font-bold">{cr.status}</span>
+                        ) : cr.status === 'Taken For Development' ? (
+                            <span className="text-amber-700 font-bold">{cr.status}</span>
                         ) : (
                             <span>{cr.status}</span>
                         )}

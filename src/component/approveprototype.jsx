@@ -90,9 +90,11 @@ function Approveprototype() {
                     className={`${
                       pr.cr.status === "Sent prototype"
                         ? "text-blue-500"
-                        : pr.cr.status === "Pending"
+                        : pr.cr.status === "Need Approvel For Prototype"
                         ? "text-red-500"
-                        : ""
+                        : pr.cr.status === "Need Approvel For Second Prototype"
+                        ?"text-red-500"
+                        :""
                     }`}
                   >
                     {pr.cr.status}

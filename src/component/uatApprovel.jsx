@@ -105,9 +105,9 @@ function UatApprove() {
                     className={`${
                       pr.cr.status === "Sent prototype"
                         ? "text-blue-500"
-                        : pr.cr.status === "Pending"
+                        : pr.cr.status === "Need UAT Approvel"
                         ? "text-red-500"
-                        : ""
+                        :""
                     }`}
                   >
                     {pr.cr.status}
@@ -128,13 +128,13 @@ function UatApprove() {
                     <span className="font-semibold">
                       {formatDate(pr.cr.createdAt)} {/* Format date */}
                     </span>{" "}
-                    now has a Prototype. Plese make sure to View the prototype
-                    and give your feed backs
+                    now need UAT Approval
                   </p>
                 )}
               </div>
             </div>
             <button
+              onClick={() => handleActionClick(pr.crId)}
               onClick={() => handleActionClick(pr.crId)}
               className="mt-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 mr-2 rounded"
             >

@@ -78,7 +78,7 @@ const CompleteView = () => {
                         <span className="text-black font-semibold">Change Request Status: </span>
                         {cr.status === 'Sent prototype' ? (
                             <span className="font-bold text-blue-500">{cr.status}</span>
-                        ) : cr.status === 'Start Development' ? (
+                        ) : cr.status === 'Development Completed' ? (
                             <span className="text-green-500">{cr.status}</span>
                         ) : (
                             <span>{cr.status}</span>
@@ -105,12 +105,15 @@ const CompleteView = () => {
                     <button onClick={handleViewAttachment} className="inline-block text-center bg-blue-500 text-white px-2 py-2 rounded hover:bg-blue-600 mt-1">
                         View CR attachment
                     </button>
+                    {cr.status!== " Need CR Approvel" &&
                     <button
+                    
                         onClick={handleActionClick}
                         className="inline-block bg-yellow-400 hover:bg-yellow-500 font-bold text-black px-2 py-2 rounded mt-1 ml-2"
                     >
                         View Prototype Details
                     </button>
+                    }
 
                 
            

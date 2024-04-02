@@ -160,7 +160,7 @@ const ShowCrDetails = () => {
             </span>
             {cr.status === "Need CR Approvel" ? (
               <span className="text-red-500 font-bold">{cr.status}</span>
-            ) : cr.status === "Taken For Development" ? (
+            ) : cr.status === "Pending to get development" ? (
               <span className="text-amber-700 font-bold">{cr.status}</span>
             ) : (
               <span>{cr.status}</span>

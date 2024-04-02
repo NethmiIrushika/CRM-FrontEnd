@@ -55,11 +55,11 @@ const Dashboard = () => {
       </button>
       <aside
         id="default-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-yellow-400"
+        className="fixed top-0 left-0 z-40 w-72 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-yellow-400"
         aria-label="Sidebar"
       >
         <br />
-        <div className="w-64 h-12  ">
+        <div className="w-72 h-12  ">
           <div className="flex justify-center ">
             <img src={logoImage} alt="Logo" className="h-auto w-20" />
           </div>
@@ -252,7 +252,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("UatApprove")}
-                style={{ display: userType !== "SFA_User" ? "none" : "" }}
+                style={{ display: userType === "SFA_User" || userType === "HOD" ? "" : "none",}}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center w-40 h-10">

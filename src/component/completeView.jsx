@@ -35,6 +35,7 @@ const CompleteView = () => {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 });
+                console.log('Prototype details:', response.data);
                 setPr(response.data);
             } catch (error) {
                 console.error('Error fetching prototype details:', error);
@@ -55,7 +56,7 @@ const CompleteView = () => {
     };
 
     const handleActionClick = (prId) => {
-        console.log("cr Id:", prId);
+        console.log("pr Id:", prId);
         navigate(`/dashboard/showprotoDetails/${prId}`);
       };
 

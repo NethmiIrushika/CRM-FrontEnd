@@ -38,7 +38,7 @@ function Approveprototype() {
       console.log(userId1);
 
       const accessToken = localStorage.getItem("accessToken");
-      const response = await axios.get(`${api.defaults.baseURL}/crprototype`, {
+      const response = await axios.get(`${api.defaults.baseURL}/crs`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -53,8 +53,8 @@ function Approveprototype() {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
   };
-  const filteredCrPrototypes = crprototype.filter((pr) => {
-    return  pr.cr.userId.userId === getLoginInfo()?.sub;
+  const filteredCrPrototypes = crprototype.filter((cr) => {
+    return  cr.userId.userId === getLoginInfo()?.sub;
   });
 
   useEffect(() => {
@@ -71,13 +71,13 @@ function Approveprototype() {
     () => [
       { Header: 'CR ID', accessor: 'crId' },
       { Header: 'Topic', accessor: 'topic' },
-      { Header: 'Status', accessor: 'cr.status' },
+      { Header: 'Status', accessor: 'status' },
       {
         Header: 'Action',
         accessor: 'prId',
         Cell: ({ row }) => (
           <button
-            onClick={() => handleActionClick(row.original.prId)}
+            onClick={() => handleActionClick(row.original.crId)}
             className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded"
           >
             View

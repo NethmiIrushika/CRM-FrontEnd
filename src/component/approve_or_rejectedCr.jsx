@@ -11,69 +11,13 @@ function ApproveORreject() {
   const [loggedInUserId, setLoggedInUserId] = useState(null);
   const navigate = useNavigate();
 
-  // const handleViewButtonClick = async (prId) => {
-  //   try {
-  //     const accessToken = localStorage.getItem("accessToken");
-  //     const response = await axios.get(
-  //       `${api.defaults.baseURL}/crprototype/${prId}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       }
-  //     );
-  //     setSelectedCR(response.data);
-  //     setShowModal(true);
-  //   } catch (error) {
-  //     console.error("Error fetching CR prototype:", error);
-  //   }
-  // };
 
-  // const handleAction = async (action) => {
-  //   try {
-  //     const accessToken = localStorage.getItem("accessToken");
-  //     let response;
-  //     if (action === "approve") {
-  //       response = await axios.put(
-  //         `${api.defaults.baseURL}/crprototype/${selectedCR.prId}/approve`,
-  //         {},
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${accessToken}`,
-  //           },
-  //         }
-  //       );
-  //     } else if (action === "reject") {
-  //       const reason = prompt("Enter rejection reason:");
-  //       response = await axios.put(
-  //         `${api.defaults.baseURL}/crprototype/${selectedCR.prId}/reject`,
-  //         { reason },
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${accessToken}`,
-  //           },
-  //         }
-  //       );
-  //     }
-  //     if (response && response.data) {
-  //       const updatedCRPrototype = response.data;
-  //       setCrprototype((prevState) =>
-  //         prevState.map((cr) =>
-  //           cr.prId === updatedCRPrototype.prId ? updatedCRPrototype : cr
-  //         )
-  //       );
-  //     }
-  //     setShowModal(false);
-  //   } catch (error) {
-  //     console.error("Error updating CR prototype:", error);
-  //   }
-  // };
 
   const fetchCrprototype = async () => {
     try {
       const userId = localStorage.getItem("userId");
       setLoggedInUserId(userId);
-
+  
       const accessToken = localStorage.getItem("accessToken");
       const response = await axios.get(`${api.defaults.baseURL}/crprototype`, {
         headers: {
@@ -85,6 +29,29 @@ function ApproveORreject() {
       console.error("Error fetching CR prototypes:", error);
     }
   };
+  
+  const filterNewestPrototypes = (prototypes) => {
+    const map = new Map();
+    prototypes.forEach((pr) => {
+      const crId = pr.crId;
+      if (!map.has(crId) || new Date(pr.createdAt) > new Date(map.get(crId).cr.createdAt)) {
+        map.set(crId, pr);
+      }
+    });
+    return Array.from(map.values());
+  };
+  
+  useEffect(() => {
+    fetchCrprototype();
+  }, []);
+  
+  useEffect(() => {
+    if (crprototype.length > 0) {
+      const newestPrototypes = filterNewestPrototypes(crprototype);
+      setCrprototype(newestPrototypes);
+    }
+  }, [crprototype]);
+  
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -93,14 +60,11 @@ function ApproveORreject() {
   const filteredCrPrototypes = crprototype.filter((pr) => {
     if (pr && pr.popupstatus) {
       return (
-      (pr.popupstatus.toLowerCase() === "approved" ||
-      pr.popupstatus === "Develop without Prototype") ||
-         pr.popupstatus.toLowerCase() === "rejected" 
+         pr.cr.status === "Develop without Prototype" ||
+         pr.cr.status === "Prototype Approved"|| 
+         pr.cr.status === "Need Approvel For Prototype"||
+         pr.cr.status === "Need Approvel For Second Prototype" &&  pr.popupstatus.toLowerCase() === "rejected"
 
-         
-         
-         &&(pr.cr.status === "Need Approvel For Prototype" || pr.popupstatus.toLowerCase() === "rejected" ) &&
-         (pr.cr.status === "Need Approvel For Prototype" || pr.popupstatus.toLowerCase() === "second prototype" )
       );
     }
     return false;

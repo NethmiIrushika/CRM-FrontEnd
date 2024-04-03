@@ -216,7 +216,7 @@ const ShowCrDetails = () => {
               onClick={() => setShowStatusPopup(true)}
               className="bg-lime-500 w-48 hover:bg-lime-600 text-white py-2 px-4 rounded mt-4 ml-2" // Added ml-2 for left margin
             >
-              Approve
+              Get Decision
             </button>
           }
         </div>

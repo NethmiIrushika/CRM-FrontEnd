@@ -305,7 +305,7 @@ const Dashboard = () => {
 
             <li>
               <button
-                onClick={() => navigate("notificaton")}
+                onClick={() => navigate("RejectedCR")}
                 className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center  w-52 h-10">
@@ -324,7 +324,7 @@ const Dashboard = () => {
                   </svg>
 
                   <span className="ms-3 text-black justify-center ">
-                    Notificaton
+                    Rejected CR
                   </span>
                 </div>
               </button>

@@ -118,7 +118,7 @@ function Crview() {
       { id: 'name', Header: 'Name', accessor: 'name' },
       { id: 'topic', Header: 'Topic', accessor: 'topic' },
       { id: 'date', Header: 'Date/Time', accessor: 'createdAt', Cell: ({ value }) => formatDate(value) }, // Apply custom Cell renderer
-      userType !== 'HOD' &&{ id: 'priority', Header: 'Priority', accessor: 'priority' },
+      { id: 'priority', Header: 'Priority', accessor: 'priority' },
   
       userType === 'SFA_User' && {
         id: 'priorityInput',

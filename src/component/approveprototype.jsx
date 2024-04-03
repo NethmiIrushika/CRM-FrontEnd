@@ -45,7 +45,8 @@ function Approveprototype() {
       pr.cr.status !== "Completed" &&
       pr.cr.status !== "Develop without Prototype"&&
       pr.cr.status !== "Need UAT Approvel"&&
-      pr.cr.status !== "Development Completed"
+      pr.cr.status !== "Development Completed"&&
+      pr.popupstatus === "Pending" || pr.popupstatus === null
     );
   });
 

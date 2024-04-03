@@ -21,10 +21,11 @@ import ShowProtoDetails from './component/showProtoDetails';
 import DevShowCrDetails from './component/devShowCrDetails';
 import Profile from './component/profile';
 import OngoingApprovelCr from './component/ongoingApprovelCr';
-import Notificaton from './component/notificaton'
+
 import CompleteView from './component/completeView';
 import UatApprove from './component/uatApprovel';
 import OtherPr from './component/otherpr';
+import RejectedCR from './component/rejectedCr';
 
 
 
@@ -56,7 +57,7 @@ function App() {
               <Route path="approveprototype" element={<ProtectedRoute><Approveprototype/></ProtectedRoute>}/>
               <Route path="approveORreject" element={<ProtectedRoute><ApproveORreject/></ProtectedRoute>}/>
               <Route path="completedCR" element={<ProtectedRoute><CompletedCR/></ProtectedRoute>}/>
-              <Route path="notificaton" element={<ProtectedRoute><Notificaton/></ProtectedRoute>}/>
+              <Route path="rejectedCR" element={<ProtectedRoute><RejectedCR/></ProtectedRoute>}/>
               <Route path="ongoingApprovelCr" element={<ProtectedRoute><OngoingApprovelCr/></ProtectedRoute>}/>
               <Route path="uatApprove" element={<ProtectedRoute><UatApprove/></ProtectedRoute>}/>
               

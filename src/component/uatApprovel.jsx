@@ -38,8 +38,8 @@ function UatApprove() {
   const filteredCrPrototypes = crprototype.filter((pr) => {
     return (
 
-      pr.cr.status === "Need UAT Approvel" &&
-      pr.popupstatus === "Need UAT Approvel" 
+      pr.cr.status === "Need UAT Approvel" 
+
 
     );
   });

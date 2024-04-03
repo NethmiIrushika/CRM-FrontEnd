@@ -135,7 +135,7 @@ function UatApprove() {
             </div>
             <button
               onClick={() => handleActionClick(pr.crId)}
-              onClick={() => handleActionClick(pr.crId)}
+
               className="mt-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 mr-2 rounded"
             >
               View

@@ -21,6 +21,7 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const [passwordStrength,  setPasswordStrength] = useState();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,6 +29,15 @@ function Register() {
       ...formData,
       [name]: value,
     });
+
+    // if (name === "password"){
+    //   const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    //   if (strongPassword.test(value)){
+    //     setPasswordStrength("strong");
+    //   } else {
+    //     setPasswordStrength("week");
+    //   }
+    // }
   };
 
   const togglePasswordVisibility = () => {
@@ -151,6 +161,9 @@ function Register() {
                     className="mt-1 p-2.5 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     required
                   />
+                  {/* {passwordStrength === "weak" && (
+                    <p className="text-red-500 text-sm mt-1">Please enter a strong password</p>
+                  )} */}
                   <button
                     type="button"
                     className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-700"

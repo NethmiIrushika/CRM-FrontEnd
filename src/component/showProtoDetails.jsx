@@ -3,11 +3,13 @@ import axios from "axios";
 import api from "../api";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import RejectReasonPopup from "../popup/rejectreasonpopup";
+
 const ShowProtoDetails = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showRejectPopup, setShowRejectPopup] = useState(false);
   const { prId } = useParams();
   const [pr, setPr] = useState(null);
-
   const navigate = useNavigate(); // Import useNavigate and initialize it
 
   useEffect(() => {
@@ -51,7 +53,6 @@ const ShowProtoDetails = () => {
 
   const handleViewAttachment = () => {
     const fileUrl = `${api.defaults.baseURL}/uploads/prototype/${pr.filePath}`;
-
     window.open(fileUrl, "_blank");
   };
 
@@ -71,17 +72,20 @@ const ShowProtoDetails = () => {
         );
         toast.success("You approved the prototype")
       } else if (action === "reject") {
-        const reason = prompt("Enter rejection reason:");
-        response = await axios.put(
-          `${api.defaults.baseURL}/crprototype/${pr.prId}/reject`,
-          { reason },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        toast.error('You reject the prototype')
+        setShowRejectPopup(true)
+        if(reason.trim()!==''){
+          response = await axios.put(
+            `${api.defaults.baseURL}/crprototype/${pr.prId}/reject`,
+            { reason },
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+          toast.error('You reject the prototype')
+        }
+        
       }
       if (response && response.data) {
         const updatedCRPrototype = response.data;
@@ -172,6 +176,17 @@ const ShowProtoDetails = () => {
         </div>
       )}
 
+{showRejectPopup && (
+  <RejectReasonPopup
+    prId={pr.prId}
+    onReject={(reason) => {
+      // Handle reject action with reason
+      console.log("Reject Reason:", reason);
+      setShowRejectPopup(false);
+    }}
+    onCancel={() => setShowRejectPopup(false) && setShowModal(false)}
+  />
+)}
     </div>
   );
 

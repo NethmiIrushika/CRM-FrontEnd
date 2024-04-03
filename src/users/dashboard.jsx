@@ -64,13 +64,13 @@ const Dashboard = () => {
             <img src={logoImage} alt="Logo" className="h-auto w-20" />
           </div>
         </div>
-        <div className="h-full px-3 py-4 overflow-y-auto bg-yellow-400">
+        <div className="h-full w-64 px-3 py-4 overflow-y-auto bg-yellow-400">
           <ul className="space-y-2 font-medium">
             <li>
               <button
                 onClick={() => navigate("userAccount")}
                 style={{ display: userType !== "Admin" ? "none" : "" }}
-                className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
+                className="flex  items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
                 <div className="flex items-center w-40 h-10">
                   <svg
@@ -96,7 +96,7 @@ const Dashboard = () => {
                 }}
                 className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white"
               >
-                <div className="flex items-center  w-40 h-10">
+                <div className="flex items-center  w-52 h-10">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -121,7 +121,7 @@ const Dashboard = () => {
                 onClick={() => navigate("viewCr")}
                 className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white"
               >
-                <div className="flex items-center  w-40 h-10">
+                <div className="flex items-center  w-52 h-10">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -148,7 +148,7 @@ const Dashboard = () => {
                 style={{ display: userType !== "SFA_User" ? "none" : "" }}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
-                <div className="flex items-center w-40 h-10">
+                <div className="flex items-center w-52 h-10">
                   <svg
                     className="w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
                     aria-hidden="true"
@@ -177,7 +177,7 @@ const Dashboard = () => {
                 style={{ display: userType !== "Developer" ? "none" : "" }}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
-                <div className="flex items-center w-40 h-10">
+                <div className="flex items-center w-52 h-10">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -205,7 +205,7 @@ const Dashboard = () => {
                 style={{ display: userType !== "SFA_User" ? "none" : "" }}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
-                <div className="flex items-center w-40 h-10">
+                <div className="flex items-center w-52 h-10">
                   <svg
                     className="w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
                     xmlns="http://www.w3.org/2000/svg"
@@ -232,7 +232,7 @@ const Dashboard = () => {
                 style={{ display: userType !== "Developer" ? "none" : "" }}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
-                <div className="flex items-center w-40 h-10">
+                <div className="flex items-center w-52 h-10">
                   <svg
                     className=" w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
                     aria-hidden="true"
@@ -255,7 +255,7 @@ const Dashboard = () => {
                 style={{ display: userType === "SFA_User" || userType === "HOD" ? "" : "none",}}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
-                <div className="flex items-center w-40 h-10">
+                <div className="flex items-center w-52 h-10">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -282,7 +282,7 @@ const Dashboard = () => {
                 onClick={() => navigate("completedCR")}
                 className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
-                <div className="flex items-center w-40 h-10">
+                <div className="flex items-center w-52 h-10">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -308,7 +308,7 @@ const Dashboard = () => {
                 onClick={() => navigate("notificaton")}
                 className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
-                <div className="flex items-center  w-40 h-10">
+                <div className="flex items-center  w-52 h-10">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -336,7 +336,7 @@ const Dashboard = () => {
                 style={{ display: userType !== "Admin" ? "none" : "" }}
                 className="flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
-                <div className="flex items-center  w-40 h-10">
+                <div className="flex items-center  w-52 h-10">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -361,7 +361,7 @@ const Dashboard = () => {
                 // style={{ display: userType !== "SFA_User" ? "none" : "" }}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
-                <div className="flex items-center w-40 h-10">
+                <div className="flex items-center w-52 h-10">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="w-6 h-6"
@@ -389,7 +389,7 @@ const Dashboard = () => {
                 onClick={handleLogout}
                 className="flex items-center text-white rounded-lg hover:bg-white hover:bg-opacity-40 hover:ring-1 hover-ring-white "
               >
-                <div className="flex items-center w-40 h-10">
+                <div className="flex items-center w-52 h-10">
                   <svg
                     className="w-5 h-5 text-black justify-left transition duration-75 dark:text-black group-hover:text-red-500 dark:group-hover:text-red"
                     aria-hidden="true"

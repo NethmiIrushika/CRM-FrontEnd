@@ -246,10 +246,7 @@ function Register() {
 
             </div>
 
-            <button
-              type="submit"
-              className="w-40 center bg-yellow-500 text-white py-2.5 rounded-md hover:bg-yellow-500 transition duration-300 mt-1"
-            >
+            <button type="submit" className="w-72 bg-yellow-400 text-white py-2.5 rounded-md hover:bg-yellow-600 transition duration-300">
               Submit
             </button>
           </form>

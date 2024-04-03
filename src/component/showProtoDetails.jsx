@@ -124,13 +124,13 @@ const ShowProtoDetails = () => {
         <div className="text-center my-4">
           <button
             onClick={handleViewAttachment}
-            className="inline-block bg-yellow-400 hover:bg-yellow-500 font-bold text-black px-4 py-2 rounded mt-4 mr-2"
+            className="inline-block bg-yellow-400 hover:bg-yellow-500  text-white px-4 py-2 rounded mt-4 mr-2"
           >
             View Attachment
           </button>
           <button
             onClick={() => handleActionClick(pr.prId)}
-            className="inline-block bg-yellow-400 hover:bg-yellow-500 font-bold text-black px-4 py-2 rounded mt-4"
+            className="inline-block bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded mt-4"
           >
             Get Decision
           </button>
@@ -157,13 +157,13 @@ const ShowProtoDetails = () => {
             <div className="mt-4">
               <button
                 onClick={() => handleAction("approve")}
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-4"
+                className="w-28 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
               >
                 Approve
               </button>
               <button
                 onClick={() => handleAction("reject")}
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                className=" bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
               >
                 Reject
               </button>

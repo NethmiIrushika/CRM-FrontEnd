@@ -39,7 +39,7 @@ const DevShowCrDetails = () => {
     const handleButtonClickskip = async () => {
         try {
             const accessToken = localStorage.getItem('accessToken');
-            
+
             // Send a PUT request to update the status
             await axios.put(
                 `${api.defaults.baseURL}/crs/${crId}/status`,
@@ -50,31 +50,31 @@ const DevShowCrDetails = () => {
                     },
                 }
             );
-    
+
             // Create CR prototype
             const userId = localStorage.getItem('userId'); // assuming userId is stored in localStorage
             const popupstatus = "Develop without Prototype";
             await axios.post(
                 `${api.defaults.baseURL}/crprototype`,
-                { crId, userId, popupstatus  }, // Send the crId and userId in the request body
+                { crId, userId, popupstatus }, // Send the crId and userId in the request body
                 {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 }
             );
-    
+
             navigate(`/dashboard/approveORreject`); // Redirect to the dashboard
         } catch (error) {
             console.error('Error updating CR status or creating CR prototype:', error);
         }
     };
-    
+
 
     const handleButtonClick = (crId, topic) => {
         console.log("CR ID:", crId);
         console.log('Topic:', topic)
-        navigate(`/dashboard/crProtoType/${crId}`,{ state: { topic: topic } });
+        navigate(`/dashboard/crProtoType/${crId}`, { state: { topic: topic } });
     };
 
     if (loading) {
@@ -104,37 +104,37 @@ const DevShowCrDetails = () => {
                 </div>
                 <div className="col-span-1">
                     <p className="font-semibold text-left">Change Request ID: {cr.crId}</p>
-                    <p className='font-semibold text-left'> Created At: {cr.createdAt}</p>
+                    <p className='font-semibold text-left mt-2'> Change Request Type: {cr.crtype}</p>
                 </div>
                 <div className="col-span-1">
                     <p className="font-semibold text-left">SFA User: {cr.name}</p>
-                    <p className="font-semibold text-left">Department: {cr.department}</p>
+                    <p className="font-semibold text-left mt-2">Created At: {cr.createdAt}</p>
                 </div>
                 <div className="col-span-2 ">
                     <p className='font-semibold text-left'> Description:</p>
-                    <div className='bg-gray-200 p-4 h-auto rounded-lg' dangerouslySetInnerHTML={{ __html: cr.description }} />
+                    <div className='bg-white-100 border border-yellow-100 p-4 h-auto rounded-lg text-left' dangerouslySetInnerHTML={{ __html: cr.description }} />
 
                 </div>
-  <div className="flex justify-center my-4">
-  <button
-    onClick={handleViewAttachment}
-    className="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300 ease-in-out"
-  >
-    View Attachment
-  </button>
-  <button
-    onClick={() => handleButtonClick(cr.crId, cr.topic)}
-    className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out"
-  >
-    Sent Prototype
-  </button>
-  <button
-    onClick={() => handleButtonClickskip(cr.crId, cr.topic)}
-    className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out"
-  >
-    Develop without Prototype
-  </button>
-</div>
+                <div className=" my-4 col-span-2">
+                    <button
+                        onClick={handleViewAttachment}
+                        className="w-48 inline-block text-center border border-yellow-100 bg-yellow-400 hover:bg-yellow-600 text-white px-4 py-2 rounded mt-1"
+                    >
+                        View Attachment
+                    </button>
+                    <button
+                        onClick={() => handleButtonClick(cr.crId, cr.topic)}
+                        className="bg-lime-500 w-48 hover:bg-lime-600 text-white py-2 px-4 rounded mt-4 ml-2 ease-in-out"
+                    >
+                        Sent Prototype
+                    </button>
+                    <button
+                        onClick={() => handleButtonClickskip(cr.crId, cr.topic)}
+                        className=" bg-rose-500 hover:bg-rose-700 text-white py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out"
+                    >
+                        Develop without Prototype
+                    </button>
+                </div>
 
 
 

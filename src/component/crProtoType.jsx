@@ -4,22 +4,22 @@ import api from '../api';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DatePicker from 'react-datepicker'; // Import react-datepicker
-import 'react-datepicker/dist/react-datepicker.css'; 
+import 'react-datepicker/dist/react-datepicker.css';
 import ReactQuill from 'react-quill'; // Import React Quill
 import 'react-quill/dist/quill.snow.css';
 
 const CrProtoType = () => {
   const { crId } = useParams(); // Extract crId from URL parameters
-  const {state} = useLocation();
+  const { state } = useLocation();
   const [formData, setFormData] = useState({
-    topic: state?.topic ||'',
-    description: '',deleverDate:'',
+    topic: state?.topic || '',
+    description: '', deleverDate: '',
   });
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-  
+
     const { id, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
@@ -43,7 +43,7 @@ const CrProtoType = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const formDataToSend = new FormData();
       formDataToSend.append('description', formData.description);
@@ -51,20 +51,20 @@ const CrProtoType = () => {
       formDataToSend.append('crId', crId);
       formDataToSend.append('file', file);
       formDataToSend.append('deliveryDate', formData.deleverDate);
-  
+
       const response = await api.post('/crprototype/', formDataToSend);
-  
+
       console.log('Data inserted successfully:', response.data);
-      
+
       // Update CR status
       await api.put(`/crs/${crId}/status`, { status: 'Need Approvel For Prototype' });
 
 
       await api.put(`/crprototype/updatePopupStatus/${crId}`, { popupstatus: 'second prototype' });
-      
+
 
       toast.success('You have successfully sent a change request prototype!');
-      
+
       setTimeout(() => {
         navigate('/dashboard/viewCr');
       });
@@ -98,16 +98,16 @@ const CrProtoType = () => {
           </div>
 
           <div>
-  <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-    Description:
-  </label>
-  <ReactQuill
-    id="description"
-    value={formData.description}
-    onChange={value => setFormData(prevState => ({ ...prevState, description: value }))}
-    className="quill-editor" // Add custom class for styling if necessary
-  />
-</div>
+            <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+              Description:
+            </label>
+            <ReactQuill
+              id="description"
+              value={formData.description}
+              onChange={value => setFormData(prevState => ({ ...prevState, description: value }))}
+              className="quill-editor" 
+            />
+          </div>
 
 
           <div>

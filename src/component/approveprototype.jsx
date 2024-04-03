@@ -115,14 +115,14 @@ function Approveprototype() {
                       {formatDate(pr.cr.createdAt)} {/* Format date */}
                     </span>{" "}
                     now has a Prototype. Plese make sure to View the prototype
-                    and give your feed backs
+                    and give your feedbacks
                   </p>
                 )}
               </div>
             </div>
             <button
               onClick={() => handleActionClick(pr.prId)}
-              className="mt-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded"
+              className="mt-4 w-40 bg-yellow-400 hover:bg-yellow-500 text-white py-2 px-4 rounded"
             >
               View
             </button>

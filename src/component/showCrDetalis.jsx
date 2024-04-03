@@ -151,7 +151,7 @@ const ShowCrDetails = () => {
           />
         </div>
       )}
-      <h1 className="text-xl font-bold my-4">View CR Details</h1>
+      {/* <h1 className="text-xl font-bold my-4">View CR Details</h1> */}
       <div className="p-8 grid grid-cols-2 gap-2 bg-white rounded-lg shadow-md4">
         <div className="col-span-2 ">
           <p className=" text-lg font-bold text-right">
@@ -172,29 +172,32 @@ const ShowCrDetails = () => {
           </p>
         </div>
         <div className="col-span-1">
-          <p className="font-semibold text-left">
+          
+          <p className="font-semibold text-left ">Department: {cr.department}</p>
+          <p className="font-semibold text-left mt-2">
             Change Request ID: {cr.crId}
           </p>
-          <p className="font-semibold text-left">SFA User: {cr.name}</p>
+          <p className="font-semibold text-left mt-2">SFA User: {cr.name}</p>
         </div>
         <div className="col-span-1">
           <p className="font-semibold text-left">
             Change Request Priority: {cr.priority}
           </p>
-          <p className="font-semibold text-left">Department: {cr.department}</p>
+          <p className="font-semibold text-left mt-2">Change Request Type: {cr.crtype}</p>
+          <p className="font-semibold text-left mt-2">Change Request Created At: {cr.createdAt}</p>
         </div>
 
         <div className="col-span-2 ">
           <p className="font-semibold text-left"> Description:</p>
           <div
-            className="bg-gray-200 p-4 h-auto rounded-lg text-left"
+            className="bg-white-100 border border-yellow-100 p-4 h-auto rounded-lg text-left "
             dangerouslySetInnerHTML={{ __html: cr.description }}
           />
         </div>
         <div className="text-center my-4">
           <button
             onClick={handleViewAttachment}
-            className="inline-block text-center bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mt-1"
+            className=" w-48 inline-block text-center border border-yellow-100 bg-yellow-400 hover:bg-yellow-600 text-white px-4 py-2 rounded mt-1"
           >
             View Attachment
           </button>
@@ -202,16 +205,16 @@ const ShowCrDetails = () => {
           {userType === 'Developer' && cr.priority === '1' &&
             <button
               onClick={() => handleButtonClick(crId)}
-              className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-4 ml-2" // Added ml-2 for left margin
+              className="bg-lime-500 w-48 hover:bg-lime-600 text-white py-2 px-4 rounded mt-4 ml-2" // Added ml-2 for left margin
             >
               Get To Development
             </button>
           }
 
-          {userType === 'HOD' &&
+          {userType === 'HOD' && cr.hodApprovel !== 'approved' &&
             <button
               onClick={() => setShowStatusPopup(true)}
-              className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-4 ml-2" // Added ml-2 for left margin
+              className="bg-lime-500 w-48 hover:bg-lime-600 text-white py-2 px-4 rounded mt-4 ml-2" // Added ml-2 for left margin
             >
               Approve
             </button>

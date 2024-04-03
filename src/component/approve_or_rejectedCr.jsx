@@ -201,7 +201,7 @@ function ApproveORreject() {
 
             <button
             onClick={() => handleActionClick(pr.crId)}
-              className="mt-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
+              className="mt-1 bg-yellow-400 hover:bg-yellow-500 text-white py-2 px-2 rounded"
             >
               View Details
             </button>
@@ -209,7 +209,7 @@ function ApproveORreject() {
             {pr.rejectionReason && (
               <button
                 onClick={() => handleButtonClick(pr.crId, pr.topic)}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded ml-2 transition-colors duration-300 ease-in-out"
+                className="bg-blue-400 hover:bg-blue-500 text-white py-2 px-2 rounded ml-2 transition-colors duration-300 ease-in-out"
               >
                 Sent another Prototype
               </button>
@@ -217,7 +217,7 @@ function ApproveORreject() {
             {pr.rejectionReason == null && (
               <button
                 onClick={() => handleChangeStatusButtonClick(pr.prId)}
-                className="mt-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 ml-2 px-2 rounded"
+                className="mt-1 bg-lime-500 hover:bg-lime-600 text-white py-2 ml-2 px-2 rounded"
               >
                For UAT Approvel
               </button>

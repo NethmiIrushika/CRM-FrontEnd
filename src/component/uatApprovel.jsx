@@ -136,13 +136,13 @@ function UatApprove() {
             <button
               onClick={() => handleActionClick(pr.crId)}
 
-              className="mt-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 mr-2 rounded"
+              className="w-32 mt-4 bg-yellow-400 hover:bg-yellow-500 text-white py-2 px-4 mr-2 rounded"
             >
               View
             </button>
             <button
               onClick={() => handlButtonClick(pr.prId)}
-              className="mt-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded"
+              className="w-32 mt-4 bg-lime-500 hover:bg-lime-600 text-white  py-2 px-4 rounded"
             >
               Approve
             </button>

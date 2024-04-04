@@ -56,10 +56,6 @@ function Approveprototype() {
     setSearchTerm(value);
   };
 
-  const filteredCrPrototypes = crprototype.filter((cr) => {
-    return  cr.userId.userId === getLoginInfo()?.sub;
-  });
-
   useEffect(() => {
     fetchCrprototype();
   }, []);
@@ -69,9 +65,21 @@ function Approveprototype() {
     navigate(`/dashboard/completeView/${crId}/`);
   };
 
+  const orderedCrPrototypes = crprototype.sort((a, b) => {
+    const statusOrder = {
+      'Need CR Approvel': 1,
+      'Pending to get development': 2,
+      'Taken For Development':3,
+      'Need Approvel For Prototype': 4,
+      'Development Completed': 5,
+      'CR Rejected': 6,
+    };
+    return statusOrder[a.status] - statusOrder[b.status];
+  });
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredCrPrototypes.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = orderedCrPrototypes.slice(indexOfFirstItem, indexOfLastItem);
 
   const goToPreviousPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
@@ -81,16 +89,6 @@ function Approveprototype() {
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
-  const handleFirstPage = () => {
-    setCurrentPage(1);
-  };
-
-  const handleLastPage = () => {
-    setCurrentPage(Math.ceil(filteredCrPrototypes.length / itemsPerPage));
-  };
-
-  const canPreviousPage = currentPage > 1;
-  const canNextPage = indexOfLastItem < filteredCrPrototypes.length;
   // Define columns and data for the React data table
   const columns = React.useMemo(
     () => [
@@ -122,7 +120,7 @@ function Approveprototype() {
     prepareRow,
   } = useTable({
     columns,
-    data: currentItems,// Use filtered data for the table
+    data: currentItems, // Use ordered and paginated data for the table
   });
 
   return (
@@ -173,20 +171,20 @@ function Approveprototype() {
           </table>
         </div>
 
-        <div className="pagination">
-          <button onClick={handleFirstPage} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-            {'<<'}
-          </button>
-          <button onClick={goToPreviousPage} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-            {'<'}
-          </button>
-          <button onClick={goToNextPage} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-            {'>'}
-          </button>
-          <button onClick={handleLastPage} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-            {'>>'}
-          </button>
+        <div className="flex justify-between items-center mt-4">
+          <span>
+            Page {currentPage} of {Math.ceil(orderedCrPrototypes.length / itemsPerPage)}
+          </span>
+          <div className="flex items-center">
+            <button onClick={goToPreviousPage} disabled={currentPage === 1} className="mr-2">
+              Previous
+            </button>
+            <button onClick={goToNextPage} disabled={indexOfLastItem >= orderedCrPrototypes.length}>
+              Next
+            </button>
+          </div>
         </div>
+
 
       </div>
     </div>

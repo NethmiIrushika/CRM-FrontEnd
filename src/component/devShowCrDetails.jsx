@@ -103,12 +103,12 @@ const DevShowCrDetails = () => {
                     <p className="text-lg font-bold text-stone-950 text-left">Topic: {cr.topic}</p>
                 </div>
                 <div className="col-span-1">
-                    <p className="font-semibold text-left">Change Request ID: {cr.crId}</p>
-                    <p className='font-semibold text-left mt-2'> Change Request Type: {cr.crtype}</p>
+                    <p className="font-semibold text-left">Change Request ID: <span className='font-normal'>{cr.crId}</span></p>
+                    <p className='font-semibold text-left mt-2'> Change Request Type: <span className='font-normal'>{cr.crtype}</span></p>
                 </div>
                 <div className="col-span-1">
-                    <p className="font-semibold text-left">SFA User: {cr.name}</p>
-                    <p className="font-semibold text-left mt-2">Created At: {cr.createdAt}</p>
+                    <p className="font-semibold text-left">SFA User: <span className='font-normal'>{cr.name}</span></p>
+                    <p className="font-semibold text-left mt-2">Created At: <span className='font-normal'>{cr.createdAt}</span></p>
                 </div>
                 <div className="col-span-2 ">
                     <p className='font-semibold text-left'> Description:</p>
@@ -118,19 +118,19 @@ const DevShowCrDetails = () => {
                 <div className=" my-4 col-span-2">
                     <button
                         onClick={handleViewAttachment}
-                        className="w-48 inline-block text-center border border-yellow-100 bg-yellow-400 hover:bg-yellow-600 text-white px-4 py-2 rounded mt-1"
+                        className="w-48 inline-block text-center border border-yellow-100 bg-yellow-400 hover:bg-yellow-600 text-black px-4 py-2 rounded mt-1"
                     >
                         View Attachment
                     </button>
                     <button
                         onClick={() => handleButtonClick(cr.crId, cr.topic)}
-                        className="bg-lime-500 w-48 hover:bg-lime-600 text-white py-2 px-4 rounded mt-4 ml-2 ease-in-out"
+                        className="bg-lime-500 w-48 hover:bg-lime-600 text-black py-2 px-4 rounded mt-4 ml-2 ease-in-out"
                     >
                         Sent Prototype
                     </button>
                     <button
                         onClick={() => handleButtonClickskip(cr.crId, cr.topic)}
-                        className=" bg-rose-500 hover:bg-rose-700 text-white py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out"
+                        className=" bg-blue-500 hover:bg-blue-700 text-black py-2 px-4 rounded ml-2 transition-colors duration-300 ease-in-out"
                     >
                         Develop without Prototype
                     </button>

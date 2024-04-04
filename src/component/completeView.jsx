@@ -80,7 +80,12 @@ const CompleteView = () => {
                             <span className="font-bold text-blue-500">{cr.status}</span>
                         ) : cr.status === 'Development Completed' ? (
                             <span className="text-green-500">{cr.status}</span>
-                        ) : (
+                        ) : cr.status === 'CR Rejected' ? (
+                            <span className="text-red-500">{cr.status}</span>
+                        ) :cr.status === 'Need Approvel For Prototype' ? (
+                            <span className="text-red-500">{cr.status}</span>
+                        ) :
+                         (
                             <span>{cr.status}</span>
                         )}
                     </p>
@@ -88,13 +93,13 @@ const CompleteView = () => {
                     <p className="text-lg font-bold text-stone-950 text-left">Topic: {cr.topic}</p>
                 </div>
                 <div className="col-span-1">
-                    <p className="font-semibold text-left">Change Request ID: {cr.crId}</p>
-                    <p className="font-semibold text-left">CR Crated At:  {cr.createdAt}</p>
+                    <p className="font-semibold text-left">Change Request ID: <span className='font-normal'>{cr.crId}</span></p>
+                    <p className="font-semibold text-left">CR Crated At: <span className='font-normal'>{cr.createdAt}</span> </p>
 
                 </div>
                 <div className="col-span-1">
-                <p className="font-semibold text-left">SFA User:  {cr.name}</p>
-                    <p className="font-semibold text-left">Department: {cr.department}</p>
+                <p className="font-semibold text-left">SFA User: <span className='font-normal'> {cr.name} </span> </p>
+                    <p className="font-semibold text-left">Department: <span className='font-normal'>{cr.department}</span></p>
                 </div>
 
                 <div className="col-span-2 ">
@@ -102,14 +107,14 @@ const CompleteView = () => {
                     <div className='bg-gray-200 p-4 h-auto rounded-lg text-left' dangerouslySetInnerHTML={{ __html: cr.description }} />
                 </div>
                 </div>
-                    <button onClick={handleViewAttachment} className="inline-block text-center bg-blue-500 text-white px-2 py-2 rounded hover:bg-blue-600 mt-1">
+                    <button onClick={handleViewAttachment} className="inline-block text-center bg-blue-500 text-black px-2 py-2 rounded hover:bg-blue-600 mt-1">
                         View CR attachment
                     </button>
                     {cr.status!== " Need CR Approvel" &&
                     <button
                     
                         onClick={handleActionClick}
-                        className="inline-block bg-yellow-400 hover:bg-yellow-500 font-bold text-black px-2 py-2 rounded mt-1 ml-2"
+                        className="inline-block bg-yellow-400 hover:bg-yellow-500 text-black px-2 py-2 rounded mt-1 ml-2"
                     >
                         View Prototype Details
                     </button>

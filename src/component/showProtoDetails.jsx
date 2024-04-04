@@ -117,8 +117,8 @@ const ShowProtoDetails = () => {
           </p>
         </div>
         <div className="col-span-1">
-          <p className="font-semibold text-left">Change Request ID: {pr.crId}</p>
-          <p className="font-semibold text-left">Prototype Created At: {pr.createdAt} </p>
+          <p className="font-semibold text-left">Change Request ID: <span className='font-normal'>{pr.crId}</span> </p>
+          <p className="font-semibold text-left">Prototype Created At: <span className='font-normal'>{pr.createdAt} </span></p>
         </div>
         <div className="col-span-2 ">
           <p className="font-semibold text-left"> Description:</p>
@@ -128,13 +128,13 @@ const ShowProtoDetails = () => {
         <div className="text-center my-4">
           <button
             onClick={handleViewAttachment}
-            className="inline-block bg-yellow-400 hover:bg-yellow-500  text-white px-4 py-2 rounded mt-4 mr-2"
+            className="inline-block bg-yellow-400 hover:bg-yellow-500  text-black px-4 py-2 rounded mt-4 mr-2"
           >
             View Attachment
           </button>
           <button
             onClick={() => handleActionClick(pr.prId)}
-            className="inline-block bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded mt-4"
+            className="inline-block bg-lime-500 hover:bg-lime-600 text-black px-4 py-2 rounded mt-4"
           >
             Get Decision
           </button>

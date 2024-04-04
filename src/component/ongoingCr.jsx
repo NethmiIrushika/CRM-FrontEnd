@@ -126,31 +126,23 @@ function OngingCr() {
                 <p className="text-lg font-bold text-stone-950  text-left">Topic: {cr.topic}</p>
               </div>
               <div className="col-span-1">
-                <p className=" font-semibold text-left">
-                  CR ID: {cr.crId}
-                </p>
-                <p className=" font-semibold text-left">
-                  CR Created At: {cr.createdAt}
-                </p>
+                <p className=" font-semibold text-left"> CR ID: <span className='font-normal'>{cr.crId}</span>   </p>
+                <p className=" font-semibold text-left"> CR Created At: <span className='font-normal'>{cr.createdAt}</span>  </p>
               </div>
               <div className="col-span-1">
-                <p className=" font-semibold text-left">
-                  Developer Name: {cr.getCr[0].user.firstname}
-                </p>
-                <p className="font-semibold text-left">
-                  SFA_User Name:  {cr.name}
-                </p>
+                <p className=" font-semibold text-left">Developer Name: <span className='font-normal'>{cr.getCr[0].user.firstname}</span> </p>
+                <p className="font-semibold text-left">SFA_User Name: <span className='font-normal'>{cr.name}</span>  </p>
               </div>
             </div>
             <button
               onClick={() => handleButtonClick(cr.crId, cr.topic)}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded mr-2 transition duration-300 ease-in-out"
+              className="w-32 bg-blue-500 hover:bg-blue-700 text-black py-2 px-2 rounded mr-2 transition duration-300 ease-in-out"
             >
               Sent Prototype
             </button>
             <button
               onClick={() => handleActionClick(cr.crId)}
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded transition duration-300 ease-in-out"
+              className="w-32 bg-green-500 hover:bg-green-700 text-black py-2 px-2 rounded transition duration-300 ease-in-out"
             >
               View CR
             </button>

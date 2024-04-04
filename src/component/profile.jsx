@@ -29,6 +29,8 @@ function Approveprototype() {
   const [crprototype, setCrprototype] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loggedInUserId, setLoggedInUserId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
   const navigate = useNavigate();
 
   const fetchCrprototype = async () => {
@@ -53,6 +55,7 @@ function Approveprototype() {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
   };
+
   const filteredCrPrototypes = crprototype.filter((cr) => {
     return  cr.userId.userId === getLoginInfo()?.sub;
   });
@@ -66,6 +69,28 @@ function Approveprototype() {
     navigate(`/dashboard/completeView/${crId}/`);
   };
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredCrPrototypes.slice(indexOfFirstItem, indexOfLastItem);
+
+  const goToPreviousPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const goToNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const handleFirstPage = () => {
+    setCurrentPage(1);
+  };
+
+  const handleLastPage = () => {
+    setCurrentPage(Math.ceil(filteredCrPrototypes.length / itemsPerPage));
+  };
+
+  const canPreviousPage = currentPage > 1;
+  const canNextPage = indexOfLastItem < filteredCrPrototypes.length;
   // Define columns and data for the React data table
   const columns = React.useMemo(
     () => [
@@ -97,7 +122,7 @@ function Approveprototype() {
     prepareRow,
   } = useTable({
     columns,
-    data: filteredCrPrototypes, // Use filtered data for the table
+    data: currentItems,// Use filtered data for the table
   });
 
   return (
@@ -147,6 +172,22 @@ function Approveprototype() {
             </tbody>
           </table>
         </div>
+
+        <div className="pagination">
+          <button onClick={handleFirstPage} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+            {'<<'}
+          </button>
+          <button onClick={goToPreviousPage} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+            {'<'}
+          </button>
+          <button onClick={goToNextPage} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+            {'>'}
+          </button>
+          <button onClick={handleLastPage} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
+            {'>>'}
+          </button>
+        </div>
+
       </div>
     </div>
   );

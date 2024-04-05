@@ -5,6 +5,7 @@ import axios from "axios";
 import api from "../api";
 import { getLoginInfo } from "../utils/LoginInfo";
 import { useTable } from 'react-table'; // Import useTable hook
+import { FaEye } from "react-icons/fa";
 
 function Profile({ userInfo }) {
   return (
@@ -30,6 +31,7 @@ function Approveprototype() {
   const [searchTerm, setSearchTerm] = useState("");
   const [loggedInUserId, setLoggedInUserId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [filteredCrPrototypes, setFilteredCrPrototypes] = useState([]);
   const itemsPerPage = 5;
   const navigate = useNavigate();
 
@@ -54,7 +56,21 @@ function Approveprototype() {
   const handleSearchChange = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
+  
+    const filteredData = crprototype.filter((item) => {
+      const crId = item.crId && item.crId.toString().toLowerCase(); // Ensure crId is a string
+      const topic = item.topic && item.topic.toLowerCase(); // Ensure topic is a string
+      const status = item.status && item.status.toLowerCase(); // Ensure status is a string
+  
+      return (
+        crId.includes(value) ||
+        topic.includes(value) ||
+        status.includes(value)
+      );
+    });
+    setFilteredCrPrototypes(filteredData);
   };
+  
 
   useEffect(() => {
     fetchCrprototype();
@@ -101,15 +117,17 @@ function Approveprototype() {
         Cell: ({ row }) => (
           <button
             onClick={() => handleActionClick(row.original.crId)}
-            className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded"
+            className="btn-secondary justify-center"
           >
-            View
+           <FaEye className="icon" />
           </button>
         ),
       },
     ],
     [] // Dependency array
   );
+
+  const dataToDisplay = searchTerm ? filteredCrPrototypes : orderedCrPrototypes;
 
   // Initialize the React data table using useTable hook
   const {
@@ -120,7 +138,7 @@ function Approveprototype() {
     prepareRow,
   } = useTable({
     columns,
-    data: currentItems, // Use ordered and paginated data for the table
+    data:  dataToDisplay, // Use ordered and paginated data for the table
   });
 
   return (
@@ -171,19 +189,20 @@ function Approveprototype() {
           </table>
         </div>
 
-        <div className="flex justify-between items-center mt-4">
-          <span>
-            Page {currentPage} of {Math.ceil(orderedCrPrototypes.length / itemsPerPage)}
-          </span>
-          <div className="flex items-center">
-            <button onClick={goToPreviousPage} disabled={currentPage === 1} className="mr-2">
-              Previous
-            </button>
-            <button onClick={goToNextPage} disabled={indexOfLastItem >= orderedCrPrototypes.length}>
-              Next
-            </button>
-          </div>
-        </div>
+        <div className="flex justify-end mb-4 mt-4">
+  <div>
+    <button onClick={goToPreviousPage} disabled={currentPage === 1} className="mr-6 border border-white-700 font-medium shadow-xl w-20 hover:bg-yellow-400">
+      Previous
+    </button>
+    <span>
+      Page {currentPage} of {Math.ceil(orderedCrPrototypes.length / itemsPerPage)}
+    </span>
+    <button onClick={goToNextPage} disabled={indexOfLastItem >= orderedCrPrototypes.length} className="w-20 ml-6 border-white-700 border font-medium shadow-xl w-20 hover:bg-yellow-400">
+      Next
+    </button>
+  </div>
+</div>
+
 
 
       </div>

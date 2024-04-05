@@ -35,7 +35,7 @@ function CompletedCR() {
 
   const handleActionClick = (crId) => {
     console.log('cr Id:', crId);
-    navigate(`/dashboard/completeView/${crId}/`);
+    navigate(`/dashboard/showCrDetails/${crId}/`);
   };
 
   

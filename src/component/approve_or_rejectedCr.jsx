@@ -148,8 +148,10 @@ function ApproveORreject() {
               </div>
               <div className='col-span-1'>
               
-                {/* {pr.rejectionReason && (<p className="mb-2 text-left">Rejected reason: {pr.rejectionReason} </p>)} */}
+\
                 {pr.cr && (<p className=" text-left font-semibold"> SFA User:  <span className="font-normal">{pr.cr.name}</span> </p>)}
+                {pr.cr && (<p className=" text-left font-semibold"> CR Status:  <span className="font-normal">{pr.cr.status}</span> </p>)}
+                {pr.cr && (<p className=" text-left font-semibold"> Developer:  <span className="font-normal">{pr.cr.developer}</span> </p>)}
                 {pr.createdAt && (
                   <p className=" text-left font-semibold"> Prototype Created At: <span className="font-normal">{pr.createdAt}</span> </p>
                 )}

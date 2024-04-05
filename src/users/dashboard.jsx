@@ -193,7 +193,7 @@ const Dashboard = () => {
                   </svg>
 
                   <span className="ms-3 text-black justify-center">
-                    Prototypes
+                    Sent Prototypes
                   </span>
                 </div>
               </button>
@@ -220,7 +220,7 @@ const Dashboard = () => {
                   </svg>
 
                   <span className="ms-3 text-black justify-center">
-                    Prototypes
+                    View Prototypes
                   </span>
                 </div>
               </button>

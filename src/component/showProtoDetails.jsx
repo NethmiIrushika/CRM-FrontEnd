@@ -119,6 +119,7 @@ const ShowProtoDetails = () => {
         <div className="col-span-1">
           <p className="font-semibold text-left">Change Request ID: <span className='font-normal'>{pr.crId}</span> </p>
           <p className="font-semibold text-left">Prototype Created At: <span className='font-normal'>{pr.createdAt} </span></p>
+          <p className="font-semibold text-left">Developer Name: <span className='font-normal'>{pr.prId.cr.developer} </span></p>
         </div>
         <div className="col-span-2 ">
           <p className="font-semibold text-left"> Description:</p>

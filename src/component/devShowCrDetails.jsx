@@ -110,6 +110,7 @@ const DevShowCrDetails = () => {
                 <div className="col-span-1">
                     <p className="font-semibold text-left">SFA User: <span className='font-normal'>{cr.name}</span></p>
                     <p className="font-semibold text-left mt-2">Created At: <span className='font-normal'>{cr.createdAt}</span></p>
+                    <p className="font-semibold text-left mt-2">Developer Name: <span className='font-normal'>{cr.developer}</span></p>
                     
 
                 </div>

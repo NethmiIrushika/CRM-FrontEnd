@@ -27,26 +27,10 @@ const CompleteView = () => {
             }
         };
 
-        const fetchProtoDetails = async () => {
-            try {
-                const accessToken = localStorage.getItem('accessToken');
-                const response = await axios.get(`${api.defaults.baseURL}/crprototype/${prId}`, {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                });
-                console.log('Prototype details:', response.data);
-                setPr(response.data);
-            } catch (error) {
-                console.error('Error fetching prototype details:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    
 
         fetchCrDetails();
-        fetchProtoDetails();
-    }, [crId, prId]);
+    }, [crId]);
 
     const handleViewAttachment = () => {
         if (cr && cr.filePath) {
@@ -55,10 +39,8 @@ const CompleteView = () => {
         }
     };
 
-    const handleActionClick = (prId) => {
-        console.log("pr Id:", prId);
-        navigate(`/dashboard/showprotoDetails/${prId}`);
-      };
+    
+
 
     if (loading) {
         return <div>Loading...</div>;
@@ -102,6 +84,7 @@ const CompleteView = () => {
                 <div className="col-span-1">
                 <p className="font-semibold text-left">SFA User: <span className='font-normal'> {cr.name} </span> </p>
                     <p className="font-semibold text-left">Department: <span className='font-normal'>{cr.department}</span></p>
+                    <p className="font-semibold text-left">Developer: <span className='font-normal'>{cr.developer}</span></p>
                 </div>
 
                 <div className="col-span-2 ">
@@ -112,20 +95,8 @@ const CompleteView = () => {
                     <button onClick={handleViewAttachment} className="inline-block text-center bg-blue-500 text-black font-medium px-2 py-2 rounded hover:bg-blue-600 mt-1">
                         View CR attachment
                     </button>
-                    {cr.status!== " Need CR Approvel" &&
-                    <button
-                    
-                        onClick={handleActionClick}
-                        className="inline-block bg-yellow-400 hover:bg-yellow-500 text-black px-2 py-2 font-medium rounded mt-1 ml-2"
-                    >
-                        View Prototype Details
-                    </button>
-                    }
-
                 
-           
-
-        </div>
+                </div>
     );
 };
 

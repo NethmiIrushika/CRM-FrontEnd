@@ -4,8 +4,7 @@ import api from "../api";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getLoginInfo } from "../utils/LoginInfo";
-import StatusPopupcr from '../popup/statuspopupcr';
-
+import StatusPopupcr from "../popup/statuspopupcr";
 
 const ShowCrDetails = () => {
   const { crId } = useParams();
@@ -103,45 +102,40 @@ const ShowCrDetails = () => {
     return <div>No CR found</div>;
   }
 
-
   const updateCr = async (updatedCr) => {
     try {
-      const accessToken = localStorage.getItem('accessToken');
-      const response = await axios.get(`${api.defaults.baseURL}/crs/${updatedCr.crId}`, {
-        hodApprovel: updatedCr.hodApprovel
-      }, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+      const accessToken = localStorage.getItem("accessToken");
+      const response = await axios.get(
+        `${api.defaults.baseURL}/crs/${updatedCr.crId}`,
+        {
+          hodApprovel: updatedCr.hodApprovel,
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       setCrs(response.data);
-      if (updatedCr.hodApprovel === 'approved') {
+      if (updatedCr.hodApprovel === "approved") {
         toast.success(`CR Id ${updatedCr.crId}  is  ${updatedCr.hodApprovel}`, {
-          className: 'toast-success',
-        
+          className: "toast-success",
         });
-        
-      } else if (updatedCr.hodApprovel === 'rejected') {
+      } else if (updatedCr.hodApprovel === "rejected") {
         toast.error(`CR Id ${updatedCr.crId} is  ${updatedCr.hodApprovel}`, {
-          className: 'toast-error',
+          className: "toast-error",
         });
       } else {
         toast.success(` ${updatedCr.crId} ${updatedCr.hodApprovel}`);
       }
-      navigate('/dashboard/viewCr')
-      
+      navigate("/dashboard/viewCr");
     } catch (error) {
-      console.error('Error updating CR:', error);
+      console.error("Error updating CR:", error);
     }
   };
 
-
   return (
-
-
-
     <div className="container mx-auto  h-auto  ">
-
       {showStatusPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
           <StatusPopupcr
@@ -172,16 +166,38 @@ const ShowCrDetails = () => {
           </p>
         </div>
         <div className="col-span-1">
-          
-          <p className="font-semibold text-left ">Department: <span className="font-normal">{cr.department}</span></p>
-          <p className="font-semibold text-left mt-2"> Change Request ID: <span className="font-normal">{cr.crId}</span> </p>
-          <p className="font-semibold text-left mt-2">SFA User: <span className="font-normal">{cr.name}</span> </p>
-          <p className="font-semibold text-left mt-2">Required Date: <span className="font-normal">{cr.requiredDate}</span> </p>
+          <p className="font-semibold text-left ">
+            Department: <span className="font-normal">{cr.department}</span>
+          </p>
+          <p className="font-semibold text-left mt-2">
+            {" "}
+            Change Request ID: <span className="font-normal">
+              {cr.crId}
+            </span>{" "}
+          </p>
+          <p className="font-semibold text-left mt-2">
+            SFA User: <span className="font-normal">{cr.name}</span>{" "}
+          </p>
+          <p className="font-semibold text-left mt-2">
+            Required Date:{" "}
+            <span className="font-normal">{cr.requiredDate}</span>{" "}
+          </p>
         </div>
         <div className="col-span-1">
-          <p className="font-semibold text-left"> Change Request Priority: <span className="font-normal">{cr.priority}</span> </p>
-          <p className="font-semibold text-left mt-2">Change Request Type:  <span className="font-normal">{cr.crtype}</span></p>
-          <p className="font-semibold text-left mt-2">Change Request Created At: <span className="font-normal">{cr.createdAt}</span></p>
+          {cr.status === "Pending to get development" && (
+            <p className="font-semibold text-left">
+              Change Request Priority:{" "}
+              <span className="font-normal">{cr.priority}</span>
+            </p>
+          )}
+          <p className="font-semibold text-left mt-2">
+            Change Request Type:{" "}
+            <span className="font-normal">{cr.crtype}</span>
+          </p>
+          <p className="font-semibold text-left mt-2">
+            Change Request Created At:{" "}
+            <span className="font-normal">{cr.createdAt}</span>
+          </p>
         </div>
 
         <div className="col-span-2 ">
@@ -199,25 +215,24 @@ const ShowCrDetails = () => {
             View Attachment
           </button>
 
-          {userType === 'Developer' && cr.priority === '1' &&
+          {userType === "Developer" && cr.priority === "1" && (
             <button
               onClick={() => handleButtonClick(crId)}
               className="bg-lime-500 w-48 hover:bg-lime-600 font-medium text-black py-2 px-4 rounded mt-4 ml-2" // Added ml-2 for left margin
             >
               Get To Development
             </button>
-          }
+          )}
 
-          {userType === 'HOD' && cr.hodApprovel !== 'approved' &&
+          {userType === "HOD" && cr.hodApprovel !== "approved" && (
             <button
               onClick={() => setShowStatusPopup(true)}
               className="bg-lime-500 w-48 hover:bg-lime-600 text-black font-medium py-2 px-4 rounded mt-4 ml-2" // Added ml-2 for left margin
             >
               Get Decision
             </button>
-          }
+          )}
         </div>
-
       </div>
     </div>
   );

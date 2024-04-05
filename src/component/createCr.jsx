@@ -8,6 +8,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { getLoginInfo } from '../utils/LoginInfo';
 import PriorityPopup from '../popup/prioritypopup.jsx';
+import DatePicker from 'react-datepicker'; // Import react-datepicker
+import 'react-datepicker/dist/react-datepicker.css';
 
 const Insert = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +21,7 @@ const Insert = () => {
     date: '',
     priority: 0,
     crtype: '',
+    requiredDate: ''
   });
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
@@ -67,7 +70,7 @@ const Insert = () => {
       formDataToSend.append('status', formData.status);
       formDataToSend.append('userId', userId);
       formDataToSend.append('crtype', formData.crtype);
-  
+      formDataToSend.append('requiredDate', requiredDate);
       const response = await axios.post(`${api.defaults.baseURL}/crs/create`, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -104,7 +107,7 @@ console.log(showPriorityPopup);
     
   };
  
-
+  const [requiredDate, setRequiredDate] = useState(null);
   return (
     <div className={`max-w-lg mx-auto bg-white shadow-lg rounded-lg p-12 `}>
       {showPriorityPopup && (
@@ -179,6 +182,20 @@ console.log(showPriorityPopup);
               id="file"
               className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
               onChange={handleFileUpload}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="requiredDate" className="block text-sm font-medium text-gray-700 mb-1">
+              Required  Date:
+            </label>
+            <DatePicker
+              id="requiredDate"
+              selected={requiredDate}
+              onChange={date => setRequiredDate(date)} // Update deliveryDate state when date is selected
+              className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
+              dateFormat="yyyy-MM-dd" // Specify the date format
+              placeholderText="Select required date" // Placeholder text for the date picker
             />
           </div>
 

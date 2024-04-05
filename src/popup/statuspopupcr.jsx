@@ -47,7 +47,7 @@ const navigate = useNavigate()
             {error && <div className="text-red-600">{error}</div>}
             <div className="flex justify-between">
               <button onClick={changeStatus} disabled={loading} className={`inline-block w-1/2 mr-1 py-2 px-4 bg-lime-500 text-white rounded-l-md hover:bg-lime-600 focus:outline-none focus:bg-lime-900 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}>Save</button>
-              <button onClick={close} disabled={loading} className={`inline-block w-1/2 ml-1 py-2 px-4 bg-red-300 text-white rounded-r-md hover:bg-red-400 focus:outline-none focus:bg-red-400 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}>Cancel</button>
+              <button onClick={close} disabled={loading} className={`inline-block w-1/2 ml-1 py-2 px-4 bg-red-500 text-white rounded-r-md hover:bg-red-600 focus:outline-none focus:bg-red-400 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}>Cancel</button>
             </div>
           </div>
         </div>

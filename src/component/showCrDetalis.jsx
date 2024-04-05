@@ -161,7 +161,7 @@ const ShowCrDetails = () => {
             {cr.status === "Need CR Approvel" ? (
               <span className="text-red-500 font-bold">{cr.status}</span>
             ) : cr.status === "Pending to get development" ? (
-              <span className="text-emerald-400 font-bold">{cr.status}</span>
+              <span className="text-green-600 font-bold">{cr.status}</span>
             ) : (
               <span>{cr.status}</span>
             )}
@@ -176,6 +176,7 @@ const ShowCrDetails = () => {
           <p className="font-semibold text-left ">Department: <span className="font-normal">{cr.department}</span></p>
           <p className="font-semibold text-left mt-2"> Change Request ID: <span className="font-normal">{cr.crId}</span> </p>
           <p className="font-semibold text-left mt-2">SFA User: <span className="font-normal">{cr.name}</span> </p>
+          <p className="font-semibold text-left mt-2">Required Date: <span className="font-normal">{cr.requiredDate}</span> </p>
         </div>
         <div className="col-span-1">
           <p className="font-semibold text-left"> Change Request Priority: <span className="font-normal">{cr.priority}</span> </p>
@@ -193,7 +194,7 @@ const ShowCrDetails = () => {
         <div className="text-center my-4">
           <button
             onClick={handleViewAttachment}
-            className=" w-48 inline-block text-center border border-yellow-100 bg-yellow-400 hover:bg-yellow-600 text-black px-4 py-2 rounded mt-1"
+            className=" w-48 inline-block text-center font-medium border border-yellow-100 bg-yellow-400 hover:bg-yellow-600 text-black px-4 py-2 rounded mt-1"
           >
             View Attachment
           </button>
@@ -201,7 +202,7 @@ const ShowCrDetails = () => {
           {userType === 'Developer' && cr.priority === '1' &&
             <button
               onClick={() => handleButtonClick(crId)}
-              className="bg-lime-500 w-48 hover:bg-lime-600 text-black py-2 px-4 rounded mt-4 ml-2" // Added ml-2 for left margin
+              className="bg-lime-500 w-48 hover:bg-lime-600 font-medium text-black py-2 px-4 rounded mt-4 ml-2" // Added ml-2 for left margin
             >
               Get To Development
             </button>
@@ -210,7 +211,7 @@ const ShowCrDetails = () => {
           {userType === 'HOD' && cr.hodApprovel !== 'approved' &&
             <button
               onClick={() => setShowStatusPopup(true)}
-              className="bg-lime-500 w-48 hover:bg-lime-600 text-black py-2 px-4 rounded mt-4 ml-2" // Added ml-2 for left margin
+              className="bg-lime-500 w-48 hover:bg-lime-600 text-black font-medium py-2 px-4 rounded mt-4 ml-2" // Added ml-2 for left margin
             >
               Get Decision
             </button>

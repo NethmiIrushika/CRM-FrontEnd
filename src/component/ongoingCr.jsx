@@ -136,13 +136,13 @@ function OngingCr() {
             </div>
             <button
               onClick={() => handleButtonClick(cr.crId, cr.topic)}
-              className="w-32 bg-blue-500 hover:bg-blue-700 text-black py-2 px-2 rounded mr-2 transition duration-300 ease-in-out"
+              className="w-32 bg-blue-500 hover:bg-blue-700 font-medium text-black py-2 px-2 rounded mr-2 transition duration-300 ease-in-out"
             >
               Sent Prototype
             </button>
             <button
               onClick={() => handleActionClick(cr.crId)}
-              className="w-32 bg-green-500 hover:bg-green-700 text-black py-2 px-2 rounded transition duration-300 ease-in-out"
+              className="w-32 bg-green-500 hover:bg-green-700 font-medium text-black py-2 px-2 rounded transition duration-300 ease-in-out"
             >
               View CR
             </button>

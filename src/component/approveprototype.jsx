@@ -123,7 +123,7 @@ function Approveprototype() {
             </div>
             <button
               onClick={() => handleActionClick(pr.prId)}
-              className="mt-4 w-40 bg-yellow-400 hover:bg-yellow-500 text-white py-2 px-4 rounded"
+              className="mt-4 w-40 bg-yellow-400 hover:bg-yellow-500 text-black font-medium py-2 px-4 rounded"
             >
               View
             </button>

@@ -84,6 +84,8 @@ const CompleteView = () => {
                             <span className="text-red-500">{cr.status}</span>
                         ) :cr.status === 'Need Approvel For Prototype' ? (
                             <span className="text-red-500">{cr.status}</span>
+                        ) :cr.status === 'Need UAT Approvel' ? (
+                            <span className="text-red-500">{cr.status}</span>
                         ) :
                          (
                             <span>{cr.status}</span>
@@ -107,14 +109,14 @@ const CompleteView = () => {
                     <div className='bg-gray-200 p-4 h-auto rounded-lg text-left' dangerouslySetInnerHTML={{ __html: cr.description }} />
                 </div>
                 </div>
-                    <button onClick={handleViewAttachment} className="inline-block text-center bg-blue-500 text-black px-2 py-2 rounded hover:bg-blue-600 mt-1">
+                    <button onClick={handleViewAttachment} className="inline-block text-center bg-blue-500 text-black font-medium px-2 py-2 rounded hover:bg-blue-600 mt-1">
                         View CR attachment
                     </button>
                     {cr.status!== " Need CR Approvel" &&
                     <button
                     
                         onClick={handleActionClick}
-                        className="inline-block bg-yellow-400 hover:bg-yellow-500 text-black px-2 py-2 rounded mt-1 ml-2"
+                        className="inline-block bg-yellow-400 hover:bg-yellow-500 text-black px-2 py-2 font-medium rounded mt-1 ml-2"
                     >
                         View Prototype Details
                     </button>

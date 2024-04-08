@@ -354,20 +354,28 @@ return (
 
           </table>
         </div>
-        <div className="pagination">
-          <button onClick={handleFirstPage} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-            {'<<'}
-          </button>
-          <button onClick={handlePreviousPage} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-            {'<'}
-          </button>
-          <button onClick={handleNextPage} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-            {'>'}
-          </button>
-          <button onClick={handleLastPage} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-            {'>>'}
-          </button>
-        </div>
+        <div className="flex justify-end mb-4 mt-4">
+  <div>
+    <button
+      onClick={handlePreviousPage}
+      disabled={!canPreviousPage}
+      className="mr-6 border border-white-700 font-medium shadow-xl w-20 bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring focus:border-yellow-300"
+    >
+      Previous
+    </button>
+    <span className="mr-6">
+      Page {pageIndex + 1} of {pageCount}
+    </span>
+    <button
+      onClick={handleNextPage}
+      disabled={!canNextPage}
+      className="border border-white-700 font-medium shadow-xl w-20 bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring focus:border-yellow-300"
+    >
+      Next
+    </button>
+  </div>
+</div>
+
       </div>
 
       )

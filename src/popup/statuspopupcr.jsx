@@ -15,7 +15,7 @@ const navigate = useNavigate()
       await axios.put(`${api.defaults.baseURL}/crs/${cr.crId}/update-hod-approval`, { hodApprovel: newCrStatus });
       close();
       update({ ...cr, hodApprovel: newCrStatus });
-      navigate('/dashboard/viewCr');
+      navigate('/dashboard/ongoingApprovelCr');
     } catch (error) {
       setError('Error changing CR status. Please try again later.');
       console.error('Error changing CR status:', error);

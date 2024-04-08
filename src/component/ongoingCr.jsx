@@ -73,15 +73,23 @@ function OngingCr() {
     setSearchTerm(e.target.value);
   };
 
+  // const filteredCRs = crs.filter(cr =>
+  //   // cr.getCr[0].user.userId === loggedInUserId &&
+  //   cr.topic !== undefined &&
+  //   Object.values(cr).some(value =>
+  //     value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+  //   )
+  // );
+
+
   const filteredCRs = crs.filter(cr =>
-    // cr.getCr[0].user.userId === loggedInUserId &&
-    cr.topic !== undefined &&
-    Object.values(cr).some(value =>
-      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    )
+    (cr.crId.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (cr.topic && cr.topic.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (cr.status && cr.status.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (cr.getCr[0].user.firstname && cr.getCr[0].user.firstname.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (cr.name && cr.name.toLowerCase().includes(searchTerm.toLowerCase()))
   );
-
-
+  
   // .filter((cr) => cr.getCr[0].user.userId === loggedInUserId); 
 
   const handleActionClick = (crId) => {

@@ -37,12 +37,22 @@ const Dashboard = () => {
     navigate("/userLogin");
   };
 
+  const handleGoBack = () => {
+    window.history.back();
+  };
+
+  const handleGoForward = () => {
+    window.history.forward();
+  };
+
   const handleCancelLogout = () => {
     setShowLogoutPopup(false);
   };
 
   return (
     <>
+    <button onClick={handleGoBack}>Back</button>
+      <button onClick={handleGoForward}>Forward</button>
       <button
         data-drawer-target="default-sidebar"
         data-drawer-toggle="default-sidebar"

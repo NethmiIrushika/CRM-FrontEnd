@@ -34,7 +34,7 @@ function Approveprototype() {
   const [filteredCrPrototypes, setFilteredCrPrototypes] = useState([]);
   const itemsPerPage = 5;
   const navigate = useNavigate();
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(1);
 
   const fetchCrprototype = async () => {
     try {
@@ -145,14 +145,14 @@ function Approveprototype() {
   const handleNextPage = () => {
     if (canNextPage) {
       nextPage();
-      setPageIndex(pageIndex + 1);
+      setPageIndex(currentPage + 1);
     }
   };
 
   const handlePreviousPage = () => {
     if (canPreviousPage) {
       previousPage();
-      setPageIndex(pageIndex - 1);
+      setPageIndex((prevIndex) => Math.max(prevIndex - 1, 1));
     }
   };
   return (
@@ -206,13 +206,13 @@ function Approveprototype() {
 
         <div className="flex justify-end mb-4 mt-4">
           <div>
-            <button onClick={handlePreviousPage} disabled={!canPreviousPage} className="mr-6 border border-white-700 font-medium shadow-xl w-20 hover:bg-yellow-400">
+            <button onClick={handlePreviousPage} disabled={!canPreviousPage} className="mr-6 border border-white-700 font-medium shadow-xl w-20 bg-yellow-400">
               Previous
             </button>
             <span>
-              Page {currentPage} of {Math.ceil(orderedCrPrototypes.length / itemsPerPage)}
+              Page {pageIndex } of {Math.ceil(dataToDisplay.length / itemsPerPage)}
             </span>
-            <button onClick={handleNextPage} disabled={!canNextPage} className="w-20 ml-6 border-white-700 border font-medium shadow-xl w-20 hover:bg-yellow-400">
+            <button onClick={handleNextPage} disabled={!canNextPage} className="w-20 ml-6 border-white-700 border font-medium shadow-xl w-20 bg-yellow-400">
               Next
             </button>
           </div>

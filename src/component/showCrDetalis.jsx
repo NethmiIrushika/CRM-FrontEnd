@@ -128,7 +128,7 @@ const ShowCrDetails = () => {
       } else {
         toast.success(` ${updatedCr.crId} ${updatedCr.hodApprovel}`);
       }
-      navigate("/dashboard/ongoingApprovelCr");
+      navigate("/dashboard/viewCr");
     } catch (error) {
       console.error("Error updating CR:", error);
     }

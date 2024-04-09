@@ -31,7 +31,7 @@ function Approveprototype() {
   const [searchTerm, setSearchTerm] = useState("");
   const [loggedInUserId, setLoggedInUserId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [filteredCrPrototypes, setFilteredCrPrototypes] = useState([]);
+
   const itemsPerPage = 5;
   const navigate = useNavigate();
 
@@ -57,23 +57,15 @@ function Approveprototype() {
   const handleSearchChange = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
-
-
-  
-    const filteredData = crprototype.filter((item) => {
-
-      const crId = item.crId && item.crId.toString().toLowerCase(); // Ensure crId is a string
-      const topic = item.topic && item.topic.toLowerCase(); // Ensure topic is a string
-      const status = item.status && item.status.toLowerCase(); // Ensure status is a string
-  
-      return (
-        crId.includes(value) ||
-        topic.includes(value) ||
-        status.includes(value)
-      );
-    });
-    setFilteredCrPrototypes(filteredData);
   };
+
+  const filteredCrPrototypes = crprototype.filter((cr) => {
+    return  cr.userId.userId === getLoginInfo()?.sub; 
+  });
+
+  const devfilteredCrPrototypes = crprototype.filter((getCr) => {
+    return  getCr.userId === getLoginInfo()?.sub; 
+  });
   
 
   useEffect(() => {
@@ -142,7 +134,7 @@ function Approveprototype() {
     prepareRow,
   } = useTable({
     columns,
-    data:  dataToDisplay, // Use ordered and paginated data for the table
+    data:  filteredCrPrototypes,devfilteredCrPrototypes // Use ordered and paginated data for the table
   });
 
   return (

@@ -5,7 +5,6 @@ import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../component/Navbar";
 import { getLoginInfo } from "../utils/LoginInfo";
 import LogoutPopup from "../popup/logoutpopup";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const Dashboard = () => {
   let navigate = useNavigate();
@@ -38,13 +37,7 @@ const Dashboard = () => {
     navigate("/userLogin");
   };
 
-  const handleGoBack = () => {
-    window.history.back();
-  };
-
-  const handleGoForward = () => {
-    window.history.forward();
-  };
+ 
 
   const handleCancelLogout = () => {
     setShowLogoutPopup(false);
@@ -82,22 +75,13 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div>
-              <button onClick={handleGoBack} className=" justify-start bg-yellow-400 hover:bg-yellow-500 font-medium text-black rounded mr-10">
-                <FaArrowLeft />
-              </button>
-              <button onClick={handleGoForward} className=" bg-yellow-400 hover:bg-yellow-500 font-medium text-black rounded ">
-                <FaArrowRight /> 
-              </button>
-            </div>
-
         <div className="h-full w-64 px-3 py-4 overflow-y-auto bg-yellow-400">
           <ul className="space-y-2 font-medium">
             <li>
               <button
                 onClick={() => navigate("userAccount")}
                 style={{ display: userType !== "Admin" ? "none" : "" }}
-                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute.includes('/dashboard/userAccount') ? "bg-white bg-opacity-40 ring-1 ring-white" : ""}`}
+                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute.includes('/dashboard/userAccount') ? "bg-white bg-opacity-40 ring-1 ring-black" : ""}`}
               >
                 <div className="flex items-center w-40 h-10">
                   <svg
@@ -121,7 +105,7 @@ const Dashboard = () => {
                   display:
                     userType === "SFA_User" || userType === "HOD" ? "" : "none",
                 }}
-                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute.includes('/dashboard/showCrDetails/') || activeRoute === '/dashboard/ongoingApprovelCr' ? "bg-white bg-opacity-40 ring-1 ring-white" : ""}`}
+                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute.includes('/dashboard/showCrDetails/') || activeRoute === '/dashboard/ongoingApprovelCr' ? "bg-white bg-opacity-40 ring-1 ring-black" : ""}`}
               >
                 <div className="flex items-center  w-52 h-10">
                   <svg
@@ -146,7 +130,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("viewCr")}
-                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute.includes('/dashboard/viewCr') ? "bg-white bg-opacity-40 ring-1 ring-white" : ""}`}
+                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute.includes('/dashboard/viewCr') ? "bg-white bg-opacity-40 ring-1 ring-black" : ""}`}
               >
                 <div className="flex items-center  w-52 h-10">
                   <svg
@@ -173,7 +157,7 @@ const Dashboard = () => {
               <button
                 onClick={() => navigate("createCr")}
                 style={{ display: userType !== "SFA_User" ? "none" : "" }}
-                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/createCr' ? "bg-white bg-opacity-40 ring-1 ring-white" : ""}`}
+                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/createCr' ? "bg-white bg-opacity-40 ring-1 ring-black" : ""}`}
               >
                 <div className="flex items-center w-52 h-10">
                   <svg
@@ -202,7 +186,7 @@ const Dashboard = () => {
               <button
                 onClick={() => navigate("ongingCr")}
                 style={{ display: userType !== "Developer" ? "none" : "" }}
-                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/approveprototype' ? "bg-white bg-opacity-40 ring-1 ring-white" : ""}`}
+                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/ongingCr' ? "bg-white bg-opacity-40 ring-1 ring-black" : ""}`}
               >
                 <div className="flex items-center w-52 h-10">
                   <svg
@@ -230,7 +214,7 @@ const Dashboard = () => {
               <button
                 onClick={() => navigate("approveprototype")}
                 style={{ display: userType !== "SFA_User" ? "none" : "" }}
-                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/approveprototype' ? "bg-white bg-opacity-40 ring-1 ring-white" : ""}`}
+                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/approveprototype' ? "bg-white bg-opacity-40 ring-1 ring-black" : ""}`}
               >
                 <div className="flex items-center w-52 h-10">
                   <svg
@@ -257,7 +241,7 @@ const Dashboard = () => {
               <button
                 onClick={() => navigate("approveORreject")}
                 style={{ display: userType !== "Developer" ? "none" : "" }}
-                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/approveORreject' ? "bg-white bg-opacity-40 ring-1 ring-white" : ""}`}
+                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/approveORreject' ? "bg-white bg-opacity-40 ring-1 ring-black" : ""}`}
               >
                 <div className="flex items-center w-52 h-10">
                   <svg
@@ -280,7 +264,7 @@ const Dashboard = () => {
               <button
                 onClick={() => navigate("UatApprove")}
                 style={{ display: userType === "SFA_User" || userType === "HOD" ? "" : "none", }}
-                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/UatApprove' ? "bg-white bg-opacity-40 ring-1 ring-white" : ""}`}
+                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/UatApprove' ? "bg-white bg-opacity-40 ring-1 ring-black" : ""}`}
               >
                 <div className="flex items-center w-52 h-10">
                   <svg
@@ -307,7 +291,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("completedCR")}
-                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/completedCR' ? "bg-white bg-opacity-40 ring-1 ring-white" : ""}`}
+                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/completedCR' ? "bg-white bg-opacity-40 ring-1 ring-black" : ""}`}
               >
                 <div className="flex items-center w-52 h-10">
                   <svg
@@ -333,7 +317,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("RejectedCR")}
-                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/RejectedCR' ? "bg-white bg-opacity-40 ring-1 ring-white" : ""}`}
+                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/RejectedCR' ? "bg-white bg-opacity-40 ring-1 ring-black" : ""}`}
               >
                 <div className="flex items-center  w-52 h-10">
                   <svg
@@ -361,7 +345,7 @@ const Dashboard = () => {
               <button
                 onClick={() => navigate("log")}
                 style={{ display: userType !== "Admin" ? "none" : "" }}
-                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/log' || '/dashboard/showCrDetails' ? "bg-white bg-opacity-40 ring-1 ring-white" : ""}`}
+                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/log' || '/dashboard/showCrDetails' ? "bg-white bg-opacity-40 ring-1 ring-black" : ""}`}
               >
                 <div className="flex items-center  w-52 h-10">
                   <svg
@@ -386,7 +370,7 @@ const Dashboard = () => {
               <button
                 onClick={() => navigate("profile")}
                 // style={{ display: userType !== "SFA_User" ? "none" : "" }}
-                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/profile' ? "bg-white bg-opacity-40 ring-1 ring-white" : ""}`}
+                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/profile' ? "bg-white bg-opacity-40 ring-1 ring-black" : ""}`}
               >
                 <div className="flex items-center w-52 h-10">
                   <svg
@@ -446,12 +430,7 @@ const Dashboard = () => {
           <div className=" d-flex justify-content-center ">
             <Navbar />
           </div>
-          <div>
-            {/* <button className="justify-start w-20 mt-1 bg-yellow-400 hover:bg-yellow-500 font-medium text-black rounded mr-16" onClick={handleGoBack}>Back</button>
-            <button className="justify-end w-20 mt-1 bg-yellow-400 hover:bg-yellow-500 font-medium text-black  rounded" onClick={handleGoForward}>Forward</button> */}
-            
-          </div>
-
+         
           <br />
           {/* <br /> */}
           <Outlet />

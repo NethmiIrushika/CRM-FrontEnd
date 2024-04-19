@@ -123,7 +123,7 @@ function Approveprototype() {
     [] // Dependency array
   );
 
-  const dataToDisplay = searchTerm ? filteredCrPrototypes : orderedCrPrototypes;
+
 
   // Initialize the React data table using useTable hook
   const {

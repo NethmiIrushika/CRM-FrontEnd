@@ -60,7 +60,7 @@ function Approveprototype() {
   };
 
   const filteredCrPrototypes = crprototype.filter((cr) => {
-    return  cr.userId.userId === getLoginInfo()?.sub; 
+    //return  cr.userId.userId === getLoginInfo()?.sub; 
   });
 
   const devfilteredCrPrototypes = crprototype.filter((getCr) => {

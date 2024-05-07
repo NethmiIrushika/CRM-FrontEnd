@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
+import { format } from 'date-fns';
 
 function ApproveORreject() {
   const [crprototype, setCrprototype] = useState([]);
@@ -39,34 +40,37 @@ function ApproveORreject() {
 
   useEffect(() => {
     fetchCrprototype();
-  }, []); // Empty dependency array ensures this useEffect runs only once
+  }, []);
 
-  // useEffect(() => {
-  //   if (crprototype.length > 0) {
-  //     const newestPrototypes = filterNewestPrototypes(crprototype);
-  //     setCrprototype(newestPrototypes);
-  //   }
-  // }, [crprototype]);
+  useEffect(() => {
+    if (crprototype.length > 0) {
+      const newestPrototypes = filterNewestPrototypes(crprototype);
+      setCrprototype(newestPrototypes);
+    }
+  }, [crprototype]);
 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
+    setSearchTerm(e.target.value.toLowerCase());
   };
 
-  const filteredCrPrototypes = crprototype.filter((pr) => {
+  const filteredCrPrototypes = crprototype.filter(pr => {
     if (pr && pr.popupstatus) {
+      const cr = pr.cr;
+      const status = cr.status;
+      const lowercaseSearchTerm = searchTerm;
+
       return (
-        (pr.cr.status === "Develop without Prototype" ||
-        pr.cr.status === "Prototype Approved" ||
-        pr.cr.status === "Need Approvel For Prototype" ||
-        pr.cr.status === "Need Approvel For Second Prototype") &&
-        (pr.popupstatus.toLowerCase() === "rejected" ||
-        (pr.cr.crId && pr.cr.crId.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (pr.cr.topic && pr.cr.topic.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (pr.cr.developer && pr.cr.developer.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (pr.cr.name && pr.cr.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (pr.cr.status && pr.cr.status.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (pr.popupstatus && pr.popupstatus.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (pr.rejectionReason && pr.rejectionReason.toLowerCase().includes(searchTerm.toLowerCase())))
+        (status === "Develop without Prototype" ||
+         status === "Prototype Approved" ||
+         status === "Need Approvel For Prototype" ||
+         status === "Need Approvel For Second Prototype") &&
+        (pr.popupstatus.toLowerCase().includes(lowercaseSearchTerm) ||
+         cr.crId.toString().toLowerCase().includes(lowercaseSearchTerm) ||
+         cr.topic.toLowerCase().includes(lowercaseSearchTerm) ||
+         cr.developer.toLowerCase().includes(lowercaseSearchTerm) ||
+         cr.name.toLowerCase().includes(lowercaseSearchTerm) ||
+         status.toLowerCase().includes(lowercaseSearchTerm) ||
+         pr.rejectionReason && pr.rejectionReason.toLowerCase().includes(lowercaseSearchTerm))
       );
     }
     return false;
@@ -103,6 +107,14 @@ function ApproveORreject() {
   const handleActionClick = (crId) => {
     console.log('cr Id:', crId);
     navigate(`/dashboard/completeView/${crId}/`);
+  };
+
+  const formatDate = (date) => {
+    return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); 
+  };
+
+const formatDate1 = (date) => {
+return format(new Date(date), 'dd/MM/yyyy'); 
   };
 
   return (
@@ -151,7 +163,7 @@ function ApproveORreject() {
                   </p>
                   {pr.cr.createdAt && (
                     <p className="text-left font-semibold">
-                      CR Created At : <span className="font-normal">{pr.cr.createdAt}</span>
+                      CR Created At : <span className="font-normal">{formatDate(pr.cr.createdAt)} {/* Format date */}</span>
                     </p>
                   )}
                   {pr.cr && <p className="text-left font-semibold">Developer : <span className="font-normal">{pr.cr.developer}</span></p>}
@@ -162,7 +174,7 @@ function ApproveORreject() {
 
                   {pr.createdAt && (
                     <p className="text-left font-semibold">
-                      Prototype Created At : <span className="font-normal">{pr.createdAt}</span>
+                      Prototype Created At : <span className="font-normal">{formatDate(pr.createdAt)} {/* Format date */}</span>
                     </p>
                   )}
                 </div>

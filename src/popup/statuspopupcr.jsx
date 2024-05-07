@@ -41,8 +41,8 @@ const navigate = useNavigate()
               className="block w-full py-2 px-4 mb-4 border rounded-md bg-slate-50 text-black focus:outline-none focus:border-blue-500"
             >
               <option value="pending">Pending</option>
-              <option value="approved">Approved</option>
-              <option value="rejected">Rejected</option>
+              <option value="approved">Approve</option>
+              <option value="rejected">Reject</option>
             </select>
             {error && <div className="text-red-600">{error}</div>}
             <div className="flex justify-between">

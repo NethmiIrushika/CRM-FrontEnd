@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getLoginInfo } from "../utils/LoginInfo";
 import StatusPopupcr from "../popup/statuspopupcr";
+import { format } from 'date-fns';
 
 const ShowCrDetails = () => {
   const { crId } = useParams();
@@ -134,6 +135,14 @@ const ShowCrDetails = () => {
     }
   };
 
+  const formatDate = (date) => {
+    return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); 
+  };
+
+const formatDate1 = (date) => {
+return format(new Date(date), 'dd/MM/yyyy'); 
+  };
+
   return (
     <div className="container mx-auto  h-auto  ">
       {showStatusPopup && (
@@ -180,7 +189,7 @@ const ShowCrDetails = () => {
           </p>
           <p className="font-semibold text-left mt-2">
             Required Date:{" "}
-            <span className="font-normal">{cr.requiredDate}</span>{" "}
+            <span className="font-normal">{formatDate1(cr.requiredDate)} {/* Format date */}</span>{" "}
           </p>
         </div>
         <div className="col-span-1">
@@ -196,7 +205,7 @@ const ShowCrDetails = () => {
           </p>
           <p className="font-semibold text-left mt-2">
             Change Request Created At:{" "}
-            <span className="font-normal">{cr.createdAt}</span>
+            <span className="font-normal">{formatDate(cr.createdAt)} {/* Format date */}</span>
           </p>
         </div>
 

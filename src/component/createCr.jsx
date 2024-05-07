@@ -8,7 +8,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { getLoginInfo } from '../utils/LoginInfo';
 import PriorityPopup from '../popup/prioritypopup.jsx';
-import DatePicker from 'react-datepicker'; // Import react-datepicker
+import DatePicker from 'react-datepicker'; 
 import 'react-datepicker/dist/react-datepicker.css';
 
 const Insert = () => {
@@ -21,7 +21,7 @@ const Insert = () => {
     date: '',
     priority: 0,
     crtype: '',
-    requiredDate: ''
+    requiredDate: '',
   });
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
@@ -83,9 +83,7 @@ const Insert = () => {
       console.log('Data inserted successfully:', response.data);
     
       const { crId , priority } = response.data;
-    
-      console.log('Created CR ID:', crId);
-      console.log('Priority:', priority);
+
       setFormData(prevState => ({
         ...prevState,
         priority: priority,
@@ -192,10 +190,10 @@ console.log(showPriorityPopup);
             <DatePicker
               id="requiredDate"
               selected={requiredDate}
-              onChange={date => setRequiredDate(date)} // Update deliveryDate state when date is selected
+              onChange={date => setRequiredDate(date)} 
               className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
-              dateFormat="yyyy-MM-dd" // Specify the date format
-              placeholderText="Select required date" // Placeholder text for the date picker
+              dateFormat="yyyy-MM-dd" 
+              placeholderText="Select required date" 
             />
           </div>
 

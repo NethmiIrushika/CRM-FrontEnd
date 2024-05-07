@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
 import { useParams, useNavigate } from "react-router-dom";
+import { format } from 'date-fns';
+
 
 const DevShowCrDetails = () => {
     const { crId } = useParams();
@@ -85,6 +87,14 @@ const DevShowCrDetails = () => {
         return <div>No CR found</div>;
     }
 
+    const formatDate = (date) => {
+        return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); 
+      };
+
+    const formatDate1 = (date) => {
+    return format(new Date(date), 'dd/MM/yyyy'); 
+      };
+
     return (
         <div className="container mx-auto  h-auto mb-4">
             <h1 className="text-xl font-bold my-4">View CR Details</h1>
@@ -105,11 +115,11 @@ const DevShowCrDetails = () => {
                 <div className="col-span-1">
                     <p className="font-semibold text-left">Change Request ID: <span className='font-normal'>{cr.crId}</span></p>
                     <p className='font-semibold text-left mt-2'> Change Request Type: <span className='font-normal'>{cr.crtype}</span></p>
-                    <p className="font-semibold text-left mt-2">Required Date: <span className='font-normal'>{cr.requiredDate}</span></p>
+                    <p className="font-semibold text-left mt-2">Required Date: <span className='font-normal'>{formatDate1(cr.requiredDate)} {/* Format date */}</span></p>
                 </div>
                 <div className="col-span-1">
                     <p className="font-semibold text-left">SFA User: <span className='font-normal'>{cr.name}</span></p>
-                    <p className="font-semibold text-left mt-2">Created At: <span className='font-normal'>{cr.createdAt}</span></p>
+                    <p className="font-semibold text-left mt-2">Created At: <span className='font-normal'>{formatDate(cr.createdAt)} {/* Format date */}</span></p>
                     <p className="font-semibold text-left mt-2">Developer Name: <span className='font-normal'>{cr.developer}</span></p>
                     
 

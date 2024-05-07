@@ -4,6 +4,7 @@ import api from "../api";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import RejectReasonPopup from "../popup/rejectreasonpopup";
+import { format } from 'date-fns';
 
 const ShowProtoDetails = () => {
   const [showModal, setShowModal] = useState(false);
@@ -106,6 +107,16 @@ const ShowProtoDetails = () => {
   if (!pr) {
     return <div>No PR found</div>;
   }
+
+  const formatDate = (date) => {
+    return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); 
+  };
+  const formatDate1 = (date) => {
+    return format(new Date(date), 'dd/MM/yyyy'); 
+  };
+
+
+  
   return (
     <div className="container mx-auto h-auto mb-4">
       <h1 className="text-xl font-bold my-4">View Prototype Details</h1>
@@ -118,8 +129,13 @@ const ShowProtoDetails = () => {
         </div>
         <div className="col-span-1">
           <p className="font-semibold text-left">Change Request ID: <span className='font-normal'>{pr.crId}</span> </p>
-          <p className="font-semibold text-left">Prototype Created At: <span className='font-normal'>{pr.createdAt} </span></p>
-          {/* <p className="font-semibold text-left">Developer Name: <span className='font-normal'>{pr.prId.cr.developer} </span></p> */}
+          <p className="font-semibold text-left">Prototype Created At: <span className='font-normal'>{formatDate(pr.createdAt)} {/* Format date */} </span></p>
+      
+          {/* <p className="font-semibold text-left">Developer Name: <span className='font-normal'>{pr.cr.developer}</span></p> */}
+        </div>
+        <div className="col-span-1"><br></br>
+        <p className="font-semibold text-left">Estimated Delivery Date: <span className='font-normal'>{formatDate1(pr.estimatedDate)} {/* Format date */}</span> </p>
+
         </div>
         <div className="col-span-2 ">
           <p className="font-semibold text-left"> Description:</p>
@@ -156,8 +172,7 @@ const ShowProtoDetails = () => {
                 </svg>
               </button>
             </div>
-            <p>CR ID: {pr.crId}</p>
-            <p>{pr.topic}</p>
+
 
             <div className="mt-4">
               <button

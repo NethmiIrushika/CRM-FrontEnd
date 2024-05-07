@@ -94,13 +94,11 @@ function Crview() {
         }
       );
 
-      // Handle any additional logic or UI updates after successfully changing priority
-      // For example, you might want to refresh the CRs list or show a success message
       fetchCrs();
       toast.success('Priority updated successfully!');
     } catch (error) {
       console.error('Error updating priority:', error);
-      // Handle error appropriately, e.g., show error message to the user
+
     }
   };
 
@@ -109,7 +107,7 @@ function Crview() {
   };
 
   const formatDate = (date) => {
-    return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); // Format date using date-fns
+    return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); 
   };
 
   const columns = React.useMemo(
@@ -117,7 +115,7 @@ function Crview() {
       { id: 'crId', Header: 'CR ID', accessor: 'crId' },
       { id: 'name', Header: 'Name', accessor: 'name' },
       { id: 'topic', Header: 'Topic', accessor: 'topic' },
-      { id: 'date', Header: 'Date/Time', accessor: 'createdAt', Cell: ({ value }) => formatDate(value) }, // Apply custom Cell renderer
+      { id: 'date', Header: 'Date/Time', accessor: 'createdAt', Cell: ({ value }) => formatDate(value) }, 
       { id: 'priority', Header: 'Priority', accessor: 'priority' },
   
       userType === 'SFA_User' && {
@@ -165,7 +163,6 @@ function Crview() {
   
 
   const handleActionClick = (crId) => {
-    console.log('cr Id:', crId);
     navigate(`/dashboard/showCrDetails/${crId}`);
   };
 

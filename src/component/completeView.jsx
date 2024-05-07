@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
 import { useParams, useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
+
 
 const CompleteView = () => {
     const { crId, prId } = useParams();
@@ -50,6 +52,10 @@ const CompleteView = () => {
         return <div>No CR found</div>;
     }
 
+    const formatDate = (date) => {
+        return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); 
+      };
+
 
     return (
         <div className="container mx-auto  h-auto mb- ">
@@ -78,7 +84,7 @@ const CompleteView = () => {
                 </div>
                 <div className="col-span-1">
                     <p className="font-semibold text-left">Change Request ID: <span className='font-normal'>{cr.crId}</span></p>
-                    <p className="font-semibold text-left">CR Crated At: <span className='font-normal'>{cr.createdAt}</span> </p>
+                    <p className="font-semibold text-left">CR Crated At: <span className='font-normal'>{formatDate(cr.createdAt)} {/* Format date */}</span> </p>
 
                 </div>
                 <div className="col-span-1">

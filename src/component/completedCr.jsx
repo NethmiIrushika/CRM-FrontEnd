@@ -14,16 +14,15 @@ function CompletedCR() {
   useEffect(() => {
     const fetchCrs = async () => {
       try {
-        const accessToken = localStorage.getItem('accessToken'); // Retrieve token from storage
+        const accessToken = localStorage.getItem('accessToken'); 
 
         const response = await axios.get(`${api.defaults.baseURL}/crs`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`, // Include token in the request headers
+            Authorization: `Bearer ${accessToken}`, 
           },
         });
-        // console.log(accessToken);
+  
         const completedCRs = response.data.filter(cr => cr.status === "Development Completed");
-
         setCrs(completedCRs);
 
       } catch (error) {
@@ -45,7 +44,6 @@ function CompletedCR() {
       { id: 'crId', Header: 'CR ID', accessor: 'crId' },
       { id: 'name', Header: 'Name', accessor: 'name' },
       { id: 'topic', Header: 'Topic', accessor: 'topic' },
-
       {
         id: 'action',
         Header: 'View',

@@ -60,7 +60,7 @@ function Approveprototype() {
   };
 
   const filteredCrPrototypes = crprototype.filter((cr) => {
-    //return  cr.userId.userId === getLoginInfo()?.sub; 
+    return  cr.userId.userId === getLoginInfo()?.sub; 
   });
 
   const devfilteredCrPrototypes = crprototype.filter((getCr) => {
@@ -134,7 +134,7 @@ function Approveprototype() {
     prepareRow,
   } = useTable({
     columns,
-    data:  filteredCrPrototypes,devfilteredCrPrototypes // Use ordered and paginated data for the table
+    data:  filteredCrPrototypes,// Use ordered and paginated data for the table
   });
 
   return (

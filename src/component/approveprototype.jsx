@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import api from "../api";
 import { getLoginInfo } from "../utils/LoginInfo";
-import { format } from "date-fns"; // Import format function from date-fns
+import { format } from "date-fns"; 
 
 function Approveprototype() {
   const [crprototype, setCrprototype] = useState([]);
@@ -60,7 +60,7 @@ function Approveprototype() {
   };
 
   const formatDate = (date) => {
-    return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); // Format date using date-fns
+    return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); 
   };
 
   return (

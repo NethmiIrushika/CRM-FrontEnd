@@ -3,6 +3,8 @@ import axios from "axios";
 import api from "../api";
 import { useParams, useNavigate } from "react-router-dom";
 import { getLoginInfo } from "../utils/LoginInfo";
+import { format } from 'date-fns';
+
 
 function OngingCr() {
   const { crId } = useParams();
@@ -64,8 +66,6 @@ function OngingCr() {
 
 
   const handleButtonClick = (crId, topic) => {
-    console.log("CR ID:", crId);
-    console.log("Topic:", topic);
     navigate(`/dashboard/crProtoType/${crId}`, { state: { topic: topic } });
   };
 
@@ -95,6 +95,10 @@ function OngingCr() {
   const handleActionClick = (crId) => {
     console.log('cr Id:', crId);
     navigate(`/dashboard/devShowCrDetails/${crId}/`);
+  };
+
+  const formatDate = (date) => {
+    return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); 
   };
 
 
@@ -135,7 +139,7 @@ function OngingCr() {
               </div>
               <div className="col-span-1">
                 <p className=" font-semibold text-left"> CR ID: <span className='font-normal'>{cr.crId}</span>   </p>
-                <p className=" font-semibold text-left"> CR Created At: <span className='font-normal'>{cr.createdAt}</span>  </p>
+                <p className=" font-semibold text-left"> CR Created At: <span className='font-normal'>{formatDate(cr.createdAt)} {/* Format date */}</span>  </p>
               </div>
               <div className="col-span-1">
                 <p className=" font-semibold text-left">Developer Name: <span className='font-normal'>{cr.getCr[0].user.firstname}</span> </p>

@@ -52,6 +52,7 @@ function Approveprototype() {
         },
       });
       setCrprototype(response.data);
+
     } catch (error) {
       console.error("Error fetching CR prototypes:", error);
     }
@@ -107,6 +108,7 @@ function Approveprototype() {
   // Handle click on the clock icon to open the popup
   const handleTimelineButtonClick = (crId) => {
     setSelectedCrId(crId); 
+  
   };
   // Define columns and data for the React data table
   const columns = React.useMemo(
@@ -156,9 +158,12 @@ function Approveprototype() {
       
       <div className="max-w-4xl mx-auto">
       <CrstatusTimelinePopup
-        show={selectedCrId !== null} // Show the popup if a CR ID is selected
-        onClose={() => setSelectedCrId(null)} // Close the popup when onClose is triggered
-      />
+  show={selectedCrId !== null}
+  onClose={() => setSelectedCrId(null)}
+  crId={selectedCrId}
+
+/>
+
         <Profile userInfo={getLoginInfo()} />
 
 
@@ -209,6 +214,7 @@ function Approveprototype() {
   <div>
     <button onClick={goToPreviousPage} disabled={currentPage === 1} className="mr-6 border border-white-700 font-medium shadow-xl w-20 hover:bg-yellow-400">
       Previous
+      
     </button>
     <span>
       Page {currentPage} of {Math.ceil(orderedCrPrototypes.length / itemsPerPage)}

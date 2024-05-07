@@ -6,6 +6,9 @@ import api from "../api";
 import { getLoginInfo } from "../utils/LoginInfo";
 import { useTable } from 'react-table'; // Import useTable hook
 import { FaEye } from "react-icons/fa";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock } from '@fortawesome/free-solid-svg-icons';
+import CrstatusTimelinePopup from "../popup/crstatustimelinepopup";
 
 function Profile({ userInfo }) {
   return (
@@ -31,7 +34,7 @@ function Approveprototype() {
   const [searchTerm, setSearchTerm] = useState("");
   const [loggedInUserId, setLoggedInUserId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [selectedCrId, setSelectedCrId] = useState(null);
   const itemsPerPage = 5;
   const navigate = useNavigate();
 
@@ -60,7 +63,7 @@ function Approveprototype() {
   };
 
   const filteredCrPrototypes = crprototype.filter((cr) => {
-    //return  cr.userId.userId === getLoginInfo()?.sub; 
+    return  cr.userId.userId === getLoginInfo()?.sub; 
   });
 
   const devfilteredCrPrototypes = crprototype.filter((getCr) => {
@@ -101,12 +104,23 @@ function Approveprototype() {
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
+  // Handle click on the clock icon to open the popup
+  const handleTimelineButtonClick = (crId) => {
+    setSelectedCrId(crId); 
+  };
   // Define columns and data for the React data table
   const columns = React.useMemo(
     () => [
       { Header: 'CR ID', accessor: 'crId' },
       { Header: 'Topic', accessor: 'topic' },
       { Header: 'Status', accessor: 'status' },
+      {
+        Header:'TimeLine', accessor:'crTime',
+        Cell: ({row}) => (<button 
+        onClick={()=>handleTimelineButtonClick(row.original.crId)}>
+          <FontAwesomeIcon icon={faClock} className="text-black-500" />
+          </button>
+        ),  },
       {
         Header: 'Action',
         accessor: 'prId',
@@ -139,8 +153,12 @@ function Approveprototype() {
 
   return (
     <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg `}>
+      
       <div className="max-w-4xl mx-auto">
-
+      <CrstatusTimelinePopup
+        show={selectedCrId !== null} // Show the popup if a CR ID is selected
+        onClose={() => setSelectedCrId(null)} // Close the popup when onClose is triggered
+      />
         <Profile userInfo={getLoginInfo()} />
 
 
@@ -153,6 +171,8 @@ function Approveprototype() {
             className="px-4 py-2 border border-gray-500 rounded"
           />
         </div>
+
+
 
         {/* Table */}
         <div className="overflow-x-auto">

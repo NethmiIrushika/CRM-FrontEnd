@@ -345,7 +345,7 @@ const Dashboard = () => {
               <button
                 onClick={() => navigate("log")}
                 style={{ display: userType !== "Admin" ? "none" : "" }}
-                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/log' || '/dashboard/showCrDetails' ? "bg-white bg-opacity-40 ring-1 ring-black" : ""}`}
+                className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/log' ? "bg-white bg-opacity-40 ring-1 ring-black" : ""}`}
               >
                 <div className="flex items-center  w-52 h-10">
                   <svg

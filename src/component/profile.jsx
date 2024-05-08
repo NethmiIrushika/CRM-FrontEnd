@@ -35,6 +35,7 @@ function Approveprototype() {
   const [loggedInUserId, setLoggedInUserId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCrId, setSelectedCrId] = useState(null);
+  const [selectedPrId, setSelectedPrId] = useState(null);
   const itemsPerPage = 5;
   const navigate = useNavigate();
 
@@ -106,10 +107,12 @@ function Approveprototype() {
   };
 
   // Handle click on the clock icon to open the popup
-  const handleTimelineButtonClick = (crId) => {
-    setSelectedCrId(crId); 
-  
-  };
+  const handleTimelineButtonClick = (crId, prId) => {
+    setSelectedCrId(crId);
+    if (prId) {
+        setSelectedPrId(prId);
+    }
+};
   // Define columns and data for the React data table
   const columns = React.useMemo(
     () => [
@@ -158,9 +161,10 @@ function Approveprototype() {
       
      
       <CrstatusTimelinePopup
-  show={selectedCrId !== null}
-  onClose={() => setSelectedCrId(null)}
+  show={selectedCrId || selectedPrId !== null}
+  onClose={() => setSelectedCrId(null) && setSelectedPrId(null) }
   crId={selectedCrId}
+  prId={setSelectedPrId}
 
 />
 <div className="max-w-4xl mx-auto">

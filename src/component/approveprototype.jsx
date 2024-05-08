@@ -35,20 +35,21 @@ function Approveprototype() {
 
   const filteredCrPrototypes = crprototype.filter((pr) => {
     return (
-      pr &&
-      pr.cr &&
-      pr.cr.userId &&
-      pr.cr.userId.userId === getLoginInfo()?.sub &&
-      pr.popupstatus !== "Rejected" &&
-      pr.popupstatus !== "Approved" &&
-      pr.rejectionReason !== "" &&
-      pr.cr.status !== "Completed" &&
-      pr.cr.status !== "Develop without Prototype"&&
-      pr.cr.status !== "Need UAT Approvel"&&
-      pr.cr.status !== "Development Completed"&&
-      pr.popupstatus === "Pending" || pr.popupstatus === null
+        pr &&
+        pr.cr &&
+        pr.cr.userId &&
+        pr.cr.userId.userId === getLoginInfo()?.sub &&
+        pr.popupstatus !== "Rejected" &&
+        pr.popupstatus !== "Approved" &&
+        pr.rejectionReason !== "" &&
+        pr.cr.status !== "Completed" &&
+        pr.cr.status !== "Develop without Prototype" &&
+        pr.cr.status !== "Need UAT Approvel" &&
+        pr.cr.status !== "Development Completed" &&
+        (pr.popupstatus === "Pending" || pr.popupstatus === null)
     );
-  });
+});
+
 
   useEffect(() => {
     fetchCrprototype();

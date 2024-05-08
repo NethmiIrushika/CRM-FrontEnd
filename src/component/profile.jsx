@@ -156,13 +156,14 @@ function Approveprototype() {
   return (
     <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg `}>
       
-      <div className="max-w-4xl mx-auto">
+     
       <CrstatusTimelinePopup
   show={selectedCrId !== null}
   onClose={() => setSelectedCrId(null)}
   crId={selectedCrId}
 
 />
+<div className="max-w-4xl mx-auto">
 
         <Profile userInfo={getLoginInfo()} />
 

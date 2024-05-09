@@ -53,7 +53,7 @@ function CrstatusTimelinePopup({ show, onClose, crId, prId }) {
 
     if (show && crId) { 
       fetchCrDetails();
-      fetchCrDetails_1();
+     // fetchCrDetails_1();
     }
   }, [show, crId]);
 
@@ -83,16 +83,33 @@ function CrstatusTimelinePopup({ show, onClose, crId, prId }) {
     >
       {(close) => (<div className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center'>
           
-        <div className='flex justify-center items-center h-80 bg-gray-100 w-80 rounded-lg'>
-          <div>
+        <div className='flex justify-center items-center h-64 bg-gray-100 w-2/3 rounded-lg'>
+          <div className='p-8 '>
              
+            <table className='table-fixed mb-4'>
+                <tr>
+                    <td className="pr-4" > CR Created At</td>
+                    <td className="pr-4">-</td>
+                    <td className="pr-4">{cr ? formatDate(cr.createdAt) : 'No time available'}</td>
+                </tr>
+                <tr>
+                    <td className="pr-4">HOD Approve At</td>
+                    <td className="pr-4">  -</td>
+                    <td className="pr-4">{cr ? formatDate(cr.hodApprovelAt) : 'No time available'}</td>
+                </tr>
+                <tr>
+                    <td className="pr-4">Get to development by</td>
+                    <td className="pr-4"> -</td>
+                    <td className="pr-4">{cr.developer} </td>
+                </tr>
+                <tr>
+                    <td className="pr-4">Department</td>
+                    <td className="pr-4"> -</td>
+                    <td className="pr-4">{cr ? cr.department : 'No department available'}</td>
+                </tr>
+            </table>
             
-            <div>CR Created At - {cr ? formatDate(cr.createdAt) : 'No time available'}  {/* Format date */}</div>
-            <div>HOD Approve At - {cr ? formatDate(cr.hodApprovelAt) : 'No time available'}  {/* Format date */}</div>   
-            <div>Get to development by - {cr.developer} </div>   
-            <div>Prototype Created At - {pr.createdAt}</div>   
-            <div>Department: {cr ? cr.department : 'No department available'}</div>
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-6">
               <button onClick={onClose} className="inline-block  mr-1 py-2 px-4 bg-yellow-300 text-white rounded-l-md hover:bg-yellow-500 focus:outline-none focus:bg-yellow-500 text-center">Close</button>
             </div>
           </div>

@@ -104,9 +104,9 @@ function Approveprototype() {
     return  cr.userId.userId === getLoginInfo()?.sub; 
   });
 
-  const devfilteredCrPrototypes = crprototype.filter((getCr) => {
-    return  getCr.userId === getLoginInfo()?.sub; 
-  });
+  // const devfilteredCrPrototypes = crprototype.filter((getCr) => {
+  //   return  getCr.userId === getLoginInfo()?.sub; 
+  // });
   
 
   useEffect(() => {
@@ -133,8 +133,7 @@ function Approveprototype() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = orderedCrPrototypes.slice(indexOfFirstItem, indexOfLastItem);
-
+  const currentItems = (filteredData.length > 0 ? filteredData : orderedCrPrototypes).slice(indexOfFirstItem, indexOfLastItem);
   const goToPreviousPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
@@ -192,7 +191,7 @@ function Approveprototype() {
     prepareRow,
   } = useTable({
     columns,
-    data:  filteredData.length > 0 ? filteredData : filteredCrPrototypes,
+    data:  currentItems,
   });
 
   return (

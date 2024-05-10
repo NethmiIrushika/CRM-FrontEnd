@@ -127,9 +127,9 @@ const ShowCrDetails = () => {
           className: "toast-error",
         });
       } else {
-        toast.success(` ${updatedCr.crId} ${updatedCr.hodApprovel}`);
+        toast.success(`${updatedCr.crId} Pending HOD Approval`);
       }
-      navigate("/dashboard/viewCr");
+      navigate("/dashboard/ongoingApprovelCr");
     } catch (error) {
       console.error("Error updating CR:", error);
     }

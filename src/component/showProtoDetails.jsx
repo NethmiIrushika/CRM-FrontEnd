@@ -97,7 +97,7 @@ const ShowProtoDetails = () => {
         );
       }
       setShowModal(false);
-      navigate("/dashboard/viewcr");
+      navigate("/dashboard/approveprototype");
     } catch (error) {
       console.error("Error updating CR prototype:", error);
     }

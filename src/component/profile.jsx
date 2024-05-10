@@ -39,6 +39,7 @@ function Approveprototype() {
   const [selectedPrId, setSelectedPrId] = useState(null);
   const itemsPerPage = 5;
   const navigate = useNavigate();
+  const [filteredData, setFilteredData] = useState([]);
 
   const fetchCrprototype = async () => {
     try {
@@ -84,15 +85,28 @@ function Approveprototype() {
   const handleSearchChange = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
+    
+    const filtered = crprototype.filter((cr) => {
+      const crId = String(cr.crId); // Convert crId to string
+      return (
+        cr.userId.userId === getLoginInfo()?.sub &&
+        (crId.toLowerCase().includes(value) ||
+        cr.topic.toLowerCase().includes(value) ||
+        cr.status.toLowerCase().includes(value))
+      );
+    });
+    
+    setFilteredData(filtered);
   };
+  
 
   const filteredCrPrototypes = crprototype.filter((cr) => {
     return  cr.userId.userId === getLoginInfo()?.sub; 
   });
 
-  const devfilteredCrPrototypes = crprototype.filter((getCr) => {
-    return  getCr.userId === getLoginInfo()?.sub; 
-  });
+  // const devfilteredCrPrototypes = crprototype.filter((getCr) => {
+  //   return  getCr.userId === getLoginInfo()?.sub; 
+  // });
   
 
   useEffect(() => {
@@ -119,8 +133,7 @@ function Approveprototype() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = orderedCrPrototypes.slice(indexOfFirstItem, indexOfLastItem);
-
+  const currentItems = (filteredData.length > 0 ? filteredData : orderedCrPrototypes).slice(indexOfFirstItem, indexOfLastItem);
   const goToPreviousPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
@@ -132,8 +145,9 @@ function Approveprototype() {
 
   const handleTimelineButtonClick = (crId, prId) => {
     setSelectedCrId(crId);
-    setSelectedPrId(prId);
+    // setSelectedPrId(prId);
     console.log(crId)
+    
   };
   
   
@@ -146,7 +160,7 @@ function Approveprototype() {
       {
         Header:'TimeLine', accessor:'crTime',
         Cell: ({ row }) => (
-          <button onClick={() => handleTimelineButtonClick(row.original.crId, row.original.prId)}>
+          <button onClick={() => handleTimelineButtonClick(row.original.crId)}>
             <FontAwesomeIcon icon={faClock} className="text-black-500" />
           </button>
         ), },
@@ -177,7 +191,7 @@ function Approveprototype() {
     prepareRow,
   } = useTable({
     columns,
-    data:  filteredCrPrototypes,
+    data:  currentItems,
   });
 
   return (
@@ -187,7 +201,7 @@ function Approveprototype() {
      
       <CrstatusTimelinePopup
   show={selectedCrId !== null}
-  onClose={() => setSelectedCrId(null) && setSelectedPrId(null)}
+  onClose={() => setSelectedCrId(null) }
   crId={selectedCrId}
   prId={selectedPrId}
 />

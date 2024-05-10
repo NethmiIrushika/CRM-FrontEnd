@@ -40,14 +40,14 @@ function ApproveORreject() {
 
   useEffect(() => {
     fetchCrprototype();
-  }, []);
+  }, []); // Empty dependency array, runs only once
 
-  // useEffect(() => {
-  //   if (crprototype.length > 0) {
-  //     const newestPrototypes = filterNewestPrototypes(crprototype);
-  //     //setCrprototype(newestPrototypes);
-  //   }
-  // }, [crprototype]);
+  useEffect(() => {
+    if (crprototype.length > 0) {
+      const newestPrototypes = filterNewestPrototypes(crprototype);
+      //setCrprototype(newestPrototypes);
+    }
+  }, [crprototype]); // Dependency on crprototype
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value.toLowerCase());
@@ -61,16 +61,16 @@ function ApproveORreject() {
 
       return (
         (status === "Develop without Prototype" ||
-         status === "Prototype Approved" ||
-         status === "Need Approvel For Prototype" ||
-         status === "Need Approvel For Second Prototype") &&
+          status === "Prototype Approved" ||
+          status === "Need Approvel For Prototype" ||
+          status === "Need Approvel For Second Prototype") &&
         (pr.popupstatus.toLowerCase().includes(lowercaseSearchTerm) ||
-         cr.crId.toString().toLowerCase().includes(lowercaseSearchTerm) ||
-         cr.topic.toLowerCase().includes(lowercaseSearchTerm) ||
-         cr.developer.toLowerCase().includes(lowercaseSearchTerm) ||
-         cr.name.toLowerCase().includes(lowercaseSearchTerm) ||
-         status.toLowerCase().includes(lowercaseSearchTerm) ||
-         pr.rejectionReason && pr.rejectionReason.toLowerCase().includes(lowercaseSearchTerm))
+          cr.crId.toString().toLowerCase().includes(lowercaseSearchTerm) ||
+          cr.topic.toLowerCase().includes(lowercaseSearchTerm) ||
+          cr.developer.toLowerCase().includes(lowercaseSearchTerm) ||
+          cr.name.toLowerCase().includes(lowercaseSearchTerm) ||
+          status.toLowerCase().includes(lowercaseSearchTerm) ||
+          (pr.rejectionReason && pr.rejectionReason.toLowerCase().includes(lowercaseSearchTerm)))
       );
     }
     return false;
@@ -94,7 +94,7 @@ function ApproveORreject() {
           prevState.map((cr) => (cr.prId === updatedCRPrototype.prId ? updatedCRPrototype : cr))
         );
       }
-      navigate(`/dashboard/viewCr`);
+      navigate(`/dashboard/approveORreject`);
     } catch (error) {
       console.error("Error UAT approvel", error);
     }
@@ -110,11 +110,7 @@ function ApproveORreject() {
   };
 
   const formatDate = (date) => {
-    return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); 
-  };
-
-const formatDate1 = (date) => {
-return format(new Date(date), 'dd/MM/yyyy'); 
+    return format(new Date(date), 'dd/MM/yyyy HH:mm:ss');
   };
 
   return (
@@ -142,15 +138,14 @@ return format(new Date(date), 'dd/MM/yyyy');
                   <p className="text-lg font-semibold text-right">
                     Prototype Status:{" "}
                     <span
-                      className={`font-bold ${
-                        pr.popupstatus === 'Rejected'
+                      className={`font-bold ${pr.popupstatus === 'Rejected'
                           ? 'text-red-500'
                           : pr.popupstatus === 'Pending'
-                          ? 'text-yellow-400'
-                          : pr.popupstatus === 'Approved'
-                          ? 'text-green-500'
-                          : 'text-black'
-                      }`}
+                            ? 'text-yellow-400'
+                            : pr.popupstatus === 'Approved'
+                              ? 'text-green-500'
+                              : 'text-black'
+                        }`}
                     >
                       {pr.popupstatus}
                     </span>
@@ -163,7 +158,7 @@ return format(new Date(date), 'dd/MM/yyyy');
                   </p>
                   {pr.cr.createdAt && (
                     <p className="text-left font-semibold">
-                      CR Created At : <span className="font-normal">{formatDate(pr.cr.createdAt)} {/* Format date */}</span>
+                      CR Created At : <span className="font-normal">{formatDate(pr.cr.createdAt)}</span>
                     </p>
                   )}
                   {pr.cr && <p className="text-left font-semibold">Developer : <span className="font-normal">{pr.cr.developer}</span></p>}
@@ -174,7 +169,7 @@ return format(new Date(date), 'dd/MM/yyyy');
 
                   {pr.createdAt && (
                     <p className="text-left font-semibold">
-                      Prototype Created At : <span className="font-normal">{formatDate(pr.createdAt)} {/* Format date */}</span>
+                      Prototype Created At : <span className="font-normal">{formatDate(pr.createdAt)}</span>
                     </p>
                   )}
                 </div>
@@ -204,7 +199,7 @@ return format(new Date(date), 'dd/MM/yyyy');
                   Sent another Prototype
                 </button>
               )}
-              {pr.rejectionReason === null && pr.popupstatus === 'Approved' || pr.cr.status === 'Develop without Prototype' && (
+              {((pr.popupstatus === 'Approved' && pr.rejectionReason === null) || pr.cr.status === 'Develop without Prototype') && (
                 <button
                   onClick={() => handleChangeStatusButtonClick(pr.prId)}
                   className="mt-1 bg-lime-500 hover:bg-lime-600 text-black font-medium py-2 ml-2 px-2 rounded"
@@ -212,6 +207,7 @@ return format(new Date(date), 'dd/MM/yyyy');
                   For UAT Approvel
                 </button>
               )}
+
             </div>
           ))}
         </div>

@@ -55,8 +55,8 @@ function CrstatusTimelinePopup({ show, onClose, crId }) {
   }
 
   const formatDate = (date) => {
-    return format(new Date(date), 'dd/MM/yyyy HH:mm:ss');
-  };
+    return date ? format(new Date(date), 'dd/MM/yyyy HH:mm:ss') : 'No time available';
+  }
   return (
     <Popup
       modal
@@ -70,51 +70,64 @@ function CrstatusTimelinePopup({ show, onClose, crId }) {
           <div className='flex justify-center items-center h-96 bg-gray-100 w-2/3 rounded-lg'>
             <div className='p-8'>
               <table className='table-fixed mb-4'>
-                <tbody>
+              <tbody>
                   <tr>
-                    <th colSpan={3}>Topic: {cr ? cr.topic: 'No topic available'}</th>
+                    <th colSpan={3}>Topic: {cr ? cr.topic : 'No topic available'}</th>
                   </tr>
-
+                  <tr>
+                    <td className="pr-4">Department</td>
+                    <td className="pr-4">-</td>
+                    <td className="pr-4">{cr ? cr.department : 'No department available'}</td>
+                  </tr>
+                  {cr && cr.createdAt && (
                   <tr>
                     <td className="pr-4">CR Created At</td>
                     <td className="pr-4">-</td>
-                    <td className="pr-4">{cr ? formatDate(cr.createdAt) : 'No time available'}</td>
+                    <td className="pr-4">{formatDate(cr.createdAt)}</td>
                   </tr>
-                  <tr>
+                )}
+                  {cr && cr.hodApprovelAt &&(<tr>
                     <td className="pr-4">HOD Approve At</td>
                     <td className="pr-4">-</td>
-                    <td className="pr-4">{cr ? formatDate(cr.hodApprovelAt) : 'No time available'}</td>
-                  </tr>
+                    <td className="pr-4">{formatDate(cr?.hodApprovelAt) }</td>
+                  </tr>)}
+
+                  {cr && cr.developer &&(
                   <tr>
                     <td className="pr-4">Get to development by</td>
                     <td className="pr-4">-</td>
                     <td className="pr-4">{cr ? cr.developer : 'No developer available'}</td>
-                  </tr>
-                  <tr>
+                  </tr>)}
+                  
+                  {cr && cr.getToDevelopmentAt &&(<tr>
                     <td className="pr-4">Get to development At</td>
                     <td className="pr-4">-</td>
-                    <td className="pr-4">{cr ? formatDate(cr.getToDevelopmentAt ): 'No time available'}</td>
-                  </tr>
-                  <tr>
+                    <td className="pr-4">{formatDate(cr?.getToDevelopmentAt) }</td>
+                  </tr>)}
+
+                  {cr && cr.ProtoCreatedAt &&(<tr>
                     <td className="pr-4">Sent Prototype At</td>
                     <td className="pr-4">-</td>
-                    <td className="pr-4">{cr ? formatDate(cr.ProtoCreatedAt	 ): 'No time available'}</td>
-                  </tr>
-                  <tr>
+                    <td className="pr-4">{ formatDate(cr?.ProtoCreatedAt) }</td>
+                  </tr>)}
+
+                  {cr && cr.prototypeApproveAt && (<tr>
                     <td className="pr-4">Prototype Approve At</td>
                     <td className="pr-4">-</td>
-                    <td className="pr-4">{cr ? formatDate(cr.prototypeApproveAt ): 'No time available'}</td>
-                  </tr>
-                  <tr>
+                    <td className="pr-4">{formatDate(cr?.prototypeApproveAt) }</td>
+                  </tr>)}
+                  
+                  { cr && cr.needUatApprovelAt && (<tr>
                     <td className="pr-4">UAT Approve At</td>
                     <td className="pr-4">-</td>
-                    <td className="pr-4">{cr ? formatDate(cr.needUatApprovelAt	): 'No time available'}</td>
-                  </tr>
-                  <tr>
+                    <td className="pr-4">{formatDate(cr?.needUatApprovelAt) }</td>
+                  </tr>)}
+
+                  {cr && cr.devCompletedAt &&(<tr>
                     <td className="pr-4">Developmnet Complete At</td>
                     <td className="pr-4">-</td>
-                    <td className="pr-4">{cr ? formatDate(cr.devCompletedAt ): 'No time available'}</td>
-                  </tr>
+                    <td className="pr-4">{formatDate(cr.devCompletedAt)}</td>
+                  </tr>)}
                 </tbody>
               </table>
               <div className="flex justify-center mt-6">

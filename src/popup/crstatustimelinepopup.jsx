@@ -83,7 +83,7 @@ function CrstatusTimelinePopup({ show, onClose, crId, prId }) {
     >
       {(close) => (
         <div className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center'>
-          <div className='flex justify-center items-center h-64 bg-gray-100 w-2/3 rounded-lg'>
+          <div className='flex justify-center items-center h-96 bg-gray-100 w-2/3 rounded-lg'>
             <div className='p-8'>
               <table className='table-fixed mb-4'>
                 <tbody>
@@ -124,6 +124,16 @@ function CrstatusTimelinePopup({ show, onClose, crId, prId }) {
                     <td className="pr-4">Prototype Approve At</td>
                     <td className="pr-4">-</td>
                     <td className="pr-4">{cr ? formatDate(cr.prototypeApproveAt ): 'No time available'}</td>
+                  </tr>
+                  <tr>
+                    <td className="pr-4">UAT Approve At</td>
+                    <td className="pr-4">-</td>
+                    <td className="pr-4">{cr ? formatDate(cr.needUatApprovelAt	): 'No time available'}</td>
+                  </tr>
+                  <tr>
+                    <td className="pr-4">Developmnet Complete At</td>
+                    <td className="pr-4">-</td>
+                    <td className="pr-4">{cr ? formatDate(cr.devCompletedAt ): 'No time available'}</td>
                   </tr>
                 </tbody>
               </table>

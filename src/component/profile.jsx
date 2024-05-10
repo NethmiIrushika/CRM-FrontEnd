@@ -87,12 +87,13 @@ function Approveprototype() {
     setSearchTerm(value);
     
     const filtered = crprototype.filter((cr) => {
-      const crId = String(cr.crId); // Convert crId to string
+      const crId = String(cr.crId); 
       return (
         cr.userId.userId === getLoginInfo()?.sub &&
         (crId.toLowerCase().includes(value) ||
         cr.topic.toLowerCase().includes(value) ||
-        cr.status.toLowerCase().includes(value))
+        cr.status.toLowerCase().includes(value))||
+        cr.name.toLowerCase().includes(value)
       );
     });
     
@@ -143,7 +144,7 @@ function Approveprototype() {
   };
 
 
-  const handleTimelineButtonClick = (crId) => {
+  const handleTimelineButtonClick = (crId, ) => {
     setSelectedCrId(crId);
 
     console.log(crId)
@@ -155,6 +156,7 @@ function Approveprototype() {
   const columns = React.useMemo(
     () => [
       { Header: 'CR ID', accessor: 'crId' },
+      { Header: 'SFA_User', accessor: 'name' },
       { Header: 'Topic', accessor: 'topic' },
       { Header: 'Status', accessor: 'status' },
       {
@@ -165,7 +167,7 @@ function Approveprototype() {
           </button>
         ), },
       {
-        Header: 'Action',
+        Header: 'View',
         accessor: 'prId',
         Cell: ({ row }) => (
           <button

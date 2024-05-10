@@ -94,6 +94,7 @@ function ApproveORreject() {
           prevState.map((cr) => (cr.prId === updatedCRPrototype.prId ? updatedCRPrototype : cr))
         );
       }
+      window.location.reload();
       navigate(`/dashboard/approveORreject`);
     } catch (error) {
       console.error("Error UAT approvel", error);

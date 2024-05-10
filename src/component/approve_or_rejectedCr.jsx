@@ -42,12 +42,12 @@ function ApproveORreject() {
     fetchCrprototype();
   }, []);
 
-  useEffect(() => {
-    if (crprototype.length > 0) {
-      const newestPrototypes = filterNewestPrototypes(crprototype);
-      setCrprototype(newestPrototypes);
-    }
-  }, [crprototype]);
+  // useEffect(() => {
+  //   if (crprototype.length > 0) {
+  //     const newestPrototypes = filterNewestPrototypes(crprototype);
+  //     //setCrprototype(newestPrototypes);
+  //   }
+  // }, [crprototype]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value.toLowerCase());

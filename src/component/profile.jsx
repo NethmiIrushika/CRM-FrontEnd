@@ -36,7 +36,7 @@ function Approveprototype() {
   const [loggedInUserId, setLoggedInUserId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCrId, setSelectedCrId] = useState(null);
-  const [selectedPrId, setSelectedPrId] = useState(null);
+
   const itemsPerPage = 5;
   const navigate = useNavigate();
   const [filteredData, setFilteredData] = useState([]);
@@ -143,9 +143,9 @@ function Approveprototype() {
   };
 
 
-  const handleTimelineButtonClick = (crId, prId) => {
+  const handleTimelineButtonClick = (crId) => {
     setSelectedCrId(crId);
-    // setSelectedPrId(prId);
+
     console.log(crId)
     
   };
@@ -203,7 +203,7 @@ function Approveprototype() {
   show={selectedCrId !== null}
   onClose={() => setSelectedCrId(null) }
   crId={selectedCrId}
-  prId={selectedPrId}
+
 />
 
 <div className="max-w-4xl mx-auto">

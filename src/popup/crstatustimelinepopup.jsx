@@ -11,7 +11,7 @@ const customModalClass = {
 
 function CrstatusTimelinePopup({ show, onClose, crId }) {
   const [cr, setCr] = useState(null);
-  //const [pr, setPr] = useState(null);
+
   const [loadingCr, setLoadingCr] = useState(true);
   //const [loadingPr, setLoadingPr] = useState(true);
   const [error, setError] = useState(null);
@@ -34,28 +34,13 @@ function CrstatusTimelinePopup({ show, onClose, crId }) {
       }
     };
 
-    // const fetchPrDetails = async () => {
-    //   try {
-    //     const accessToken = localStorage.getItem('accessToken');
-    //     const response = await axios.get(`${api.defaults.baseURL}/crprototype/${prId}`, {
-    //       headers: {
-    //         Authorization: `Bearer ${accessToken}`,
-    //       },
-    //     });
-    //     setPr(response.data);
-    //     setLoadingPr(false);
-    //   } catch (error) {
-    //     console.error('Error fetching CR prototype details:', error);
-    //     setError(error);
-    //     setLoadingPr(false);
-    //   }
-    // };
+    
 
     if (show && crId) {
       fetchCrDetails();
-      // fetchPrDetails();
+
     }
-  }, [show, crId, prId]);
+  }, [show, crId]);
 
   if (!show || !crId ) {
     return null;
@@ -89,11 +74,7 @@ function CrstatusTimelinePopup({ show, onClose, crId }) {
                   <tr>
                     <th colSpan={3}>Topic: {cr ? cr.topic: 'No topic available'}</th>
                   </tr>
-                  <tr>
-                    <td className="pr-4">Department</td>
-                    <td className="pr-4">-</td>
-                    <td className="pr-4">{cr ? cr.department : 'No department available'}</td>
-                  </tr>
+
                   <tr>
                     <td className="pr-4">CR Created At</td>
                     <td className="pr-4">-</td>

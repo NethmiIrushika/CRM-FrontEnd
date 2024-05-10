@@ -204,7 +204,7 @@ return format(new Date(date), 'dd/MM/yyyy');
                   Sent another Prototype
                 </button>
               )}
-              {pr.rejectionReason === null && pr.popupstatus === 'Approved' && (
+              {pr.rejectionReason === null && pr.popupstatus === 'Approved' || pr.cr.status === 'Develop without Prototype' && (
                 <button
                   onClick={() => handleChangeStatusButtonClick(pr.prId)}
                   className="mt-1 bg-lime-500 hover:bg-lime-600 text-black font-medium py-2 ml-2 px-2 rounded"

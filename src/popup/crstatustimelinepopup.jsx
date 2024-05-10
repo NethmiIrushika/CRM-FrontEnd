@@ -14,6 +14,7 @@ function CrstatusTimelinePopup({ show, onClose, crId, prId }) {
   const [pr, setPr] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
 
   useEffect(() => {
     const fetchCrDetails = async () => {
@@ -36,28 +37,28 @@ function CrstatusTimelinePopup({ show, onClose, crId, prId }) {
     const fetchCrDetails_1 = async () => {
       try {
         const accessToken = localStorage.getItem('accessToken');
-        const response = await axios.get(`${api.defaults.baseURL}/crprototype/${crId}`, {
+        const response = await axios.get(`${api.defaults.baseURL}/crprototype/${prId}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         });
         setPr(response.data);
         setLoading(false);
-
       } catch (error) {
         console.error('Error fetching CR details:', error);
         setError(error);
         setLoading(false);
       }
     };
+    
 
-    if (show && crId) { 
+
       fetchCrDetails();
       fetchCrDetails_1();
-    }
-  }, [show, crId]);
 
-  if (!show || !crId) {
+  }, [show, crId, prId]);
+
+  if (!show || !crId || !prId) {
     return null;
   }
 
@@ -91,7 +92,7 @@ function CrstatusTimelinePopup({ show, onClose, crId, prId }) {
             <div>HOD Approve At - {cr ? formatDate(cr.hodApprovelAt) : 'No time available'}  {/* Format date */}</div>   
             <div>Get to development by - {cr.developer} </div>   
             <div>Prototype Created At - {pr.createdAt}</div>   
-            <div>Department: {cr ? cr.department : 'No department available'}</div>
+            <div>Department - {cr ? cr.department : 'No department available'}</div>
             <div className="flex justify-center">
               <button onClick={onClose} className="inline-block  mr-1 py-2 px-4 bg-yellow-300 text-white rounded-l-md hover:bg-yellow-500 focus:outline-none focus:bg-yellow-500 text-center">Close</button>
             </div>

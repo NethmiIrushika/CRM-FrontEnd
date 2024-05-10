@@ -31,6 +31,7 @@ function Profile({ userInfo }) {
 
 function Approveprototype() {
   const [crprototype, setCrprototype] = useState([]);
+  const [crprototype_1, setCrprototype_1] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loggedInUserId, setLoggedInUserId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,7 +44,7 @@ function Approveprototype() {
     try {
       const userId1 = localStorage.getItem("userId");
       setLoggedInUserId(userId1);
-      console.log(userId1);
+
 
 
       const accessToken = localStorage.getItem("accessToken");
@@ -58,6 +59,27 @@ function Approveprototype() {
       console.error("Error fetching CR prototypes:", error);
     }
   };
+
+  const fetchCrprototype_1 = async () => {
+    try {
+      const userId1 = localStorage.getItem("userId");
+      setLoggedInUserId(userId1);
+      console.log(userId1);
+
+
+      const accessToken = localStorage.getItem("accessToken");
+      const response = await axios.get(`${api.defaults.baseURL}/crprototype/`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      setCrprototype_1(response.data);
+
+    } catch (error) {
+      console.error("Error fetching CR prototypes:", error);
+    }
+  };
+
 
   const handleSearchChange = (e) => {
     const value = e.target.value.toLowerCase();
@@ -75,6 +97,7 @@ function Approveprototype() {
 
   useEffect(() => {
     fetchCrprototype();
+    fetchCrprototype_1();
   }, []);
 
   const handleActionClick = (crId) => {
@@ -106,14 +129,15 @@ function Approveprototype() {
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
-  // Handle click on the clock icon to open the popup
+
   const handleTimelineButtonClick = (crId, prId) => {
     setSelectedCrId(crId);
-    if (prId) {
-        setSelectedPrId(prId);
-    }
-};
-  // Define columns and data for the React data table
+    setSelectedPrId(prId);
+    console.log(crId)
+  };
+  
+  
+
   const columns = React.useMemo(
     () => [
       { Header: 'CR ID', accessor: 'crId' },
@@ -121,11 +145,11 @@ function Approveprototype() {
       { Header: 'Status', accessor: 'status' },
       {
         Header:'TimeLine', accessor:'crTime',
-        Cell: ({row}) => (<button 
-        onClick={()=>handleTimelineButtonClick(row.original.crId)}>
-          <FontAwesomeIcon icon={faClock} className="text-black-500" />
+        Cell: ({ row }) => (
+          <button onClick={() => handleTimelineButtonClick(row.original.crId, row.original.prId)}>
+            <FontAwesomeIcon icon={faClock} className="text-black-500" />
           </button>
-        ),  },
+        ), },
       {
         Header: 'Action',
         accessor: 'prId',
@@ -139,12 +163,12 @@ function Approveprototype() {
         ),
       },
     ],
-    [] // Dependency array
+    [] 
   );
 
 
 
-  // Initialize the React data table using useTable hook
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -153,20 +177,21 @@ function Approveprototype() {
     prepareRow,
   } = useTable({
     columns,
-    data:  filteredCrPrototypes,// Use ordered and paginated data for the table
+    data:  filteredCrPrototypes,
   });
 
   return (
+
     <div className={`container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg `}>
       
      
       <CrstatusTimelinePopup
-  show={selectedCrId || selectedPrId !== null}
-  onClose={() => setSelectedCrId(null) && setSelectedPrId(null) }
+  show={selectedCrId !== null}
+  onClose={() => setSelectedCrId(null) && setSelectedPrId(null)}
   crId={selectedCrId}
-  prId={setSelectedPrId}
-
+  prId={selectedPrId}
 />
+
 <div className="max-w-4xl mx-auto">
 
         <Profile userInfo={getLoginInfo()} />

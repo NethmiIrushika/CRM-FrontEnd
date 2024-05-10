@@ -75,9 +75,9 @@ function CrstatusTimelinePopup({ show, onClose, crId }) {
                     <th colSpan={3}>Topic: {cr ? cr.topic : 'No topic available'}</th>
                   </tr>
                   <tr>
-                    <td className="pr-4">Department</td>
+                    <td className="pr-4">CR Id</td>
                     <td className="pr-4">-</td>
-                    <td className="pr-4">{cr ? cr.department : 'No department available'}</td>
+                    <td className="pr-4">{cr ? cr.crId : 'No CrId available'}</td>
                   </tr>
                   {cr && cr.createdAt && (
                   <tr>
@@ -87,7 +87,7 @@ function CrstatusTimelinePopup({ show, onClose, crId }) {
                   </tr>
                 )}
                   {cr && cr.hodApprovelAt &&(<tr>
-                    <td className="pr-4">HOD Approve At</td>
+                    <td className="pr-4">HOD Approve/Reject At</td>
                     <td className="pr-4">-</td>
                     <td className="pr-4">{formatDate(cr?.hodApprovelAt) }</td>
                   </tr>)}

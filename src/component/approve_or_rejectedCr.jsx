@@ -45,7 +45,7 @@ function ApproveORreject() {
   useEffect(() => {
     if (crprototype.length > 0) {
       const newestPrototypes = filterNewestPrototypes(crprototype);
-      //setCrprototype(newestPrototypes);
+      setCrprototype(newestPrototypes);
     }
   }, [crprototype]); // Dependency on crprototype
 

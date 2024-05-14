@@ -89,10 +89,10 @@ function Approveprototype() {
     const filtered = crprototype.filter((cr) => {
       const crId = String(cr.crId); 
       return (
-        cr.userId.userId === getLoginInfo()?.sub &&
-        (crId.toLowerCase().includes(value) ||
+
+        crId.toLowerCase().includes(value) ||
         cr.topic.toLowerCase().includes(value) ||
-        cr.status.toLowerCase().includes(value))||
+        cr.status.toLowerCase().includes(value)||
         cr.name.toLowerCase().includes(value)
       );
     });

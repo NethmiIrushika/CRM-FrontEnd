@@ -93,7 +93,7 @@ const Insert = () => {
       toast.success('You have successfully made a change request!');
       setShowPriorityPopup(true);
 setTimeout(() => {
-  navigate('/dashboard/ongoingApprovelCr');
+  navigate('/dashboard/OngoingApprovelCr');
 }, 2000);
      
       

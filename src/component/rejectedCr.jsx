@@ -90,7 +90,7 @@ function RejectedCR() {
   const filteredRows = React.useMemo(() => {
     return page.filter((row) =>
       Object.values(row.original).some((cellValue) =>
-        cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        cellValue !== null && cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
   }, [page, searchTerm]);
@@ -162,18 +162,16 @@ function RejectedCR() {
         </table>
       </div>
       <div className="pagination">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-          {'<<'}
+        
+        
+        <button onClick={() => previousPage()} disabled={!canPreviousPage} className="mr-6 border border-white-700 font-medium shadow-xl w-20 hover:bg-yellow-400">
+        Previous
         </button>{' '}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-          {'<'}
+        <span className="mx-4">Page {pageIndex + 1} of {pageCount}</span>{' '}
+        <button onClick={() => nextPage()} disabled={!canNextPage} className="w-20 ml-6 border-white-700 border font-medium shadow-xl w-20 hover:bg-yellow-400">
+        Next
         </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-          {'>'}
-        </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className="mr-2 px-4 py-2 bg-yellow-400 text-black rounded">
-          {'>>'}
-        </button>{' '}
+        
       </div>
           </div>
         )}

@@ -90,7 +90,7 @@ function RejectedCR() {
   const filteredRows = React.useMemo(() => {
     return page.filter((row) =>
       Object.values(row.original).some((cellValue) =>
-        cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        cellValue !== null && cellValue.toString().toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
   }, [page, searchTerm]);

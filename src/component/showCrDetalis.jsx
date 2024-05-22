@@ -224,7 +224,7 @@ return format(new Date(date), 'dd/MM/yyyy');
             View Attachment
           </button>
 
-          {userType === "Developer" && cr.priority === "1" && (
+          {userType === "Developer" && cr.priority === 1 && (
             <button
               onClick={() => handleButtonClick(crId)}
               className="bg-lime-500 w-48 hover:bg-lime-600 font-medium text-black py-2 px-4 rounded mt-4 ml-2" // Added ml-2 for left margin

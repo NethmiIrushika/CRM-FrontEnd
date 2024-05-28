@@ -5,11 +5,13 @@ import api from '../api';
 import { useTable, usePagination, useSortBy } from 'react-table';
 import { FaEye } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { getLoginInfo } from "../utils/LoginInfo";
 
 function RejectedCR() {
   const [crs, setCrs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
+  const userType = getLoginInfo()?.userType;
 
   useEffect(() => {
     const fetchCrs = async () => {
@@ -94,6 +96,11 @@ function RejectedCR() {
       )
     );
   }, [page, searchTerm]);
+
+  if (userType === 'Developer') {
+    return <p>You do not have access to this page.</p>;
+}
+
 
   return (
     <div className="container mx-auto bg-white-100 shadow-md min-h-96 rounded-lg">

@@ -8,6 +8,7 @@ import { format } from "date-fns";
 function Approveprototype() {
   const [crprototype, setCrprototype] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const userType = getLoginInfo()?.userType;
   const [loggedInUserId, setLoggedInUserId] = useState(null);
   const navigate = useNavigate();
 
@@ -64,6 +65,11 @@ function Approveprototype() {
   const formatDate = (date) => {
     return format(new Date(date), 'dd/MM/yyyy HH:mm:ss');
   };
+
+  if (userType !== 'SFA_User') {
+    return <p>You do not have access to this page.</p>;
+}
+
 
   return (
     <div className="container mx-auto full">

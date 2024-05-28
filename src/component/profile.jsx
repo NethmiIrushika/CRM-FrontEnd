@@ -54,7 +54,8 @@ function Approveprototype() {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      setCrprototype(response.data);
+      const data = response.data.filter(cr => cr.status !== 'CR Rejected');
+      setCrprototype(data);
 
     } catch (error) {
       console.error("Error fetching CR prototypes:", error);

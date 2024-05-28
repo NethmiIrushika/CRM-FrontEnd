@@ -10,6 +10,7 @@ function OngingCr() {
   const { crId } = useParams();
   const [crs, setCrs] = useState([]);
   const [cr, setCr] = useState(null);
+  const userType = getLoginInfo()?.userType;
   const [searchTerm, setSearchTerm] = useState("");
   const [loggedInUserId, setLoggedInUserId] = useState(getLoginInfo()?.sub); // Initialize with the logged-in user ID
   const navigate = useNavigate();
@@ -95,6 +96,11 @@ function OngingCr() {
   const formatDate = (date) => {
     return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); 
   };
+
+  if (userType !== 'Developer' ) {
+    return <p>You do not have access to this page.</p>;
+}
+
 
 
 

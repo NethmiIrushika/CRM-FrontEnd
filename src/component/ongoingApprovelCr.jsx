@@ -221,6 +221,11 @@ function OngoingApprovelCr() {
     
       return filteredData;
     }, [page, searchTerm, userType]);
+
+    if (userType !== 'HOD' && userType !== 'SFA_User') {
+      return <p>You do not have access to this page.</p>;
+  }
+  
     
   
     

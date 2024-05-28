@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 function UatApprove() {
   const [crprototype, setCrprototype] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const userType = getLoginInfo()?.userType;
   const [loggedInUserId, setLoggedInUserId] = useState(null);
   const navigate = useNavigate();
   const name = getLoginInfo()?.firstname;
@@ -79,6 +80,12 @@ function UatApprove() {
   const filteredCrPrototypes = uniqueCrPrototypes.filter((pr) => {
     return pr.cr.status === "Need UAT Approvel";
   });
+
+  if (userType !== 'HOD' && userType !== 'SFA_User') {
+    return <p>You do not have access to this page.</p>;
+}
+
+
 
   return (
     <div className="container mx-auto full">

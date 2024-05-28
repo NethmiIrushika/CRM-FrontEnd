@@ -3,12 +3,14 @@ import axios from "axios";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { format } from 'date-fns';
+import { getLoginInfo } from "../utils/LoginInfo";
 
 function ApproveORreject() {
   const [crprototype, setCrprototype] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loggedInUserId, setLoggedInUserId] = useState(null);
   const navigate = useNavigate();
+  const userType = getLoginInfo()?.userType;
 
   const fetchCrprototype = async () => {
     try {
@@ -113,6 +115,11 @@ function ApproveORreject() {
   const formatDate = (date) => {
     return format(new Date(date), 'dd/MM/yyyy HH:mm:ss');
   };
+
+  if (userType !== 'Developer') {
+    return <p>You do not have access to this page.</p>;
+}
+
 
   return (
     <div className="container mx-auto full">

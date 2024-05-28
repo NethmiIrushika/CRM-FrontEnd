@@ -317,6 +317,7 @@ const Dashboard = () => {
             <li>
               <button
                 onClick={() => navigate("RejectedCR")}
+                style={{ display: userType !== "Developer" ? "" : "none", }}
                 className={`flex items-center text-white rounded-lg hover:bg-white  hover:bg-opacity-40 hover:ring-1 hover-ring-white ${activeRoute === '/dashboard/RejectedCR' ? "bg-white bg-opacity-40 ring-1 ring-black" : ""}`}
               >
                 <div className="flex items-center  w-52 h-10">

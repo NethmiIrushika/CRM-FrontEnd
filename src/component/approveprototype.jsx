@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import api from "../api";
 import { getLoginInfo } from "../utils/LoginInfo";
-import { format } from "date-fns"; 
+import { format } from "date-fns";
 
 function Approveprototype() {
   const [crprototype, setCrprototype] = useState([]);
@@ -34,22 +34,23 @@ function Approveprototype() {
   };
 
   const filteredCrPrototypes = crprototype.filter((pr) => {
+    const matchesSearchTerm = pr.topic ? pr.topic.toLowerCase().includes(searchTerm.toLowerCase()) : false;
     return (
-        pr &&
-        pr.cr &&
-        pr.cr.userId &&
-        pr.cr.userId.userId === getLoginInfo()?.sub &&
-        pr.popupstatus !== "Rejected" &&
-        pr.popupstatus !== "Approved" &&
-        pr.rejectionReason !== "" &&
-        pr.cr.status !== "Completed" &&
-        pr.cr.status !== "Develop without Prototype" &&
-        pr.cr.status !== "Need UAT Approvel" &&
-        pr.cr.status !== "Development Completed" &&
-        (pr.popupstatus === "Pending" || pr.popupstatus === null)
+      pr &&
+      pr.cr &&
+      pr.cr.userId &&
+      pr.cr.userId.userId === getLoginInfo()?.sub &&
+      pr.popupstatus !== "Rejected" &&
+      pr.popupstatus !== "Approved" &&
+      pr.rejectionReason !== "" &&
+      pr.cr.status !== "Completed" &&
+      pr.cr.status !== "Develop without Prototype" &&
+      pr.cr.status !== "Need UAT Approvel" &&
+      pr.cr.status !== "Development Completed" &&
+      (pr.popupstatus === "Pending" || pr.popupstatus === null) &&
+      matchesSearchTerm
     );
-});
-
+  });
 
   useEffect(() => {
     fetchCrprototype();
@@ -61,7 +62,7 @@ function Approveprototype() {
   };
 
   const formatDate = (date) => {
-    return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); 
+    return format(new Date(date), 'dd/MM/yyyy HH:mm:ss');
   };
 
   return (
@@ -71,66 +72,65 @@ function Approveprototype() {
           type="text"
           value={searchTerm}
           onChange={handleSearchChange}
-          placeholder="Search..."
+          placeholder="Search by CR topic..."
           className="px-4 py-2 border border-gray-500 rounded"
         />
       </div>
 
-      {filteredCrPrototypes.length === 0?(
+      {filteredCrPrototypes.length === 0 ? (
         <div className="flex justify-center items-center h-full mt-4">
-          <p className="text-xl text-black-500 mt-10">There are not any prototype to approve!!</p>
+          <p className="text-xl text-black-500 mt-10">There are not any prototypes to approve!!</p>
         </div>
-      ):(
+      ) : (
         <div className="grid grid-cols-1 gap-4">
-        {filteredCrPrototypes.map((pr) => (
-          <div key={pr.prId} className="bg-white rounded-lg shadow-md p-6">
-            <div className="grid grid-cols-2 gap-2">
-              <div className="col-span-2">
-                <p className="text-lg font-bold text-right">
-                  <span className="text-black-400">Status: </span>
-                  <span
-                    className={`${
-                      pr.cr.status === "Sent prototype"
-                        ? "text-blue-500"
-                        : pr.cr.status === "Need Approvel For Prototype"
-                        ? "text-red-500"
-                        : pr.cr.status === "Need Approvel For Second Prototype"
-                        ?"text-red-500"
-                        :""
-                    }`}
-                  >
-                    {pr.cr.status}
-                  </span>
-                </p>
-
-                <p className="text-lg font-bold text-stone-950 text-left">
-                  Topic: {pr.topic}
-                </p>
-              </div>
-              <div className="col-span-2">
-                {pr.cr.createdAt && (
-                  <p className="text-center">
-                    The Change Request with ID:{" "}
-                    <span className="font-semibold text-lg">{pr.crId}</span>{" "}
-                    you created at :{" "}
-                    <span className="font-semibold">
-                      {formatDate(pr.cr.createdAt)} {/* Format date */}
-                    </span>{" "}
-                    now has a Prototype. Plese make sure to View the prototype
-                    and give your feedbacks
+          {filteredCrPrototypes.map((pr) => (
+            <div key={pr.prId} className="bg-white rounded-lg shadow-md p-6">
+              <div className="grid grid-cols-2 gap-2">
+                <div className="col-span-2">
+                  <p className="text-lg font-bold text-right">
+                    <span className="text-black-400">Status: </span>
+                    <span
+                      className={`${
+                        pr.cr.status === "Sent prototype"
+                          ? "text-blue-500"
+                          : pr.cr.status === "Need Approvel For Prototype" ||
+                            pr.cr.status === "Need Approvel For Second Prototype"
+                          ? "text-red-500"
+                          : ""
+                      }`}
+                    >
+                      {pr.cr.status}
+                    </span>
                   </p>
-                )}
+
+                  <p className="text-lg font-bold text-stone-950 text-left">
+                    Topic: {pr.topic}
+                  </p>
+                </div>
+                <div className="col-span-2">
+                  {pr.cr.createdAt && (
+                    <p className="text-center">
+                      The Change Request with ID:{" "}
+                      <span className="font-semibold text-lg">{pr.crId}</span>{" "}
+                      you created at :{" "}
+                      <span className="font-semibold">
+                        {formatDate(pr.cr.createdAt)} {/* Format date */}
+                      </span>{" "}
+                      now has a Prototype. Please make sure to view the prototype
+                      and give your feedback.
+                    </p>
+                  )}
+                </div>
               </div>
+              <button
+                onClick={() => handleActionClick(pr.prId)}
+                className="mt-4 w-40 bg-yellow-400 hover:bg-yellow-500 text-black font-medium py-2 px-4 rounded"
+              >
+                View
+              </button>
             </div>
-            <button
-              onClick={() => handleActionClick(pr.prId)}
-              className="mt-4 w-40 bg-yellow-400 hover:bg-yellow-500 text-black font-medium py-2 px-4 rounded"
-            >
-              View
-            </button>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
       )}
     </div>
   );

@@ -17,7 +17,7 @@ function OngoingApprovelCr() {
     const userType = getLoginInfo()?.userType;
     const navigate = useNavigate();
     const [editPriority, setEditPriority] = useState(false); // State for controlling the popup
-    const [selectedCr, setSelectedCr] = useState(null); // State for the selected CR
+    const [selectedCr, setSelectedCr] = useState(null); 
     const [newPriority, setNewPriority] = useState('');
     const [currentPriority, setCurrentPriority] = useState('');
     const [pageIndex, setPageIndex] = useState(0);
@@ -44,9 +44,8 @@ function OngoingApprovelCr() {
     // Logout user if token is expired
     useEffect(() => {
       if (isTokenExpired()) {
-        // Perform logout action here, such as clearing local storage and redirecting to login page
         localStorage.clear();
-        navigate('/UserLogin'); // Redirect to login page
+        navigate('/UserLogin'); 
       }
     }, []);
   
@@ -61,22 +60,11 @@ function OngoingApprovelCr() {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        // Filter CRs with status "start-development"
-        const filteredCrs = response.data.filter(cr =>
+      const filteredCrs = response.data.filter(cr =>
           cr.status === 'Need CR Approvel' );
         setCrs(filteredCrs);
       } catch (error) {
         console.error('Error fetching crs:', error);
-      }
-    };
-  
-  
-    const handleEditPriority = (row) => {
-      console.log(row); // Add this line to check the structure of the row object
-      if (row.original) {
-        setSelectedCr(row.original);
-        setEditPriority(true);
-        setNewPriority(row.original.priority);
       }
     };
   
@@ -93,14 +81,11 @@ function OngoingApprovelCr() {
             },
           }
         );
-  
-        // Handle any additional logic or UI updates after successfully changing priority
-        // For example, you might want to refresh the CRs list or show a success message
         fetchCrs();
         toast.success('Priority updated successfully!');
       } catch (error) {
         console.error('Error updating priority:', error);
-        // Handle error appropriately, e.g., show error message to the user
+
       }
     };
   
@@ -109,7 +94,7 @@ function OngoingApprovelCr() {
     };
   
     const formatDate = (date) => {
-      return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); // Format date using date-fns
+      return format(new Date(date), 'dd/MM/yyyy HH:mm:ss'); 
     };
   
     const columns = React.useMemo(
@@ -117,7 +102,7 @@ function OngoingApprovelCr() {
         { id: 'crId', Header: 'CR ID', accessor: 'crId' },
         { id: 'name', Header: 'Name', accessor: 'name' },
         { id: 'topic', Header: 'Topic', accessor: 'topic' },
-        { id: 'date', Header: 'Date/Time', accessor: 'createdAt', Cell: ({ value }) => formatDate(value) }, // Apply custom Cell renderer
+        { id: 'date', Header: 'Date/Time', accessor: 'createdAt', Cell: ({ value }) => formatDate(value) }, 
         {
           id: 'action',
           Header: 'View',
@@ -143,9 +128,6 @@ function OngoingApprovelCr() {
       navigate(`/dashboard/showCrDetails/${crId}`);
     };
   
-  
-  
-  
     const {
       getTableProps,
       getTableBodyProps,
@@ -156,8 +138,8 @@ function OngoingApprovelCr() {
       previousPage,
       canNextPage,
       canPreviousPage,
-      gotoPage, // Add gotoPage from usePagination
-      pageCount, // Add pageCount from usePagination
+      gotoPage, 
+      pageCount, 
   
     } = useTable(
       {

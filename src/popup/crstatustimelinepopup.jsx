@@ -13,7 +13,6 @@ function CrstatusTimelinePopup({ show, onClose, crId }) {
   const [cr, setCr] = useState(null);
 
   const [loadingCr, setLoadingCr] = useState(true);
-  //const [loadingPr, setLoadingPr] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -45,10 +44,6 @@ function CrstatusTimelinePopup({ show, onClose, crId }) {
   if (!show || !crId ) {
     return null;
   }
-
-  // if (loadingCr || loadingPr) {
-  //   return <div>Loading...</div>;
-  // }
 
   if (error) {
     return <div>Error: {error.message}</div>;

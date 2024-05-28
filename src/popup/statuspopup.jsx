@@ -1,18 +1,14 @@
-// statuspopup.js
-
-// Import necessary dependencies
 import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import api from '../api';
 import axios from 'axios';
 
-// Define your custom Tailwind CSS class with dark theme
+
 const customModalClass = {
-  content: 'max-w-lg mx-auto bg-gray-800 text-white rounded-md p-6 shadow-lg', // Increase max-w-md to max-w-lg
+  content: 'max-w-lg mx-auto bg-gray-800 text-white rounded-md p-6 shadow-lg', 
   overlay: 'fixed inset-0 bg-gray-900 bg-opacity-75 z-50',
 };
 
-// Create your StatusPopup component
 function StatusPopup({ close, user, updateUser }) {
   const [newStatus, setNewStatus] = useState(user.status);
 
@@ -21,11 +17,7 @@ function StatusPopup({ close, user, updateUser }) {
     try {
       // Update the user status in the database
       await axios.put(`${api.defaults.baseURL}/users/${user.userId}`, { status: newStatus });
-
-      // Close the popup
       close();
- 
-      // Call the callback function to update the user table
       updateUser({ ...user, status: newStatus });
     } catch (error) {
       console.error('Error changing user status:', error);

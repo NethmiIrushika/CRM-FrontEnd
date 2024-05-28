@@ -10,7 +10,6 @@ import UserAccount from './component/userAccount';
 import Crview from './component/viewCr'
 import CreateCr from './component/createCr'
 import { ToastContainer } from 'react-toastify';
-import Log from './component/log';
 import ProtectedRoute from './ProtectedRoute';
 import ShowCrDetails from './component/showCrDetalis';
 import OngingCr from './component/ongoingCr';
@@ -21,7 +20,6 @@ import ShowProtoDetails from './component/showProtoDetails';
 import DevShowCrDetails from './component/devShowCrDetails';
 import Profile from './component/profile';
 import OngoingApprovelCr from './component/ongoingApprovelCr';
-
 import CompleteView from './component/completeView';
 import UatApprove from './component/uatApprovel';
 import OtherPr from './component/otherpr';
@@ -46,7 +44,6 @@ function App() {
               <Route path="createCr" element={<ProtectedRoute><CreateCr /></ProtectedRoute>} />
               <Route path="viewCr" element={<ProtectedRoute><Crview/></ProtectedRoute>}/>
               <Route path="profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
-              <Route path="log" element={<ProtectedRoute><Log/></ProtectedRoute>}/>
               <Route path="crProtoType/:crId" element={<ProtectedRoute><CrProtoType/></ProtectedRoute>}/>
               <Route path="otherPr/:crId" element={<ProtectedRoute><OtherPr/></ProtectedRoute>}/>
               <Route path="ongingCr" element={<ProtectedRoute><OngingCr/></ProtectedRoute>}/>

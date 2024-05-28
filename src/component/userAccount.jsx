@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
 import { useTable, usePagination, useSortBy } from 'react-table';
-import StatusPopup from '../popup/statuspopup'; // Import StatusPopup component
+import StatusPopup from '../popup/statuspopup';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaEdit } from 'react-icons/fa';
@@ -67,7 +67,7 @@ function UserAccount() {
   } = useTable(
     {
       columns,
-      data: users, // Use 'users' state as data
+      data: users, 
       initialState: { pageIndex: 0, pageSize: 10 },
     },
     useSortBy,

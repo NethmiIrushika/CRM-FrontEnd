@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import api from "../api";
 import { getLoginInfo } from "../utils/LoginInfo";
-import { useTable } from 'react-table'; // Import useTable hook
+import { useTable } from 'react-table'; 
 import { FaEye } from "react-icons/fa";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
@@ -104,11 +104,7 @@ function Approveprototype() {
   const filteredCrPrototypes = crprototype.filter((cr) => {
     return  cr.userId.userId === getLoginInfo()?.sub; 
   });
-
-  // const devfilteredCrPrototypes = crprototype.filter((getCr) => {
-  //   return  getCr.userId === getLoginInfo()?.sub; 
-  // });
-  
+ 
 
   useEffect(() => {
     fetchCrprototype();

@@ -34,15 +34,12 @@ const DevShowCrDetails = () => {
     const handleViewAttachment = () => {
         // Construct the URL to fetch the file
         const fileUrl = `${api.defaults.baseURL}/uploads/cr/` + cr.filePath;
-        // Open the file in a new tab
         window.open(fileUrl, '_blank');
     }
 
     const handleButtonClickskip = async () => {
         try {
             const accessToken = localStorage.getItem('accessToken');
-
-            // Send a PUT request to update the status
             await axios.put(
                 `${api.defaults.baseURL}/crs/${crId}/status`,
                 { status: 'Develop without Prototype' },
@@ -53,8 +50,7 @@ const DevShowCrDetails = () => {
                 }
             );
 
-            // Create CR prototype
-            const userId = localStorage.getItem('userId'); // assuming userId is stored in localStorage
+            const userId = localStorage.getItem('userId');
             const popupstatus = "Develop without Prototype";
             await axios.post(
                 `${api.defaults.baseURL}/crprototype`,

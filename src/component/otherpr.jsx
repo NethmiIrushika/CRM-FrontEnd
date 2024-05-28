@@ -3,13 +3,13 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import api from '../api';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import DatePicker from 'react-datepicker'; // Import react-datepicker
+import DatePicker from 'react-datepicker'; 
 import 'react-datepicker/dist/react-datepicker.css'; 
-import ReactQuill from 'react-quill'; // Import React Quill
+import ReactQuill from 'react-quill'; 
 import 'react-quill/dist/quill.snow.css';
 
 const OtherPr = () => {
-  const { crId } = useParams(); // Extract crId from URL parameters
+  const { crId } = useParams(); 
   const {state} = useLocation();
   const [formData, setFormData] = useState({
     topic: state?.topic ||'',
@@ -58,11 +58,6 @@ const OtherPr = () => {
       
       // Update CR status
       await api.put(`/crs/${crId}/status`, { status: 'Need Approvel For Second Prototype' });
-
-
-      //await api.put(`/crprototype/updatePopupStatus/${crId}`, { popupstatus: 'second prototype' });
-      
-
       toast.success('You have successfully sent a change request prototype!');
       
       setTimeout(() => {
@@ -105,12 +100,11 @@ const OtherPr = () => {
     id="description"
     value={formData.description}
     onChange={value => setFormData(prevState => ({ ...prevState, description: value }))}
-    className="quill-editor" // Add custom class for styling if necessary
+    className="quill-editor" 
   />
 </div>
 
-
-          <div>
+<div>
             <label htmlFor="file" className="block text-sm font-medium text-gray-700 mb-1">
               Attach File:
             </label>

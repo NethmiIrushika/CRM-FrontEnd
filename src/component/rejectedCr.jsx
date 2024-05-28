@@ -14,11 +14,11 @@ function RejectedCR() {
   useEffect(() => {
     const fetchCrs = async () => {
       try {
-        const accessToken = localStorage.getItem('accessToken'); // Retrieve token from storage
+        const accessToken = localStorage.getItem('accessToken'); 
 
         const response = await axios.get(`${api.defaults.baseURL}/crs`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`, // Include token in the request headers
+            Authorization: `Bearer ${accessToken}`, 
           },
         });
            console.log(accessToken);

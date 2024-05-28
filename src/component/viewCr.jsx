@@ -16,8 +16,8 @@ function Crview() {
   const [searchTerm, setSearchTerm] = useState('');
   const userType = getLoginInfo()?.userType;
   const navigate = useNavigate();
-  const [editPriority, setEditPriority] = useState(false); // State for controlling the popup
-  const [selectedCr, setSelectedCr] = useState(null); // State for the selected CR
+  const [editPriority, setEditPriority] = useState(false); 
+  const [selectedCr, setSelectedCr] = useState(null); 
   const [newPriority, setNewPriority] = useState('');
   const [currentPriority, setCurrentPriority] = useState('');
   const [pageIndex, setPageIndex] = useState(0);
@@ -44,9 +44,8 @@ function Crview() {
   // Logout user if token is expired
   useEffect(() => {
     if (isTokenExpired()) {
-      // Perform logout action here, such as clearing local storage and redirecting to login page
       localStorage.clear();
-      navigate('/UserLogin'); // Redirect to login page
+      navigate('/UserLogin'); 
     }
   }, []);
 
@@ -61,7 +60,7 @@ function Crview() {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      // Filter CRs with status "start-development"
+
       const filteredCrs = response.data.filter(cr =>
         cr.status === 'Pending to get development');
       setCrs(filteredCrs);
@@ -72,7 +71,7 @@ function Crview() {
 
 
   const handleEditPriority = (row) => {
-    console.log(row); // Add this line to check the structure of the row object
+    console.log(row); 
     if (row.original) {
       setSelectedCr(row.original);
       setEditPriority(true);
@@ -179,15 +178,15 @@ function Crview() {
     previousPage,
     canNextPage,
     canPreviousPage,
-    gotoPage, // Add gotoPage from usePagination
-    pageCount, // Add pageCount from usePagination
+    gotoPage, 
+    pageCount, 
 
   } = useTable(
     {
       columns,
       data: crs,
       initialState: { sortBy: [{ id: 'priority', desc: false }], pageSize: 5, pageIndex: pageIndex }, // Set initial page size and index
-      disableMultiSort: true, // Disable multi-column sorting
+      disableMultiSort: true,
     },
     useSortBy,
     usePagination

@@ -1,10 +1,10 @@
-// PrototypeCr.jsx
+
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from '../api';
-import { Link, useNavigate } from 'react-router-dom';
-import ReactQuill from 'react-quill';
+import { useNavigate } from 'react-router-dom';
+
 import 'react-quill/dist/quill.snow.css';
 
 function PrototypeCr() {
@@ -19,11 +19,10 @@ function PrototypeCr() {
         
         const response = await axios.get(`${api.defaults.baseURL}/crs`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`, // Include token in the request headers
+            Authorization: `Bearer ${accessToken}`, 
           },
         });
   
-        // Filter CRs based on status "Starting Development"
         const startingDevelopmentCRs = response.data.filter(cr => cr.status === "Starting Development");
   
         setCrs(startingDevelopmentCRs);

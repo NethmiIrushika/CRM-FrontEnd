@@ -42,7 +42,6 @@ const ShowCrDetails = () => {
   const handleViewAttachment = () => {
     // Construct the URL to fetch the file
     const fileUrl = `${api.defaults.baseURL}/uploads/cr/` + cr.filePath;
-    // Open the file in a new tab
     window.open(fileUrl, "_blank");
   };
 
@@ -70,9 +69,7 @@ const ShowCrDetails = () => {
   const handleButtonClick = async (crId) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
-      const userId = localStorage.getItem("userId"); // Retrieve the userId from localStorage
-
-      // Log the userId before making the API call
+      const userId = localStorage.getItem("userId"); 
       console.log(userId);
 
       await axios.put(
@@ -148,7 +145,7 @@ return format(new Date(date), 'dd/MM/yyyy');
       {showStatusPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
           <StatusPopupcr
-            cr={cr} // Pass the cr object here
+            cr={cr} 
             close={() => setShowStatusPopup(false)}
             update={updateCr}
           />

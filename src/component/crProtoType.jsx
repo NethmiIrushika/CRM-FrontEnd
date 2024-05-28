@@ -18,16 +18,6 @@ const CrProtoType = () => {
   });
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-
-    const { id, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [id]: value,
-    }));
-  }
-
   const handleFileUpload = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);

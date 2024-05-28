@@ -11,7 +11,7 @@ const ShowProtoDetails = () => {
   const [showRejectPopup, setShowRejectPopup] = useState(false);
   const { prId } = useParams();
   const [pr, setPr] = useState(null);
-  const navigate = useNavigate(); // Import useNavigate and initialize it
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchCrDetails = async () => {

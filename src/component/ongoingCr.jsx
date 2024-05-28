@@ -59,11 +59,6 @@ function OngingCr() {
     fetchCrs();
   }, [crId]);
 
-  // Rest of the component code...
-
-
-
-
 
   const handleButtonClick = (crId, topic) => {
     navigate(`/dashboard/crProtoType/${crId}`, { state: { topic: topic } });

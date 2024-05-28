@@ -122,8 +122,9 @@ function Approveprototype() {
       'Pending to get development': 2,
       'Taken For Development':3,
       'Need Approvel For Prototype': 4,
-      'Development Completed': 5,
-      'CR Rejected': 6,
+      'Need UAT Approvel': 5,
+      'Development Completed': 6,
+      'CR Rejected': 7,
     };
     return statusOrder[a.status] - statusOrder[b.status];
   });
